@@ -148,3 +148,6 @@ formInstance: Form = FormControlWrapper.builder(exampleFormValue)
   })
   .getForm()
 ```
+
+## Form generation result
+![alt text](https://github.com/brunotot/ngx-painless-form/blob/main/docs/form-example.png?raw=true)
