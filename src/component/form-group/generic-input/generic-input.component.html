@@ -1,0 +1,60 @@
+<ng-container [ngSwitch]="type">
+  <ng-container *ngSwitchCase="InputType.SELECT_SINGLE">
+    <ngxp-select2 
+      [shouldStartValidating]="isSubmitPressed"
+      [placeholder]="placeholder"
+      [formControlName]="formControlName"
+      [type]="type"
+      [value]="value"
+      [classAppend]="classAppend"
+      [data]="select2Data">
+    </ngxp-select2>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="InputType.SELECT_MULTIPLE">
+    <ngxp-select2 
+      [shouldStartValidating]="isSubmitPressed"
+      [placeholder]="placeholder"
+      [formControlName]="formControlName"
+      [type]="type"
+      [classAppend]="classAppend"
+      [value]="value"
+      [data]="select2Data">
+    </ngxp-select2>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="InputType.INPUT_TEXTAREA">
+    <textarea 
+      [ngClass]="class.concat(' ', classAppend)"
+      [attr.placeholder]="placeholder"
+      [formControlName]="formControlName">
+    </textarea>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="InputType.INPUT_CHECKBOX">
+    <input 
+      [ngClass]="checkboxClass.concat(' ', classAppend)"
+      [formControlName]="formControlName"
+      (change)="v = !val"
+      [checked]="val"
+      [type]="type"
+    />
+  </ng-container>
+
+  <ng-container *ngSwitchCase="InputType.INPUT_HIDDEN">
+    <input
+      [formControlName]="formControlName"
+      [type]="type"
+    />
+  </ng-container>
+
+  <ng-container *ngSwitchDefault>
+    <input 
+      [ngClass]="class.concat(' ', classAppend)"
+      [attr.placeholder]="placeholder"
+      [formControlName]="formControlName"
+      [type]="type"
+    />
+  </ng-container>
+</ng-container>
+

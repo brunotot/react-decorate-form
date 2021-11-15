@@ -1,0 +1,23 @@
+<div [ngClass]="inputGroupClass">
+  <ngxp-generic-input
+    [formControlName]="formControlName"
+    [type]="type === InputType.INPUT_PASSWORD ? (passwordShown ? InputType.INPUT_TEXT : InputType.INPUT_PASSWORD) : type"
+    [classAppend]="type === InputType.INPUT_CHECKBOX ? (validationClass === 'input-invalid' ? 'border-invalid' : '') : validationClass"
+    [placeholder]="placeholder"
+    [select2Data]="select2Data"
+    [isSubmitPressed]="isSubmitPressed"
+    [value]="value">
+  </ngxp-generic-input>
+  <span
+    (click)="passwordShown = !passwordShown" 
+    *ngIf="type === InputType.INPUT_PASSWORD" 
+    class="input-group-text user-select-none password">
+    <i [ngClass]="'fa '.concat(passwordShown ? 'fa-eye-slash' : 'fa-eye')"></i>
+  </span>
+</div>
+
+<ng-container *ngIf="validationClass === 'input-invalid'">
+  <span class="feedback-invalid" *ngFor="let errorMessage of errorMessages">
+    {{ errorMessage }}
+  </span>
+</ng-container>

@@ -1,0 +1,27 @@
+<form (submit)="onSubmit($event)" [formGroup]="form">
+  <div class="card shadow">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 text-primary title title-md">{{ formTitle }}</h6>
+    </div>
+    <div class="card-body">
+      <ng-container *ngFor="let displayConfig of form.formControlWrapper.displayConfigs">
+        <ngxp-form-input-row
+          [labelText]="displayConfig.label"
+          [formControlName]="displayConfig.variable"
+          [type]="displayConfig.inputType"
+          [isSubmitPressed]="isSubmitPressed"
+          [validationClass]="calculateValidationClass(isSubmitPressed, displayConfig.variable)"
+          [errorMessages]="getErrorMessages(displayConfig.variable)"
+          [placeholder]="displayConfig.placeholder"
+          [select2Data]="displayConfig?.select2Data || []"
+          [value]="form.get(displayConfig.variable)?.value">
+        </ngxp-form-input-row>
+      </ng-container>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex mx-1 justify-content-end">
+        <input class="btn btn-success" type="submit" value="Submit"/>
+      </div>
+    </div>
+  </div>
+</form>
