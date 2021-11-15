@@ -35,6 +35,15 @@ npm install ngx-simple-form
 
 ## Usage
 
+### Component call in template file
+```html
+<ngxp-form
+  [form]="formInstance"
+  [formTitle]="formTitle"
+  [fnSubmit]="onSubmitFn">
+</ngxp-form>
+```
+
 ### Important imports
 ```typescript
 import { Validators } from '@angular/forms';
