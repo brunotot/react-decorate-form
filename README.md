@@ -1,6 +1,8 @@
 # NgxPainlessForm
 
-Agonising form creation made easy. Simply create fully responsive and validated forms within minutes. Angular v13
+Agonising form creation made easy. 
+Simply create fully responsive and validated forms within minutes. 
+Made with Angular v13 and Bootstrap 5 design.
 
 ## Installation
 
@@ -9,7 +11,6 @@ Agonising form creation made easy. Simply create fully responsive and validated 
 npm install jquery@3.5.x
 npm install select2@4.0.x
 npm install ng-select2@1.3.1
-npm install bootstrap@5.1.3
 npm install ngx-simple-form
 ```
 

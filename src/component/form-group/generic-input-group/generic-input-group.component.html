@@ -1,22 +1,22 @@
-<div [ngClass]="inputGroupClass">
+<div [ngClass]="inputGroupClass.concat(type === InputType.SELECT_MULTIPLE || type === InputType.SELECT_SINGLE ? ' d-block' : '')">
   <ngxp-generic-input
-    [formControlName]="formControlName"
     [type]="type === InputType.INPUT_PASSWORD ? (passwordShown ? InputType.INPUT_TEXT : InputType.INPUT_PASSWORD) : type"
-    [classAppend]="type === InputType.INPUT_CHECKBOX ? (validationClass === 'input-invalid' ? 'border-invalid' : '') : validationClass"
+    [validationStatus]="validationStatus"
+    [formControlName]="formControlName"
+    [classAppend]="classAppend"
     [placeholder]="placeholder"
     [select2Data]="select2Data"
-    [isSubmitPressed]="isSubmitPressed"
     [value]="value">
   </ngxp-generic-input>
   <span
+    *ngIf="type === InputType.INPUT_PASSWORD"  
     (click)="passwordShown = !passwordShown" 
-    *ngIf="type === InputType.INPUT_PASSWORD" 
     class="input-group-text user-select-none password">
-    <i [ngClass]="'fa '.concat(passwordShown ? 'fa-eye-slash' : 'fa-eye')"></i>
+    <i [ngClass]="'fa '.concat(passwordShown ? 'fa-slash-eye' : 'fa-eye')"></i>
   </span>
 </div>
 
-<ng-container *ngIf="validationClass === 'input-invalid'">
+<ng-container *ngIf="validationStatus === ValidationStatus.INVALID">
   <span class="feedback-invalid" *ngFor="let errorMessage of errorMessages">
     {{ errorMessage }}
   </span>

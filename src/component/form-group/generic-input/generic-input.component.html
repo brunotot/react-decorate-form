@@ -1,60 +1,49 @@
-<ng-container [ngSwitch]="type">
-  <ng-container *ngSwitchCase="InputType.SELECT_SINGLE">
-    <ngxp-select2 
-      [shouldStartValidating]="isSubmitPressed"
+<ng-container [ngSwitch]="true">
+  <ng-container *ngSwitchCase="type === InputType.SELECT_SINGLE || type === InputType.SELECT_MULTIPLE">
+    <ngxp-select2-impl
+      [validationStatus]="validationStatus"
       [placeholder]="placeholder"
       [formControlName]="formControlName"
       [type]="type"
       [value]="value"
+      [class]="class"
       [classAppend]="classAppend"
       [data]="select2Data">
-    </ngxp-select2>
+    </ngxp-select2-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="InputType.SELECT_MULTIPLE">
-    <ngxp-select2 
-      [shouldStartValidating]="isSubmitPressed"
+  <ng-container *ngSwitchCase="type === InputType.INPUT_TEXTAREA">
+    <ngxp-textarea-impl 
+      [class]="class"
+      [classAppend]="classAppend"
+      [validationStatus]="validationStatus"
       [placeholder]="placeholder"
-      [formControlName]="formControlName"
-      [type]="type"
-      [classAppend]="classAppend"
-      [value]="value"
-      [data]="select2Data">
-    </ngxp-select2>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="InputType.INPUT_TEXTAREA">
-    <textarea 
-      [ngClass]="class.concat(' ', classAppend)"
-      [attr.placeholder]="placeholder"
       [formControlName]="formControlName">
-    </textarea>
+    </ngxp-textarea-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="InputType.INPUT_CHECKBOX">
-    <input 
-      [ngClass]="checkboxClass.concat(' ', classAppend)"
+  <ng-container *ngSwitchCase="type === InputType.INPUT_CHECKBOX">
+    <ngxp-checkbox-impl
+      [class]="class"
+      [classAppend]="classAppend"
       [formControlName]="formControlName"
-      (change)="v = !val"
-      [checked]="val"
-      [type]="type"
-    />
+      [validationStatus]="validationStatus">
+    </ngxp-checkbox-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="InputType.INPUT_HIDDEN">
-    <input
-      [formControlName]="formControlName"
-      [type]="type"
-    />
+  <ng-container *ngSwitchCase="type === InputType.INPUT_HIDDEN">
+    <ngxp-hidden-impl [formControlName]="formControlName"></ngxp-hidden-impl>
   </ng-container>
 
   <ng-container *ngSwitchDefault>
-    <input 
-      [ngClass]="class.concat(' ', classAppend)"
-      [attr.placeholder]="placeholder"
+    <ngxp-default-impl
+      [class]="class"
+      [classAppend]="classAppend"
+      [placeholder]="placeholder"
+      [validationStatus]="validationStatus"
       [formControlName]="formControlName"
-      [type]="type"
-    />
+      [type]="type">
+    </ngxp-default-impl>
   </ng-container>
 </ng-container>
 

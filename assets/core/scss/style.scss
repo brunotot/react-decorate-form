@@ -1,0 +1,60 @@
+@import "./../../vendor/bootstrap/css/bootstrap.css";
+@import "./icons";
+@import "./colors";
+@import "./../../vendor/select2/scss/select2-custom";
+
+$box-shadow-success-focus: 0 0 0 0.25rem rgb(25 135 84 / 25%);
+$box-shadow-danger-focus: 0 0 0 0.25rem rgb(220 53 69 / 25%);
+$box-shadow-success: 0px 0px 0px 1px $color-success;
+$box-shadow-danger: 0px 0px 0px 1px $color-danger;
+
+/*input::-webkit-datetime-edit {
+  color: $color-placeholder;
+}*/
+
+.feedback-invalid { color: $color-danger }
+.feedback-valid { color: $color-success }
+
+.border-valid { border: 1px solid $color-success !important }
+.border-invalid { border: 1px solid $color-danger !important }
+
+.focus-valid:focus { border-color: $color-success }
+.focus-invalid:focus { border-color: $color-danger }
+
+.shadow-invalid {
+  box-shadow: $box-shadow-danger;
+  -webkit-box-shadow: $box-shadow-danger;
+  &:focus {
+    box-shadow: $box-shadow-danger-focus;
+  }
+}
+
+.shadow-valid {
+  box-shadow: $box-shadow-success;
+  -webkit-box-shadow: $box-shadow-success;
+  &:focus {
+    box-shadow: $box-shadow-success-focus;
+  }
+}
+
+.input-validation {
+  padding-right: calc(1.5em + .75rem) !important;
+  background-repeat: no-repeat !important;
+  background-position: right calc(.375em + .1875rem) center !important;
+  background-size: calc(.75em + .375rem) calc(.75em + .375rem) !important;
+  &-valid {
+    background-image: $icon-checkmark !important;
+    border-color: $color-success !important;
+    &:focus { 
+      box-shadow: $box-shadow-success-focus !important;
+    }
+  }
+  &-invalid {
+    background-image: $icon-exclamation !important;
+    border-color: $color-danger !important;
+    &:focus { 
+      box-shadow: $box-shadow-danger-focus !important;
+    }
+  }
+}
+

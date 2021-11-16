@@ -1,0 +1,45 @@
+$blue:     #0d6efd;
+$indigo:   #6610f2;
+$purple:   #6f42c1;
+$pink:     #d63384;
+$red:      #dc3545;
+$orange:   #fd7e14;
+$yellow:   #ffc107;
+$green:    #198754;
+$teal:     #20c997;
+$cyan:     #0dcaf0;
+$white:    #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black:    #000;
+
+$color-primary:   $blue;
+$color-secondary: $gray-600;
+$color-success:   $green;
+$color-info:      $cyan;
+$color-warning:   $yellow;
+$color-danger:    $red;
+$color-light:     $gray-100;
+$color-dark:      $gray-900;
+
+.color-primary { color: $color-primary }
+.color-success { color: $color-success }
+.color-secondary { color: $color-secondary }
+.color-info { color: $color-info }
+.color-warning { color: $color-warning }
+.color-danger { color: $color-danger }
+.color-faded { color: $color-light }
+.color-dark { color: $color-dark }
+
+$color-input-border: #ced4da;
+$color-placeholder: #6c757d;
+
+.color-input-border { color: $color-input-border }
+.color-placeholder { color: $color-placeholder }

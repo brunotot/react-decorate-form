@@ -19,13 +19,37 @@ export interface IDisplayConfig {
   select2Data?: Select2OptionData[]
 }
 
-export interface IFormBaseConfig {
-  inputType: InputType,
+export interface IFormInputHiddenConfig {
+  inputType: InputType.INPUT_HIDDEN,
+  key: string
+}
+
+export interface IFormInputDateConfig {
+  inputType: InputType.INPUT_DATETIME | InputType.INPUT_DATE,
+  label: string,
   key: string, 
   validatorConfigs?: { validator: ValidatorFn, message: string, validatorName: string }[],
-  placeholder?: string,
-  label?: string,
-  select2Data?: Select2OptionData[]
+}
+
+export interface IFormInputGeneralConfig {
+  inputType: InputType.INPUT_CHECKBOX 
+    | InputType.INPUT_NUMBER 
+    | InputType.INPUT_PASSWORD 
+    | InputType.INPUT_TEXT 
+    | InputType.INPUT_TEXTAREA,
+  placeholder: string,
+  label: string,
+  key: string, 
+  validatorConfigs?: { validator: ValidatorFn, message: string, validatorName: string }[],
+}
+
+export interface IFormInputSelectConfig {
+  inputType: InputType.SELECT_SINGLE | InputType.SELECT_MULTIPLE,
+  placeholder: string,
+  label: string,
+  key: string, 
+  validatorConfigs?: { validator: ValidatorFn, message: string, validatorName: string }[],
+  select2Data: Select2OptionData[]
 }
 
 export default class FormControlWrapper {
@@ -57,21 +81,22 @@ export default class FormControlWrapper {
       this.form = form;
     }
 
-    public set(formBaseConfig: IFormBaseConfig) {
+
+    public set(formBaseConfig: IFormInputDateConfig | IFormInputGeneralConfig | IFormInputHiddenConfig | IFormInputSelectConfig) {
       let { key, inputType } = formBaseConfig;
-      let select2Data = formBaseConfig?.select2Data || [];
-      let validatorConfigs = formBaseConfig.validatorConfigs || [];
-      let validators = validatorConfigs.map(c => c.validator);
+      let select2Data = (formBaseConfig as IFormInputSelectConfig)?.select2Data || [];
+      let validatorConfigs = (formBaseConfig as any).validatorConfigs || [];
+      let validators = validatorConfigs.map((c: any) => c.validator);
 
       let displayValue = this.form[key];
       if (inputType === InputType.INPUT_DATETIME) {
-        displayValue = (displayValue as Date).toISOString().slice(0, 16);
+        displayValue = (displayValue as Date)?.toISOString().slice(0, 16);
       } else if (inputType === InputType.INPUT_DATE) {
-        displayValue = (displayValue as Date).toISOString().slice(0, 10);
+        displayValue = (displayValue as Date)?.toISOString().slice(0, 10);
       }
       this.initialControls[key] = new FormControl(displayValue, validators);
       let validationErrors: IValidationError[] = [];
-      validatorConfigs.forEach(validatorConfig => {
+      validatorConfigs.forEach((validatorConfig: any) => {
         let { message, validatorName } = validatorConfig;
         validationErrors.push({
           message,
@@ -81,8 +106,8 @@ export default class FormControlWrapper {
       this.displayConfigs.push({
         inputType,
         variable: key,
-        label: formBaseConfig.label || '',
-        placeholder: formBaseConfig.placeholder || '',
+        label: (formBaseConfig as any).label || '',
+        placeholder: (formBaseConfig as any).placeholder || '',
         select2Data
       })
       this.errorMessagesWrapper[key] = validationErrors;

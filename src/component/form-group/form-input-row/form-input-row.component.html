@@ -2,14 +2,13 @@
   <label [ngClass]="labelClass">{{ labelText }}</label>
   <div [ngClass]="inputWrapperClass">
     <ngxp-generic-input-group
+      [validationStatus]="validationStatus"
       [formControlName]="formControlName"
-      [type]="type"
-      [validationClass]="validationClass"
       [errorMessages]="errorMessages"
       [placeholder]="placeholder"
       [select2Data]="select2Data"
-      [isSubmitPressed]="isSubmitPressed"
-      [value]="value">
+      [value]="value"
+      [type]="type">
     </ngxp-generic-input-group>
   </div>
 </div>

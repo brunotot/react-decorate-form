@@ -4,12 +4,16 @@ import { BaseFormComponent } from './src/component/form-group/base-form/base-for
 import { Form } from './src/form/Form';
 import { NgxPainlessFormModule } from './src/ngx-painless-form.module';
 import { InputType } from './src/model/InputType';
-import { Select2Component } from './src/component/form-group/select2/select2.component';
+import { Select2Component } from './src/component/form-group/impl/select2-impl/select2-impl.component';
 import { FormInputRowComponent } from './src/component/form-group/form-input-row/form-input-row.component';
 import { GenericInputComponent } from './src/component/form-group/generic-input/generic-input.component';
 import { GenericInputGroupComponent } from './src/component/form-group/generic-input-group/generic-input-group.component';
 import { IForm } from './src/form/base/BaseForm';
 import { ISelect2MultipleId, ISelect2SingleId} from './src/model/Select2';
+import { DefaultImplComponent } from './src/component/form-group/impl/default-impl/default-impl.component';
+import { HiddenImplComponent } from './src/component/form-group/impl/hidden-impl/hidden-impl.component';
+import { CheckboxImplComponent } from './src/component/form-group/impl/checkbox-impl/checkbox-impl.component';
+import { TextareaImplComponent } from './src/component/form-group/impl/textarea-impl/textarea-impl.component';
 
 export { FormControlWrapper };
 export { ReactiveInput };
@@ -24,3 +28,7 @@ export { FormInputRowComponent };
 export { IForm };
 export { ISelect2MultipleId };
 export { ISelect2SingleId };
+export { DefaultImplComponent };
+export { HiddenImplComponent };
+export { CheckboxImplComponent };
+export { TextareaImplComponent };

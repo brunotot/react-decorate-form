@@ -1,24 +1,66 @@
 import { Component, Input } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
+import { InputType } from "./InputType";
+import { getValidationClass, handleUniqueClasses, Style } from "./Style";
+import { ValidationStatus } from "./ValidationStatus";
 
 @Component({ template: '' })
 export default class ReactiveInput implements ControlValueAccessor {
+  @Input() validationStatus: ValidationStatus = ValidationStatus.IDLE;
   @Input() formControlName!: string;
-  val: any = ''
+  @Input() placeholder: string = '';
+  @Input() classAppend: string = '';
+  @Input() class: string = '';
+  @Input() type!: InputType;
+  @Input() value!: any;
+  
+  InputType = InputType;
+  ValidationStatus = ValidationStatus;
+  Style = Style;
+
+  get placeholderValue() { return this.placeholder ? this.placeholder : this.defaultPlaceholder }
+  get typeValue() { return this.type ? this.type : this.defaultType }
+
+  defaultBaseValidationClass: string = Style.CLASS_INPUT_VALIDATION;
+  defaultValidClass: string = Style.CLASS_INPUT_VALID;
+  defaultInvalidClass: string = Style.CLASS_INPUT_INVALID;
+  defaultClass: string = '';
+  defaultPlaceholder: string = 'Enter value'
+  defaultType = InputType.INPUT_TEXT;
+
+  handleUniqueClasses = handleUniqueClasses;
+  getValidationClass = getValidationClass;
+
+  calculateClassWrapper(
+    baseValidationClass: string = '',
+    validClass: string,
+    invalidClass: string) {
+    let classStart = this.validationStatus === ValidationStatus.IDLE ? '' : baseValidationClass;
+    return classStart.concat(
+      ' ',
+      handleUniqueClasses(
+        this.class ? this.class : this.defaultClass, 
+        this.classAppend, 
+        getValidationClass(this.validationStatus, validClass, invalidClass)))
+  }
+
+  get defaultClassWrapper() {
+    return this.calculateClassWrapper(
+      this.defaultBaseValidationClass,
+      this.defaultValidClass,
+      this.defaultInvalidClass
+    );
+  }
   
   constructor() { }
-
-  set v(val: any) {
-    this.val = val
-    this.onChange(val)
-    this.onTouch(val)
-  }
 
   onChange: any = () => {}
   onTouch: any = () => {}
 
   writeValue(value: any) {
-    this.v = value
+    this.value = value
+    this.onChange(value)
+    this.onTouch(value)
   }
 
   registerOnChange(fn: any) {

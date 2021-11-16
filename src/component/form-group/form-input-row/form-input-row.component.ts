@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Select2OptionData } from 'ng-select2';
-import { InputType } from '../../../model/InputType';
 import VIEW_PROVIDERS, { buildProviders } from '../../../model/Provider';
 import ReactiveInput from '../../../model/ReactiveInput';
 
@@ -15,15 +14,10 @@ export class FormInputRowComponent extends ReactiveInput implements OnInit {
   @Input() inputWrapperClass: string = 'col-sm-12 col-md-9';
   @Input() rowWrapperClass: string = 'row my-2';
   @Input() labelClass: string = 'col-form-label col-sm-12 col-md-3 pt-2';
+
   @Input() labelText!: string;
-  @Input() type!: InputType;
-  @Input() validationClass!: string;
   @Input() errorMessages!: string[];
-  @Input() placeholder: string = 'Enter value';
-  @Input() value!: any;
-  @Input() isSubmitPressed: boolean = false;
   @Input() select2Data: Select2OptionData[] = [];
-  InputType = InputType;
 
   constructor() { 
     super()

@@ -4,6 +4,7 @@ import { IForm } from '../../../form/base/BaseForm';
 import { Form } from '../../../form/Form';
 import { InputType } from '../../../model/InputType';
 import { ISelect2MultipleId, ISelect2SingleId } from '../../../model/Select2';
+import { ValidationStatus } from '../../../model/ValidationStatus';
 
 @Component({
   selector: 'ngxp-form',
@@ -14,7 +15,8 @@ export class BaseFormComponent implements OnInit {
   @Input() form!: Form;
   @Input() formTitle!: string;
   @Input() fnSubmit!: (form: IForm) => any;
-  isSubmitPressed: boolean = false;
+  validationStatus: ValidationStatus = ValidationStatus.IDLE;
+  InputType = InputType;
 
   constructor() {
   }
@@ -23,11 +25,12 @@ export class BaseFormComponent implements OnInit {
   }
 
   onSubmit(e: any) {
-    this.isSubmitPressed = true;
-    if (this.form.invalid || this.form.errors)  {
+    if (this.form.invalid || this.form.errors) {
+      this.validationStatus = ValidationStatus.INVALID;
       e.preventDefault();
       return;
     }
+    this.validationStatus = ValidationStatus.VALID;
     let value = this.form.value;
     Object.keys(value).forEach(k => {
       let { displayConfigs } = this.form.formControlWrapper;
@@ -45,13 +48,14 @@ export class BaseFormComponent implements OnInit {
     this.fnSubmit(value);
   }
 
-  calculateValidationClass(isSubmitPressed: boolean, varName: string): string {
-    if (!isSubmitPressed) return '';
+  calculateValidationStatus(validationStatus: ValidationStatus, varName: string): ValidationStatus {
+    if (validationStatus === ValidationStatus.IDLE) return ValidationStatus.IDLE;
     let hasErrors: boolean = !!this.form.get(varName)?.errors;
-    return hasErrors ? 'input-invalid' : 'input-valid';
+    return hasErrors ? ValidationStatus.INVALID : ValidationStatus.VALID;
   }
 
   getErrorMessages(varName: string): string[] {
+    if (this.validationStatus === ValidationStatus.IDLE) return [];
     let validationErrors: ValidationErrors | null = this.form.get(varName)?.errors || null;
     if (!validationErrors) return [];
     let keys = Object.keys(validationErrors);
