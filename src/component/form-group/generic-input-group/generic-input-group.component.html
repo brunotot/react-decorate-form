@@ -6,7 +6,7 @@
     [value]="value">
   </ngxp-generic-input>
   <span
-    *ngIf="displayConfig.inputType === InputType.INPUT_PASSWORD"  
+    *ngIf="displayConfig.inputType === InputType.INPUT_PASSWORD || isPassword"  
     (click)="onPasswordShowClick()" 
     class="input-group-text user-select-none password">
     <i [ngClass]="'fa '.concat(passwordShown ? 'fa-slash-eye' : 'fa-eye')"></i>

@@ -12,6 +12,8 @@ import { DefaultImplComponent } from './component/form-group/impl/default-impl/d
 import { CheckboxImplComponent } from './component/form-group/impl/checkbox-impl/checkbox-impl.component';
 import { HiddenImplComponent } from './component/form-group/impl/hidden-impl/hidden-impl.component';
 import { TextareaImplComponent } from './component/form-group/impl/textarea-impl/textarea-impl.component';
+import { ColorImplComponent } from './component/form-group/impl/color-impl/color-impl.component';
+import { RangeImplComponent } from './component/form-group/impl/range-impl/range-impl.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { TextareaImplComponent } from './component/form-group/impl/textarea-impl
     DefaultImplComponent,
     CheckboxImplComponent,
     HiddenImplComponent,
-    TextareaImplComponent
+    TextareaImplComponent,
+    ColorImplComponent,
+    RangeImplComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,8 @@ import { TextareaImplComponent } from './component/form-group/impl/textarea-impl
     NgSelect2Module
   ],
   exports: [
+    RangeImplComponent,
+    ColorImplComponent,
     TextareaImplComponent,
     BaseFormComponent,
     GenericInputComponent,

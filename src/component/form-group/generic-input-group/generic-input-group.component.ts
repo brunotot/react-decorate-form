@@ -13,12 +13,12 @@ export class GenericInputGroupComponent extends ReactiveInput implements OnInit 
   @Input() inputGroupClass: string = 'input-group justify-content-between';
   @Input() errorMessages: string[] = [];
   passwordShown: boolean = false;
+  isPassword: boolean = false;
 
   onPasswordShowClick() {
+    this.isPassword = true;
     this.passwordShown = !this.passwordShown;
-    this.displayConfig.inputType = this.displayConfig.inputType === this.InputType.INPUT_PASSWORD 
-      ? (this.passwordShown ? this.InputType.INPUT_TEXT : this.InputType.INPUT_PASSWORD) 
-      : this.displayConfig.inputType;
+    this.displayConfig.inputType = this.passwordShown ? this.InputType.INPUT_TEXT : this.InputType.INPUT_PASSWORD;
   }
 
   constructor() { 

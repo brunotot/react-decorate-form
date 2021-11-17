@@ -12,6 +12,7 @@
   <ng-container *ngSwitchCase="InputType.INPUT_TEXTAREA">
     <ngxp-textarea-impl 
       [class]="class"
+      [value]="value"
       [classAppend]="classAppend"
       [validationStatus]="validationStatus"
       [displayConfig]="displayConfig">
@@ -21,6 +22,7 @@
   <ng-container *ngSwitchCase="InputType.INPUT_CHECKBOX">
     <ngxp-checkbox-impl
       [class]="class"
+      [value]="value"
       [classAppend]="classAppend"
       [displayConfig]="displayConfig"
       [validationStatus]="validationStatus">
@@ -28,7 +30,15 @@
   </ng-container>
 
   <ng-container *ngSwitchCase="InputType.INPUT_HIDDEN">
-    <ngxp-hidden-impl [displayConfig]="displayConfig"></ngxp-hidden-impl>
+    <ngxp-hidden-impl [displayConfig]="displayConfig" [value]="value"></ngxp-hidden-impl>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="InputType.INPUT_COLOR">
+    <ngxp-color-impl [displayConfig]="displayConfig" [value]="value"></ngxp-color-impl>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="InputType.INPUT_RANGE">
+    <ngxp-range-impl [displayConfig]="displayConfig" [value]="value" [validationStatus]="validationStatus"></ngxp-range-impl>
   </ng-container>
 
   <ng-container *ngSwitchDefault>
@@ -36,7 +46,8 @@
       [class]="class"
       [classAppend]="classAppend"
       [displayConfig]="displayConfig"
-      [validationStatus]="validationStatus">
+      [validationStatus]="validationStatus"
+      [value]="value">
     </ngxp-default-impl>
   </ng-container>
 </ng-container>

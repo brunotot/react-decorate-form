@@ -7,5 +7,14 @@ export enum InputType {
   INPUT_PASSWORD = 'password',
   INPUT_CHECKBOX = 'checkbox',
   INPUT_HIDDEN = 'hidden',
-  SELECT = 'select'
+  SELECT = 'select',
+  INPUT_COLOR = 'color',
+  INPUT_EMAIL = 'email',
+  INPUT_MONTH = 'month',
+  INPUT_URL = 'url',
+  INPUT_TEL = 'tel',
+  INPUT_SEARCH = 'search',
+  INPUT_RANGE = 'range',
+  INPUT_WEEK = 'week',
+  INPUT_TIME = 'time'
 }

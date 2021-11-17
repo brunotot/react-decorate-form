@@ -1,6 +1,6 @@
 {
   "name": "ngx-simple-form",
-  "version": "0.0.123",
+  "version": "0.0.127",
   "scripts": {
     "lib:deploy": "npm run lib:build && cd dist/ && npm publish",
     "lib:build": "ng-packagr -p package.json"

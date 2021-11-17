@@ -14,7 +14,11 @@ import { DefaultImplComponent } from './src/component/form-group/impl/default-im
 import { HiddenImplComponent } from './src/component/form-group/impl/hidden-impl/hidden-impl.component';
 import { CheckboxImplComponent } from './src/component/form-group/impl/checkbox-impl/checkbox-impl.component';
 import { TextareaImplComponent } from './src/component/form-group/impl/textarea-impl/textarea-impl.component';
+import { ColorImplComponent } from './src/component/form-group/impl/color-impl/color-impl.component';
+import { RangeImplComponent } from './src/component/form-group/impl/range-impl/range-impl.component';
 
+export { RangeImplComponent };
+export { ColorImplComponent };
 export { FormControlWrapper };
 export { ReactiveInput };
 export { BaseFormComponent };
