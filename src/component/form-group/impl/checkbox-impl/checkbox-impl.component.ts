@@ -19,10 +19,6 @@ export class CheckboxImplComponent extends ReactiveInput implements OnInit {
     super();
   }
 
-  ngAfterViewInit() {
-    this.writeValue(!!this.value); // throws ExpressionChangedAfterItHasBeenCheckedError
-  }
-
   ngOnInit(): void {
   }
 }

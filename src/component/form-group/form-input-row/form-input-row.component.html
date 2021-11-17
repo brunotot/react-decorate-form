@@ -1,22 +1,18 @@
-<div *ngIf="type !== InputType.INPUT_HIDDEN" [ngClass]="rowWrapperClass">
-  <label [ngClass]="labelClass">{{ labelText }}</label>
+<div *ngIf="displayConfig.inputType !== InputType.INPUT_HIDDEN" [ngClass]="rowWrapperClass">
+  <label [ngClass]="labelClass">{{ displayConfig.label }}</label>
   <div [ngClass]="inputWrapperClass">
     <ngxp-generic-input-group
       [validationStatus]="validationStatus"
-      [formControlName]="formControlName"
+      [displayConfig]="displayConfig"
       [errorMessages]="errorMessages"
-      [placeholder]="placeholder"
-      [select2Data]="select2Data"
-      [value]="value"
-      [type]="type">
+      [value]="value">
     </ngxp-generic-input-group>
   </div>
 </div>
 
-<ng-container *ngIf="type === InputType.INPUT_HIDDEN">
+<ng-container *ngIf="displayConfig.inputType === InputType.INPUT_HIDDEN">
   <ngxp-generic-input
-    [formControlName]="formControlName"
-    [type]="type"
+    [displayConfig]="displayConfig"
     [value]="value">
   </ngxp-generic-input>
 </ng-container>

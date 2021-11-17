@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Select2OptionData } from 'ng-select2';
 import ReactiveInput from '../../../model/ReactiveInput';
 import VIEW_PROVIDERS, { buildProviders } from '../../../model/Provider';
 
@@ -12,7 +11,6 @@ import VIEW_PROVIDERS, { buildProviders } from '../../../model/Provider';
 })
 export class GenericInputComponent extends ReactiveInput implements OnInit {
   @Input() checkboxClass: string = 'form-check-input checkbox';
-  @Input() select2Data: Select2OptionData[] = [];
 
   constructor() {
     super();

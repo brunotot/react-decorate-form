@@ -17,10 +17,6 @@ import { ValidationStatus } from '../../../../model/ValidationStatus';
 export class Select2Component extends ReactiveInput implements OnInit {
   @ViewChild(NgSelect2Component) select2Component!: NgSelect2Component;
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
-  @Input() allowClear: boolean = true;
-  @Input() width: string = "100%";
-  @Input() data: Select2OptionData[] = [];
-  @Input() options: any = {};
 
   valueSet: boolean = false;
   select2ContainerSelector!: string;
@@ -43,12 +39,7 @@ export class Select2Component extends ReactiveInput implements OnInit {
   }
 
   ngOnInit(): void {
-    this.options = {
-      multiple: this.type === InputType.SELECT_MULTIPLE,
-      tags: true,
-      id: this.formControlName
-    }
-    this.select2ContainerSelector =  `#${this.formControlName} .select2-selection`;
+    this.select2ContainerSelector =  `#${this.displayConfig.formControlName} .select2-selection`;
   }
 
   clearSelection() {
