@@ -1,10 +1,10 @@
 <ng-select2
-  [attr.id]="formControlName"
+  [attr.id]="displayConfig.formControlName"
   [placeholder]="placeholderValue"
   (valueChanged)="baseValueChanged($event)"
-  [formControlName]="formControlName"
-  [allowClear]="allowClear"
-  [width]="width" 
-  [data]="data"
-  [options]="options">
+  [formControlName]="displayConfig.formControlName"
+  [allowClear]="displayConfig.select2Config?.allowClear"
+  [width]="displayConfig.select2Config?.width" 
+  [data]="displayConfig.select2Data"
+  [options]="displayConfig.select2Config?.options">
 </ng-select2>

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Select2OptionData } from 'ng-select2';
 import ReactiveInput from '../../../model/ReactiveInput';
 import VIEW_PROVIDERS, { buildProviders } from '../../../model/Provider';
 
@@ -12,9 +11,15 @@ import VIEW_PROVIDERS, { buildProviders } from '../../../model/Provider';
 })
 export class GenericInputGroupComponent extends ReactiveInput implements OnInit {
   @Input() inputGroupClass: string = 'input-group justify-content-between';
-  @Input() select2Data: Select2OptionData[] = [];
   @Input() errorMessages: string[] = [];
   passwordShown: boolean = false;
+
+  onPasswordShowClick() {
+    this.passwordShown = !this.passwordShown;
+    this.displayConfig.inputType = this.displayConfig.inputType === this.InputType.INPUT_PASSWORD 
+      ? (this.passwordShown ? this.InputType.INPUT_TEXT : this.InputType.INPUT_PASSWORD) 
+      : this.displayConfig.inputType;
+  }
 
   constructor() { 
     super() 

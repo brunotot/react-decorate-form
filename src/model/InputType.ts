@@ -7,6 +7,5 @@ export enum InputType {
   INPUT_PASSWORD = 'password',
   INPUT_CHECKBOX = 'checkbox',
   INPUT_HIDDEN = 'hidden',
-  SELECT_SINGLE = 'select-single',
-  SELECT_MULTIPLE = 'select-multi'
+  SELECT = 'select'
 }

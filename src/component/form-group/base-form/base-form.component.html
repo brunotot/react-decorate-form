@@ -6,14 +6,10 @@
     <div class="card-body">
       <ng-container *ngFor="let displayConfig of form.formControlWrapper.displayConfigs">
         <ngxp-form-input-row
-          [labelText]="displayConfig.label"
-          [formControlName]="displayConfig.variable"
-          [type]="displayConfig.inputType"
-          [validationStatus]="calculateValidationStatus(validationStatus, displayConfig.variable)"
-          [errorMessages]="getErrorMessages(displayConfig.variable)"
-          [placeholder]="displayConfig.placeholder"
-          [select2Data]="displayConfig?.select2Data || []"
-          [value]="form.get(displayConfig.variable)?.value">
+          [displayConfig]="displayConfig"
+          [validationStatus]="calculateValidationStatus(validationStatus, displayConfig.formControlName)"
+          [errorMessages]="getErrorMessages(displayConfig.formControlName)"
+          [value]="form.get(displayConfig.formControlName)?.value">
         </ngxp-form-input-row>
       </ng-container>
     </div>

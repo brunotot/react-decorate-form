@@ -1,7 +1,5 @@
 <input 
   [ngClass]="defaultClassWrapper"
-  [formControlName]="formControlName"
-  (change)="writeValue(!value)"
-  [checked]="value"
+  [formControlName]="displayConfig.formControlName"
   type="checkbox"
 />

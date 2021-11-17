@@ -1,48 +1,42 @@
-<ng-container [ngSwitch]="true">
-  <ng-container *ngSwitchCase="type === InputType.SELECT_SINGLE || type === InputType.SELECT_MULTIPLE">
+<ng-container [ngSwitch]="displayConfig.inputType">
+  <ng-container *ngSwitchCase="InputType.SELECT">
     <ngxp-select2-impl
       [validationStatus]="validationStatus"
-      [placeholder]="placeholder"
-      [formControlName]="formControlName"
-      [type]="type"
+      [displayConfig]="displayConfig"
       [value]="value"
       [class]="class"
-      [classAppend]="classAppend"
-      [data]="select2Data">
+      [classAppend]="classAppend">
     </ngxp-select2-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="type === InputType.INPUT_TEXTAREA">
+  <ng-container *ngSwitchCase="InputType.INPUT_TEXTAREA">
     <ngxp-textarea-impl 
       [class]="class"
       [classAppend]="classAppend"
       [validationStatus]="validationStatus"
-      [placeholder]="placeholder"
-      [formControlName]="formControlName">
+      [displayConfig]="displayConfig">
     </ngxp-textarea-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="type === InputType.INPUT_CHECKBOX">
+  <ng-container *ngSwitchCase="InputType.INPUT_CHECKBOX">
     <ngxp-checkbox-impl
       [class]="class"
       [classAppend]="classAppend"
-      [formControlName]="formControlName"
+      [displayConfig]="displayConfig"
       [validationStatus]="validationStatus">
     </ngxp-checkbox-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="type === InputType.INPUT_HIDDEN">
-    <ngxp-hidden-impl [formControlName]="formControlName"></ngxp-hidden-impl>
+  <ng-container *ngSwitchCase="InputType.INPUT_HIDDEN">
+    <ngxp-hidden-impl [displayConfig]="displayConfig"></ngxp-hidden-impl>
   </ng-container>
 
   <ng-container *ngSwitchDefault>
     <ngxp-default-impl
       [class]="class"
       [classAppend]="classAppend"
-      [placeholder]="placeholder"
-      [validationStatus]="validationStatus"
-      [formControlName]="formControlName"
-      [type]="type">
+      [displayConfig]="displayConfig"
+      [validationStatus]="validationStatus">
     </ngxp-default-impl>
   </ng-container>
 </ng-container>

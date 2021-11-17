@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
+import { IDisplayConfig } from "./FormControlWrapper";
 import { InputType } from "./InputType";
 import { getValidationClass, handleUniqueClasses, Style } from "./Style";
 import { ValidationStatus } from "./ValidationStatus";
@@ -7,19 +8,17 @@ import { ValidationStatus } from "./ValidationStatus";
 @Component({ template: '' })
 export default class ReactiveInput implements ControlValueAccessor {
   @Input() validationStatus: ValidationStatus = ValidationStatus.IDLE;
-  @Input() formControlName!: string;
-  @Input() placeholder: string = '';
+  @Input() displayConfig!: IDisplayConfig
   @Input() classAppend: string = '';
   @Input() class: string = '';
-  @Input() type!: InputType;
   @Input() value!: any;
   
   InputType = InputType;
   ValidationStatus = ValidationStatus;
   Style = Style;
 
-  get placeholderValue() { return this.placeholder ? this.placeholder : this.defaultPlaceholder }
-  get typeValue() { return this.type ? this.type : this.defaultType }
+  get placeholderValue() { return this.displayConfig.placeholder ? this.displayConfig.placeholder : this.defaultPlaceholder }
+  get typeValue() { return this.displayConfig.inputType ? this.displayConfig.inputType : this.defaultType }
 
   defaultBaseValidationClass: string = Style.CLASS_INPUT_VALIDATION;
   defaultValidClass: string = Style.CLASS_INPUT_VALID;

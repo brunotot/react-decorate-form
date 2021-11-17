@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
+import { ISelect2Config } from '../../../model/FormControlWrapper';
 import { IForm } from '../../../form/base/BaseForm';
 import { Form } from '../../../form/Form';
 import { InputType } from '../../../model/InputType';
@@ -34,15 +35,20 @@ export class BaseFormComponent implements OnInit {
     let value = this.form.value;
     Object.keys(value).forEach(k => {
       let { displayConfigs } = this.form.formControlWrapper;
-      let displayConfig = displayConfigs.find(displayConfig => displayConfig.variable === k);
+      let displayConfig = displayConfigs.find(displayConfig => displayConfig.formControlName === k);
       if (displayConfig) {
         let { inputType } = displayConfig;
         if (inputType === InputType.INPUT_DATETIME || inputType === InputType.INPUT_DATE) value[k] = new Date(value[k])
         else if (inputType === InputType.INPUT_NUMBER) value[k] = Number(value[k]);
         else if (inputType === InputType.INPUT_CHECKBOX) value[k] = Boolean(value[k]);
-        else if (inputType === InputType.SELECT_SINGLE) value[k] = typeof value[k] === "string" ? value[k] : (value[k] as ISelect2SingleId).id;
-        else if (inputType === InputType.SELECT_MULTIPLE) value[k] = Array.isArray(value[k]) ? value[k] : (value[k] as ISelect2MultipleId).ids;
-        else value[k] = String(value[k]);
+        else if (inputType === InputType.SELECT) {
+          let valueAsSelect = value[k] as ISelect2Config;
+          if (valueAsSelect.options.multiple) {
+            value[k] = Array.isArray(value[k]) ? value[k] : (value[k] as ISelect2MultipleId).ids
+          } else {
+            value[k] = typeof value[k] === "string" ? value[k] : (value[k] as ISelect2SingleId).id
+          }
+        } else value[k] = String(value[k]);
       }
     })
     this.fnSubmit(value);
