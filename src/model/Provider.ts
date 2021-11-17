@@ -13,11 +13,3 @@ export function buildProviders(component: any) {
     }
   ];
 }
-
-export function getStyleUrls(defaultStyleUrls: string) {
-  return [
-    './../../../../../assets/core/style/scss/style.scss',
-    './../../../../../assets/vendor/style/css/bootstrap.css',
-    defaultStyleUrls
-  ]
-}

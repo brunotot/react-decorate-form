@@ -1,0 +1,19 @@
+<div [ngClass]="defaultClassWrapper">
+  <div class="col-2 text-nowrap">{{ displayConfig.min }}</div>
+  <div class="col-8">
+    <div class="d-flex justify-content-between">
+      <input
+        class='w-100'
+        [min]="displayConfig.min"
+        [max]="displayConfig.max"
+        (mousemove)="mousemove($event)"
+        (mousedown)="mousedown($event)"
+        (mouseup)="mouseup($event)"
+        [formControlName]="displayConfig.formControlName"
+        type="range"
+      />
+      <span class="text-nowrap color-primary ms-2">{{ value }}</span>
+    </div>
+  </div>
+  <div class="col-2 text-end text-nowrap">{{ displayConfig.max }}</div>
+</div>

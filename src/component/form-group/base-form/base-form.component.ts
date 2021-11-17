@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
-import { ISelect2Config } from '../../../model/FormControlWrapper';
-import { IForm } from '../../../form/base/BaseForm';
+import { IForm, ITimeDisplay } from '../../../form/base/BaseForm';
 import { Form } from '../../../form/Form';
 import { InputType } from '../../../model/InputType';
-import { ISelect2MultipleId, ISelect2SingleId } from '../../../model/Select2';
 import { ValidationStatus } from '../../../model/ValidationStatus';
 
 @Component({
@@ -38,17 +36,27 @@ export class BaseFormComponent implements OnInit {
       let displayConfig = displayConfigs.find(displayConfig => displayConfig.formControlName === k);
       if (displayConfig) {
         let { inputType } = displayConfig;
-        if (inputType === InputType.INPUT_DATETIME || inputType === InputType.INPUT_DATE) value[k] = new Date(value[k])
+        if (inputType === InputType.INPUT_DATETIME || inputType === InputType.INPUT_DATE || inputType === InputType.INPUT_MONTH) value[k] = new Date(value[k])
         else if (inputType === InputType.INPUT_NUMBER) value[k] = Number(value[k]);
         else if (inputType === InputType.INPUT_CHECKBOX) value[k] = Boolean(value[k]);
         else if (inputType === InputType.SELECT) {
-          let valueAsSelect = value[k] as ISelect2Config;
-          if (valueAsSelect.options.multiple) {
-            value[k] = Array.isArray(value[k]) ? value[k] : (value[k] as ISelect2MultipleId).ids
+          let valueAsAny = value[k] as any;
+          if ("ids" in valueAsAny) {
+            value[k] = Array.isArray(value[k]) ? value[k] : valueAsAny.ids
           } else {
-            value[k] = typeof value[k] === "string" ? value[k] : (value[k] as ISelect2SingleId).id
+            value[k] = typeof value[k] === "string" ? value[k] : valueAsAny.id
           }
-        } else value[k] = String(value[k]);
+        } else if (inputType === InputType.INPUT_TIME) {
+          let valueAsString = value[k] ? value[k] : "0:0";
+          let splitValue = valueAsString.split(":");
+          let hh = Number(splitValue[0]);
+          let mm = Number(splitValue[1]);
+          value[k] = {
+            hh,
+            mm
+          } as ITimeDisplay
+        }
+        else value[k] = String(value[k]);
       }
     })
     this.fnSubmit(value);

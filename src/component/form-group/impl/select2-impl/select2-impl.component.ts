@@ -56,7 +56,7 @@ export class Select2Component extends ReactiveInput implements OnInit {
       let validationClass = this.validationStatus === ValidationStatus.VALID ? Style.CLASS_INPUT_VALID : Style.CLASS_INPUT_INVALID;
       $selectionContainer
         .addClass(validationClass)
-        .removeClass(validationClass === Style.CLASS_INPUT_INVALID ? Style.CLASS_INPUT_VALID : Style.CLASS_INPUT_INVALID);
+        .removeClass(this.validationStatus === ValidationStatus.INVALID ? Style.CLASS_INPUT_VALID : Style.CLASS_INPUT_INVALID);
     } else {
       $selectionContainer
         .css('border', Style.STYLE_BORDER_INPUT_DEFAULT)
