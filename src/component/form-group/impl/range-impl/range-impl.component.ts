@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import ReactiveInput from '../../../../model/ReactiveInput';
+
+const SM_BREAKPOINT: number = 767;
 
 @Component({
   selector: 'ngxp-range-impl',
@@ -10,10 +12,24 @@ import ReactiveInput from '../../../../model/ReactiveInput';
   viewProviders: VIEW_PROVIDERS
 })
 export class RangeImplComponent extends ReactiveInput implements OnInit {
+  $ = $;
+  @ViewChild('rangeSelectorDivWrapper') rangeSelectorDivWrapper!: ElementRef;
+  @ViewChild('rangeContainerWrapper') rangeContainerWrapper!: ElementRef;
+  windowWidth: number = /*window.innerWidth*/ 25;
+  
   override defaultClass: string = 'w-100 row range-wrapper';
   firstChange: boolean = false;
   down: boolean = false;
+  calculatedWidth: number = -1;
 
+  calculateStartEndBadgeMaxWidth(sliderWidth: number) {
+    let wrapperWidth = this.getCalculatedWidth(this.rangeContainerWrapper);
+    let freeSpaceWidth = wrapperWidth - sliderWidth;
+    let delta = 25;
+    let calculation = (freeSpaceWidth / 2) - delta;
+    return this.windowWidth > SM_BREAKPOINT ? `${calculation}px` : '100%';
+  }
+  
   mousemove(e: any) {
     if (!this.down) return;
     this.handleChange(e);
@@ -32,6 +48,22 @@ export class RangeImplComponent extends ReactiveInput implements OnInit {
     let value: number = Number(e.target.value);
     this.writeValue(value);
     this.firstChange = false;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize($event: any) {
+    this.windowWidth = $event.target.innerWidth;
+    this.calculatedWidth = this.getCalculatedWidth(this.rangeSelectorDivWrapper);
+  }
+
+  getCalculatedWidth(elemRef: ElementRef): number {
+    let nativeElement = elemRef?.nativeElement;
+    if (!nativeElement) return -1;
+    return this.$(nativeElement).outerWidth(true)!;
+  }
+
+  ngAfterViewChecked() {
+    this.calculatedWidth = this.getCalculatedWidth(this.rangeSelectorDivWrapper);
   }
 
   constructor() {

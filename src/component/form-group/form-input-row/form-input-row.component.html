@@ -5,6 +5,7 @@
       [validationStatus]="validationStatus"
       [displayConfig]="displayConfig"
       [errorMessages]="errorMessages"
+      [form]="form"
       [value]="value">
     </ngxp-generic-input-group>
   </div>
@@ -13,6 +14,7 @@
 <ng-container *ngIf="displayConfig.inputType === InputType.INPUT_HIDDEN">
   <ngxp-generic-input
     [displayConfig]="displayConfig"
+    [form]="form"
     [value]="value">
   </ngxp-generic-input>
 </ng-container>

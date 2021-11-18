@@ -1,9 +1,9 @@
 {
   "name": "ngx-simple-form",
-  "version": "0.0.127",
+  "version": "0.0.128",
   "scripts": {
     "lib:deploy": "npm run lib:build && cd dist/ && npm publish",
-    "lib:build": "ng-packagr -p package.json"
+    "lib:build": "ng-packagr -p package.json && cd ../ngx-painless-form-test/src/app && echo '' >> app.module.ts && clear"
   },
   "peerDependencies": {
     "@angular/common": "^13.0.0",

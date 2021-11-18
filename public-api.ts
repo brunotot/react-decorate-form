@@ -16,6 +16,7 @@ import { CheckboxImplComponent } from './src/component/form-group/impl/checkbox-
 import { TextareaImplComponent } from './src/component/form-group/impl/textarea-impl/textarea-impl.component';
 import { ColorImplComponent } from './src/component/form-group/impl/color-impl/color-impl.component';
 import { RangeImplComponent } from './src/component/form-group/impl/range-impl/range-impl.component';
+import { FileImplComponent } from './src/component/form-group/impl/file-impl/file-impl.component';
 
 export { RangeImplComponent };
 export { ColorImplComponent };
@@ -36,3 +37,4 @@ export { DefaultImplComponent };
 export { HiddenImplComponent };
 export { CheckboxImplComponent };
 export { TextareaImplComponent };
+export { FileImplComponent };

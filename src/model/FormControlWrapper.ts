@@ -72,7 +72,41 @@ export interface IFormInputGeneralConfig {
     | InputType.INPUT_SEARCH
     | InputType.INPUT_TIME
     | InputType.INPUT_WEEK
+    | InputType.INPUT_FILE
     | InputType.INPUT_EMAIL,
+  placeholder: string,
+  label: string,
+  formControlName: string, 
+  validatorConfigs?: IValidatorConfig[]
+}
+
+export interface IFormInputFileConfig {
+  inputType: InputType.INPUT_FILE,
+  multiple?: boolean,
+  placeholder: string,
+  label: string,
+  formControlName: string, 
+  validatorConfigs?: IValidatorConfig[]
+}
+
+export interface IFormInputFileConfigImpl {
+  multiple?: boolean,
+  label: string,
+  formControlName: string, 
+  validatorConfigs?: IValidatorConfig[]
+}
+
+export interface IFormInputTextareaConfig {
+  inputType: InputType.INPUT_TEXTAREA,
+  rows?: number,
+  placeholder: string,
+  label: string,
+  formControlName: string, 
+  validatorConfigs?: IValidatorConfig[]
+}
+
+export interface IFormInputTextareaConfigImpl {
+  rows?: number,
   placeholder: string,
   label: string,
   formControlName: string, 
@@ -81,6 +115,12 @@ export interface IFormInputGeneralConfig {
 
 export interface IFormInputGeneralConfigImpl {
   placeholder: string,
+  label: string,
+  formControlName: string, 
+  validatorConfigs?: IValidatorConfig[]
+}
+
+export interface IFormInputGeneralWithoutPlaceholderConfigImpl {
   label: string,
   formControlName: string, 
   validatorConfigs?: IValidatorConfig[]
@@ -121,6 +161,7 @@ export interface IFormInputSelectConfigImpl {
 }
 
 export interface IDisplayConfig {
+  rows?: number,
   inputType: InputType,
   placeholder: string,
   label: string,
@@ -129,7 +170,8 @@ export interface IDisplayConfig {
   select2Data: Select2OptionData[],
   select2Config?: ISelect2Config,
   min?: number,
-  max?: number
+  max?: number,
+  multiple?: boolean
 }
 
 export interface IWeekConfig {
@@ -151,31 +193,41 @@ export default class FormControlWrapper {
   public withSelect(config: IFormInputSelectConfigImpl) { return this.set(config as any, InputType.SELECT) }
   public withNumber(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_NUMBER) }
   public withText(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_TEXT) }
-  public withTextarea(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_TEXTAREA) }
+  public withTextarea(config: IFormInputTextareaConfigImpl) { return this.set(config as any, InputType.INPUT_TEXTAREA) }
   public withDate(config: IFormInputDateConfigImpl) { return this.set(config as any, InputType.INPUT_DATE) }
   public withDateTime(config: IFormInputDateConfigImpl) { return this.set(config as any, InputType.INPUT_DATETIME) }
-  public withCheckbox(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_CHECKBOX) }
+  public withCheckbox(config: IFormInputGeneralWithoutPlaceholderConfigImpl) { return this.set(config as any, InputType.INPUT_CHECKBOX) }
   public withPassword(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_PASSWORD) }
   public withColor(config: IFormInputColorConfigImpl) { return this.set(config as any, InputType.INPUT_COLOR) }
   public withEmail(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_EMAIL) }
   public withMonth(config: IFormInputDateConfigImpl) { return this.set(config as any, InputType.INPUT_MONTH) }
   public withUrl(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_URL) }
   public withTel(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_TEL) }
-  public withSearch(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_SEARCH) }
+  public withSearch(config: IFormInputGeneralWithoutPlaceholderConfigImpl) { return this.set(config as any, InputType.INPUT_SEARCH) }
   public withRange(config: IFormInputRangeConfigImpl) { return this.set(config as any, InputType.INPUT_RANGE) }
-  public withWeek(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_WEEK) }
-  public withTime(config: IFormInputGeneralConfigImpl) { return this.set(config as any, InputType.INPUT_TIME) }
+  public withWeek(config: IFormInputGeneralWithoutPlaceholderConfigImpl) { return this.set(config as any, InputType.INPUT_WEEK) }
+  public withTime(config: IFormInputGeneralWithoutPlaceholderConfigImpl) { return this.set(config as any, InputType.INPUT_TIME) }
+  public withFile(config: IFormInputFileConfigImpl) { return this.set(config as any, InputType.INPUT_FILE) }
 
   public getFormattedDisplayValue(formControlName: string, inputType: InputType, displayConfig: IDisplayConfig): any {
-    if (inputType === InputType.INPUT_DATETIME) {
-      this.form[formControlName] = (this.form[formControlName] as Date)?.toISOString().slice(0, 16);
-    } else if (inputType === InputType.INPUT_DATE) {
-      return (this.form[formControlName] as Date)?.toISOString().slice(0, 10);
-    } else if (inputType === InputType.INPUT_MONTH) {
-      return (this.form[formControlName] as Date)?.toISOString().slice(0, 7);
+    if (inputType === InputType.INPUT_DATE || inputType === InputType.INPUT_DATETIME || inputType === InputType.INPUT_MONTH) {
+      if (!this.form[formControlName]) return '';
+      let date: Date;
+      if (typeof this.form[formControlName] === "string") {
+        date = new Date(this.form[formControlName] as string);
+        if (!date) throw new Error("Invalid date format: " + this.form[formControlName])
+      } else {
+        date = this.form[formControlName] as Date
+      }
+      if (inputType === InputType.INPUT_DATETIME) {
+        this.form[formControlName] = date.toISOString().slice(0, 16);
+      } else if (inputType === InputType.INPUT_DATE) {
+        this.form[formControlName] = date.toISOString().slice(0, 10);
+      } else if (inputType === InputType.INPUT_MONTH) {
+        this.form[formControlName] = date.toISOString().slice(0, 7);
+      }
     } else if (inputType === InputType.INPUT_COLOR) {
-      this.form[formControlName] = this.form[formControlName] ? this.form[formControlName] : Style.COLOR_PRIMARY;
-      return this.form[formControlName];
+      this.form[formControlName] = this.form[formControlName] ? this.form[formControlName] : Style.COLOR_BLACK;
     } else if (inputType === InputType.INPUT_RANGE) {
       let min = displayConfig.min!;
       let max = displayConfig.max!;
@@ -191,7 +243,11 @@ export default class FormControlWrapper {
       if (typeof value !== "string") {
         let { hh, mm } = value as ITimeDisplay;
         this.form[formControlName] = `${hh}:${mm}`;
+      } else {
+        this.form[formControlName] = `${(value as ITimeDisplay).hh}:${(value as ITimeDisplay).mm}`
       }
+    } else if (inputType === InputType.INPUT_FILE) {
+      this.form[formControlName] = '';
     }
     return this.form[formControlName];
   } 

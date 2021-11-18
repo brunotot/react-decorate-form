@@ -14,6 +14,8 @@ import { HiddenImplComponent } from './component/form-group/impl/hidden-impl/hid
 import { TextareaImplComponent } from './component/form-group/impl/textarea-impl/textarea-impl.component';
 import { ColorImplComponent } from './component/form-group/impl/color-impl/color-impl.component';
 import { RangeImplComponent } from './component/form-group/impl/range-impl/range-impl.component';
+import { TitleDirective } from './directive/TitleDirective';
+import { FileImplComponent } from './component/form-group/impl/file-impl/file-impl.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { RangeImplComponent } from './component/form-group/impl/range-impl/range
     HiddenImplComponent,
     TextareaImplComponent,
     ColorImplComponent,
-    RangeImplComponent
+    RangeImplComponent,
+    TitleDirective,
+    FileImplComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +41,7 @@ import { RangeImplComponent } from './component/form-group/impl/range-impl/range
     NgSelect2Module
   ],
   exports: [
+    FileImplComponent,
     RangeImplComponent,
     ColorImplComponent,
     TextareaImplComponent,

@@ -5,7 +5,8 @@
       [displayConfig]="displayConfig"
       [value]="value"
       [class]="class"
-      [classAppend]="classAppend">
+      [classAppend]="classAppend"
+      [form]="form">
     </ngxp-select2-impl>
   </ng-container>
 
@@ -15,7 +16,8 @@
       [value]="value"
       [classAppend]="classAppend"
       [validationStatus]="validationStatus"
-      [displayConfig]="displayConfig">
+      [displayConfig]="displayConfig"
+      [form]="form">
     </ngxp-textarea-impl>
   </ng-container>
 
@@ -25,20 +27,44 @@
       [value]="value"
       [classAppend]="classAppend"
       [displayConfig]="displayConfig"
-      [validationStatus]="validationStatus">
+      [validationStatus]="validationStatus"
+      [form]="form">
     </ngxp-checkbox-impl>
   </ng-container>
 
   <ng-container *ngSwitchCase="InputType.INPUT_HIDDEN">
-    <ngxp-hidden-impl [displayConfig]="displayConfig" [value]="value"></ngxp-hidden-impl>
+    <ngxp-hidden-impl 
+      [displayConfig]="displayConfig" 
+      [value]="value" 
+      [form]="form">
+    </ngxp-hidden-impl>
   </ng-container>
 
   <ng-container *ngSwitchCase="InputType.INPUT_COLOR">
-    <ngxp-color-impl [displayConfig]="displayConfig" [value]="value"></ngxp-color-impl>
+    <ngxp-color-impl 
+      [displayConfig]="displayConfig" 
+      [value]="value"
+      [form]="form"></ngxp-color-impl>
   </ng-container>
 
   <ng-container *ngSwitchCase="InputType.INPUT_RANGE">
-    <ngxp-range-impl [displayConfig]="displayConfig" [value]="value" [validationStatus]="validationStatus"></ngxp-range-impl>
+    <ngxp-range-impl 
+      [displayConfig]="displayConfig" 
+      [value]="value" 
+      [validationStatus]="validationStatus"
+      [form]="form">
+    </ngxp-range-impl>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="InputType.INPUT_FILE">
+    <ngxp-file-impl
+      [class]="class"
+      [classAppend]="classAppend"
+      [displayConfig]="displayConfig"
+      [validationStatus]="validationStatus"
+      [form]="form"
+      [value]="value">
+    </ngxp-file-impl>
   </ng-container>
 
   <ng-container *ngSwitchDefault>
@@ -47,7 +73,8 @@
       [classAppend]="classAppend"
       [displayConfig]="displayConfig"
       [validationStatus]="validationStatus"
-      [value]="value">
+      [value]="value"
+      [form]="form">
     </ngxp-default-impl>
   </ng-container>
 </ng-container>
