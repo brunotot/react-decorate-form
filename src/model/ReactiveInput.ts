@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
+import { Form } from "../form/Form";
 import { IDisplayConfig } from "./FormControlWrapper";
 import { InputType } from "./InputType";
 import { getValidationClass, handleUniqueClasses, Style } from "./Style";
@@ -12,7 +13,8 @@ export default class ReactiveInput implements ControlValueAccessor {
   @Input() classAppend: string = '';
   @Input() class: string = '';
   @Input() value!: any;
-  
+  @Input() form!: Form;
+
   InputType = InputType;
   ValidationStatus = ValidationStatus;
   Style = Style;
@@ -57,6 +59,9 @@ export default class ReactiveInput implements ControlValueAccessor {
   onTouch: any = () => {}
 
   writeValue(value: any) {
+    let config = {} as any;
+    config[this.displayConfig.formControlName] = value;
+    this.form.patchValue(config);
     this.value = value
     this.onChange(value)
     this.onTouch(value)

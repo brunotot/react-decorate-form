@@ -16,5 +16,6 @@ export enum InputType {
   INPUT_SEARCH = 'search',
   INPUT_RANGE = 'range',
   INPUT_WEEK = 'week',
-  INPUT_TIME = 'time'
+  INPUT_TIME = 'time',
+  INPUT_FILE = 'file'
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
-import { IForm, ITimeDisplay } from '../../../form/base/BaseForm';
+import { IForm, ITimeDisplay, IWeekConfig } from '../../../form/base/BaseForm';
 import { Form } from '../../../form/Form';
 import { InputType } from '../../../model/InputType';
 import { ValidationStatus } from '../../../model/ValidationStatus';
@@ -37,7 +37,7 @@ export class BaseFormComponent implements OnInit {
       if (displayConfig) {
         let { inputType } = displayConfig;
         if (inputType === InputType.INPUT_DATETIME || inputType === InputType.INPUT_DATE || inputType === InputType.INPUT_MONTH) value[k] = new Date(value[k])
-        else if (inputType === InputType.INPUT_NUMBER) value[k] = Number(value[k]);
+        else if (inputType === InputType.INPUT_NUMBER || inputType === InputType.INPUT_RANGE) value[k] = isNaN(value[k]) ? null : Number(value[k]);
         else if (inputType === InputType.INPUT_CHECKBOX) value[k] = Boolean(value[k]);
         else if (inputType === InputType.SELECT) {
           let valueAsAny = value[k] as any;
@@ -55,10 +55,23 @@ export class BaseFormComponent implements OnInit {
             hh,
             mm
           } as ITimeDisplay
+        } else if (inputType === InputType.INPUT_WEEK) {
+          let valueAsString = value[k] ? value[k] : "0000-W0";
+          let splitValue = valueAsString.split("-W");
+          let year = Number(splitValue[0]);
+          let week = Number(splitValue[1]);
+          value[k] = {
+            year,
+            week
+          } as IWeekConfig
+        } else if (inputType === InputType.INPUT_FILE) {
+          console.log(value[k]);
+        } else {
+          value[k] = String(value[k]);
         }
-        else value[k] = String(value[k]);
       }
     })
+    console.log(value);
     this.fnSubmit(value);
   }
 

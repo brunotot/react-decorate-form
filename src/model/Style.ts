@@ -7,7 +7,9 @@ export enum Style {
   CLASS_INPUT_INVALID_GROUP = 'input-validation input-validation-invalid',
   CLASS_INPUT_VALID_GROUP = 'input-validation input-validation-valid',
   STYLE_BORDER_INPUT_DEFAULT = '1px solid #ced4da',
-  COLOR_PRIMARY = '#0d6efd'
+  COLOR_PRIMARY = '#0d6efd',
+  CLASS_TITLE_BOX = 'title-box',
+  COLOR_BLACK = '#000000'
 }
 
 export function getValidationClass(

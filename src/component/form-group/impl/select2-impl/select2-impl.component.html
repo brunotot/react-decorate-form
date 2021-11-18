@@ -6,5 +6,8 @@
   [allowClear]="!!displayConfig.select2Config?.allowClear"
   [width]="displayConfig.select2Config?.width || ''" 
   [data]="displayConfig.select2Data"
+  [dropdownParent]="!!displayConfig.select2Config?.dropdownParent ?  displayConfig.select2Config?.dropdownParent : ''"
+  [disabled]="!!displayConfig.select2Config?.disabled"
+  [value]="!!displayConfig.select2Config?.value ? displayConfig.select2Config.value : ''"
   [options]="displayConfig.select2Config?.options || {}">
 </ng-select2>

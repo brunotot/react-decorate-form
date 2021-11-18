@@ -35,7 +35,7 @@
 }
 
 .select2-container .select2-selection--single {
-  height: 38px !important;
+  min-height: 38px !important;
   display: flex !important;
   align-content: center !important;
   flex-wrap: nowrap !important;

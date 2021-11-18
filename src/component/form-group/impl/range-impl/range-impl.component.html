@@ -1,6 +1,14 @@
-<div [ngClass]="defaultClassWrapper">
-  <div class="col-2 text-nowrap">{{ displayConfig.min }}</div>
-  <div class="col-8">
+<div #rangeContainerWrapper [ngClass]="defaultClassWrapper">
+  <div class="col-md-2 col-sm-12 text-nowrap d-flex align-items-center justify-content-center justify-content-md-start">
+    <span 
+      [attr.title]="displayConfig.min" 
+      class="badge bg-secondary text-ellipsis title-mobile" 
+      style="line-height: 1.3" 
+      [style.max-width]="calculateStartEndBadgeMaxWidth(calculatedWidth)">
+      {{ displayConfig.min }}&nbsp;&gt;
+    </span>
+  </div>
+  <div #rangeSelectorDivWrapper class="col-md-8 col-sm-12">
     <div class="d-flex justify-content-between">
       <input
         class='w-100'
@@ -12,8 +20,18 @@
         [formControlName]="displayConfig.formControlName"
         type="range"
       />
-      <span class="text-nowrap color-primary ms-2">{{ value }}</span>
+      <span class="text-nowrap badge bg-primary ms-2" style="line-height: 1.3">{{ value }}</span>
     </div>
   </div>
-  <div class="col-2 text-end text-nowrap">{{ displayConfig.max }}</div>
+  <div class="col-md-2 col-sm-12 text-md-end text-center text-nowrap d-flex align-items-center justify-content-center justify-content-md-end">
+    <ng-container *ngFor="let badgeWidth of [calculateStartEndBadgeMaxWidth(calculatedWidth)]">
+      <span 
+        [attr.title]="displayConfig.max" 
+        class="badge bg-secondary text-ellipsis title-mobile" 
+        style="line-height: 1.3" 
+        [style.max-width]="badgeWidth">
+        &lt;&nbsp;{{ displayConfig.max }}
+      </span>
+    </ng-container>
+  </div>
 </div>

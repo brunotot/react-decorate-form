@@ -1,5 +1,6 @@
 <textarea 
   [ngClass]="defaultClassWrapper"
   [attr.placeholder]="placeholderValue"
-  [formControlName]="displayConfig.formControlName">
+  [formControlName]="displayConfig.formControlName"
+  [attr.rows]="!!displayConfig.rows ? displayConfig.rows : 4">
 </textarea>

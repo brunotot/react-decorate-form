@@ -3,7 +3,8 @@
     [displayConfig]="displayConfig"
     [validationStatus]="validationStatus"
     [classAppend]="classAppend"
-    [value]="value">
+    [value]="value"
+    [form]="form">
   </ngxp-generic-input>
   <span
     *ngIf="displayConfig.inputType === InputType.INPUT_PASSWORD || isPassword"  
@@ -14,7 +15,10 @@
 </div>
 
 <ng-container *ngIf="validationStatus === ValidationStatus.INVALID">
-  <span class="feedback-invalid" *ngFor="let errorMessage of errorMessages">
-    {{ errorMessage }}
-  </span>
+  <ng-container *ngFor="let errorMessage of errorMessages; let i = index">
+    <span class="feedback-invalid">
+      {{ errorMessage }}
+    </span>
+    <br *ngIf="i < errorMessages.length - 1" />
+  </ng-container>
 </ng-container>

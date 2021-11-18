@@ -1,0 +1,14 @@
+<input *ngIf="!displayConfig.multiple"
+  [ngClass]="defaultClassWrapper"
+  [attr.placeholder]="placeholderValue"
+  (change)="onFileChange($event)"
+  type="file"
+/>
+
+<input *ngIf="!!displayConfig.multiple"
+  [ngClass]="defaultClassWrapper"
+  [attr.placeholder]="placeholderValue"
+  (change)="onFileChange($event)"
+  type="file"
+  multiple
+/>

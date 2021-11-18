@@ -1,27 +1,26 @@
 <form (submit)="onSubmit($event)" [formGroup]="form">
   <div class="card shadow">
-    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <div *ngIf="!!formTitle" class="card-header py-3 d-flex justify-content-between align-items-center">
       <h6 class="header-title color-primary">{{ formTitle }}</h6>
     </div>
-    <div class="card-body">
+    <div class="card-body py-2">
       <ng-container *ngFor="let displayConfig of form.formControlWrapper.displayConfigs">
         <ngxp-form-input-row
           [displayConfig]="displayConfig"
           [validationStatus]="calculateValidationStatus(validationStatus, displayConfig.formControlName)"
           [errorMessages]="getErrorMessages(displayConfig.formControlName)"
-          [value]="form.get(displayConfig.formControlName)?.value">
+          [value]="form.get(displayConfig.formControlName)?.value"
+          [form]="form">
         </ngxp-form-input-row>
       </ng-container>
     </div>
-    <div class="card-footer">
-      <div class="d-flex justify-content-end">
-        <button class="btn btn-secondary me-1 d-flex justify-content-center align-items-center" type="reset">
-          <i class="fa glyphicon fa-backspace"></i>Reset
-        </button>
-        <button class="btn btn-success ms-1 d-flex justify-content-center align-items-center" type="submit">
-          <i class="fa glyphicon fa-circled-checkmark"></i>Submit
-        </button>
-      </div>
+    <div class="footer-btns-container">
+      <button class="btn btn-secondary footer-btn-reset" type="reset">
+        <i class="fa glyphicon fa-backspace"></i>Reset
+      </button>
+      <button class="btn btn-success footer-btn-submit" type="submit">
+        <i class="fa glyphicon fa-circled-checkmark"></i>Submit
+      </button>
     </div>
   </div>
 </form>
