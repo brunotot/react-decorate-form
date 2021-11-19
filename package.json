@@ -1,6 +1,6 @@
 {
   "name": "ngx-painless-form",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "lib:deploy": "npm run lib:build && cd dist/ && npm publish",
     "lib:build": "ng-packagr -p package.json && cd ../ngx-painless-form-test/src/app && echo '' >> app.module.ts && clear"
@@ -14,6 +14,12 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "repository": {
+    "url": "git://github.com/brunotot/ngx-painless-form.git"
+  },
+  "publishConfig": {
+    "brunotot:registry":"https://npm.pkg.github.com"
   },
   "ngPackage": {
     "$schema": "./../node_modules/ng-packagr/ng-package.schema.json",
