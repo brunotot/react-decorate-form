@@ -1,5 +1,6 @@
 <input
   [ngClass]="defaultClassWrapper"
-  [formControlName]="displayConfig.formControlName"
+  (change)="onColorChange($event)"
+  [value]="hexValue"
   type="color"
 />

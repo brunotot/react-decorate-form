@@ -18,6 +18,7 @@ export class Select2Component extends ReactiveInput implements OnInit {
   @ViewChild(NgSelect2Component) select2Component!: NgSelect2Component;
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
 
+  String = String;
   valueSet: boolean = false;
   select2ContainerSelector!: string;
   firstTimeValidation: boolean = false;

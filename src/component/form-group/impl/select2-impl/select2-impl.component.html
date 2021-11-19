@@ -5,9 +5,8 @@
   [formControlName]="displayConfig.formControlName"
   [allowClear]="!!displayConfig.select2Config?.allowClear"
   [width]="displayConfig.select2Config?.width || ''" 
-  [data]="displayConfig.select2Data"
-  [dropdownParent]="!!displayConfig.select2Config?.dropdownParent ?  displayConfig.select2Config?.dropdownParent : ''"
-  [disabled]="!!displayConfig.select2Config?.disabled"
+  [data]="displayConfig.select2Config?.data"
+  [dropdownParent]="!!displayConfig.select2Config?.dropdownParent ? String(displayConfig.select2Config?.dropdownParent) : ''"
   [value]="!!displayConfig.select2Config?.value ? displayConfig.select2Config.value : ''"
-  [options]="displayConfig.select2Config?.options || {}">
+  [options]="displayConfig.select2Config || {}">
 </ng-select2>
