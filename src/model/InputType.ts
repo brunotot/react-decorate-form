@@ -12,7 +12,7 @@ export enum InputType {
   INPUT_EMAIL = 'email',
   INPUT_MONTH = 'month',
   INPUT_URL = 'url',
-  INPUT_TEL = 'tel',
+  INPUT_PHONE = 'tel',
   INPUT_SEARCH = 'search',
   INPUT_RANGE = 'range',
   INPUT_WEEK = 'week',

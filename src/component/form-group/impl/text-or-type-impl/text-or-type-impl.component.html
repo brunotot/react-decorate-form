@@ -1,0 +1,11 @@
+<input 
+  [ngClass]="defaultClassWrapper"
+  [attr.placeholder]="placeholderValue"
+  [value]="formattedDisplayValue ? formattedDisplayValue : null"
+  (focus)="onFocus()"
+  (focusout)="onUnfocus()"
+  (mouseover)="onHover()"
+  (mouseout)="onUnhover()"
+  (input)="onInput($event)"
+  [type]="isHovered || isFocused || formattedDisplayValue ? textOrType : InputType.INPUT_TEXT"
+/>

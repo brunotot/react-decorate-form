@@ -1,15 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { IFile } from '../../../../model/ValidatorBuilder';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import ReactiveInput from '../../../../model/ReactiveInput';
-
-interface IFile {
-  lastModified: number,
-  lastModifiedDate: Date,
-  name: string, 
-  size: number
-  type: string,
-  content: string
-}
 
 @Component({
   selector: 'ngxp-file-impl',
@@ -43,6 +35,8 @@ export class FileImplComponent extends ReactiveInput implements OnInit {
           this.cd.markForCheck();
         };
       }
+    } else {
+      this.writeValue(this.displayConfig.multiple ? [] : null);
     }
   }
 

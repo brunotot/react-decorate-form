@@ -1,5 +1,5 @@
-<ng-container [ngSwitch]="displayConfig.inputType">
-  <ng-container *ngSwitchCase="InputType.SELECT">
+<ng-container [ngSwitch]="true">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.SELECT">
     <ngxp-select2-impl
       [validationStatus]="validationStatus"
       [displayConfig]="displayConfig"
@@ -10,7 +10,7 @@
     </ngxp-select2-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="InputType.INPUT_TEXTAREA">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_TEXTAREA">
     <ngxp-textarea-impl 
       [class]="class"
       [value]="value"
@@ -21,7 +21,7 @@
     </ngxp-textarea-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="InputType.INPUT_CHECKBOX">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_CHECKBOX">
     <ngxp-checkbox-impl
       [class]="class"
       [value]="value"
@@ -32,7 +32,7 @@
     </ngxp-checkbox-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="InputType.INPUT_HIDDEN">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_HIDDEN">
     <ngxp-hidden-impl 
       [displayConfig]="displayConfig" 
       [value]="value" 
@@ -40,14 +40,14 @@
     </ngxp-hidden-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="InputType.INPUT_COLOR">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_COLOR">
     <ngxp-color-impl 
       [displayConfig]="displayConfig" 
       [value]="value"
       [form]="form"></ngxp-color-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="InputType.INPUT_RANGE">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_RANGE">
     <ngxp-range-impl 
       [displayConfig]="displayConfig" 
       [value]="value" 
@@ -56,7 +56,7 @@
     </ngxp-range-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="InputType.INPUT_FILE">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_FILE">
     <ngxp-file-impl
       [class]="class"
       [classAppend]="classAppend"
@@ -65,6 +65,29 @@
       [form]="form"
       [value]="value">
     </ngxp-file-impl>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_PHONE">
+    <ngxp-phone-impl
+      [class]="class"
+      [classAppend]="classAppend"
+      [displayConfig]="displayConfig"
+      [validationStatus]="validationStatus"
+      [value]="value"
+      [form]="form">
+    </ngxp-phone-impl>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_DATETIME || displayConfig.inputType === InputType.INPUT_DATE || displayConfig.inputType === InputType.INPUT_MONTH || displayConfig.inputType === InputType.INPUT_WEEK || displayConfig.inputType === InputType.INPUT_TIME">
+    <ngxp-text-or-type-impl
+      [class]="class"
+      [classAppend]="classAppend"
+      [displayConfig]="displayConfig"
+      [validationStatus]="validationStatus"
+      [textOrTypeConfig]="textOrTypeConfig"
+      [value]="value"
+      [form]="form">
+    </ngxp-text-or-type-impl>
   </ng-container>
 
   <ng-container *ngSwitchDefault>

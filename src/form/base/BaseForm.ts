@@ -1,20 +1,20 @@
 import FormControlWrapper from "../../model/FormControlWrapper";
 import { InputType } from "../../model/InputType";
-import { ISelect2MultipleId, ISelect2SingleId } from "../../model/Select2";
+import { IColor, IPhone, ITime, IWeek } from "../../model/ValidatorBuilder";
 
-
-export interface ITimeDisplay {
-  hh?: number,
-  mm?: number
-}
-
-export interface IWeekConfig {
-  year?: number,
-  week?: number
-}
 
 export interface IForm {
-  [key: string]: Date | number | string | boolean | ISelect2SingleId | ISelect2MultipleId | IWeekConfig | ITimeDisplay
+  [key: string]: 
+      Date 
+    | number 
+    | string 
+    | boolean 
+    | string[]
+    | IWeek 
+    | ITime
+    | IColor
+    | IPhone
+    | null
 }
 
 export interface IBaseForm {

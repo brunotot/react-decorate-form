@@ -18,6 +18,7 @@
   font: inherit;
 }
 
+.select2-container .select2-selection--multiple.input-validation-invalid .select2-selection__clear { margin-right: 46px !important }
 .select2-container .select2-selection.input-validation-valid .select2-selection__arrow,
 .select2-container .select2-selection.input-validation-invalid .select2-selection__arrow { right: 40px }
 

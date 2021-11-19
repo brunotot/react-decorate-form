@@ -15,10 +15,9 @@ export class RangeImplComponent extends ReactiveInput implements OnInit {
   $ = $;
   @ViewChild('rangeSelectorDivWrapper') rangeSelectorDivWrapper!: ElementRef;
   @ViewChild('rangeContainerWrapper') rangeContainerWrapper!: ElementRef;
-  windowWidth: number = /*window.innerWidth*/ 25;
+  windowWidth: number = 0;
   
   override defaultClass: string = 'w-100 row range-wrapper';
-  firstChange: boolean = false;
   down: boolean = false;
   calculatedWidth: number = -1;
 
@@ -45,9 +44,10 @@ export class RangeImplComponent extends ReactiveInput implements OnInit {
   }
 
   handleChange(e: any) {
-    let value: number = Number(e.target.value);
+    let max = this.displayConfig.max!;
+    let min = this.displayConfig.min!;
+    let value: number = Number(e.target.value ? e.target.value : (max+min)/2);
     this.writeValue(value);
-    this.firstChange = false;
   }
 
   @HostListener('window:resize', ['$event'])

@@ -45,6 +45,11 @@ export default class ReactiveInput implements ControlValueAccessor {
         getValidationClass(this.validationStatus, validClass, invalidClass)))
   }
 
+  get currentFormValue() {
+    let formValue: any = this.form.get(this.displayConfig.formControlName);
+    return !!formValue ? formValue.value : null;
+  }
+
   get defaultClassWrapper() {
     return this.calculateClassWrapper(
       this.defaultBaseValidationClass,
