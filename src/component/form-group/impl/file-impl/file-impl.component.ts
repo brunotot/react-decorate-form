@@ -3,6 +3,9 @@ import { IFile } from '../../../../model/ValidatorBuilder';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import ReactiveInput from '../../../../model/ReactiveInput';
 
+const DEFAULT_CLASS = 'form-control width-auto';
+const DEFAULT_CLASS_WITH_COLOR_PLACEHOLDER = 'form-control width-auto color-placeholder';
+
 @Component({
   selector: 'ngxp-file-impl',
   templateUrl: './file-impl.component.html',
@@ -11,7 +14,7 @@ import ReactiveInput from '../../../../model/ReactiveInput';
   viewProviders: VIEW_PROVIDERS
 })
 export class FileImplComponent extends ReactiveInput implements OnInit {
-  override defaultClass: string = 'form-control width-auto';
+  override defaultClass: string = DEFAULT_CLASS_WITH_COLOR_PLACEHOLDER;
 
   onFileChange(event: any) {
     let resultFiles: IFile[] = [];
@@ -35,7 +38,9 @@ export class FileImplComponent extends ReactiveInput implements OnInit {
           this.cd.markForCheck();
         };
       }
+      this.defaultClass = DEFAULT_CLASS;
     } else {
+      this.defaultClass = DEFAULT_CLASS.concat(' color-placeholder');
       this.writeValue(this.displayConfig.multiple ? [] : null);
     }
   }
