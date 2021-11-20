@@ -2,7 +2,7 @@
   <ngxp-generic-input
     [displayConfig]="displayConfig"
     [validationStatus]="validationStatus"
-    [classAppend]="classAppend"
+    [classAppend]="displayConfig.inputType === InputType.INPUT_PASSWORD || isPassword ? 'position-relative' : ''"
     [value]="value"
     [form]="form">
   </ngxp-generic-input>

@@ -39,7 +39,7 @@ $color-dark:      $gray-900;
 .color-dark { color: $color-dark }
 
 $color-input-border: #ced4da;
-$color-placeholder: #6c757d;
+$color-placeholder: #c7c1c1;
 
 .color-input-border { color: $color-input-border }
-.color-placeholder { color: $color-placeholder }
+.color-placeholder { color: $color-placeholder !important }
