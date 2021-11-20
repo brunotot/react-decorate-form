@@ -1,6 +1,10 @@
-<input
-  [ngClass]="defaultClassWrapper"
-  (change)="onColorChange($event)"
-  [value]="hexValue"
-  type="color"
-/>
+
+<div class="d-flex align-items-center">
+  <input
+    [ngClass]="defaultClassWrapper"
+    (input)="onInput($event)"
+    [value]="hexValue"
+    type="color"
+  />&nbsp;
+  <span>{{ hexValue }}</span>
+</div>

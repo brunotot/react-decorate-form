@@ -78,6 +78,50 @@
     </ngxp-phone-impl>
   </ng-container>
 
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_PASSWORD">
+    <ngxp-password-impl
+      [class]="class"
+      [classAppend]="classAppend"
+      [displayConfig]="displayConfig"
+      [validationStatus]="validationStatus"
+      [value]="value"
+      [form]="form">
+    </ngxp-password-impl>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_SEARCH">
+    <ngxp-search-impl
+      [class]="class"
+      [classAppend]="classAppend"
+      [displayConfig]="displayConfig"
+      [validationStatus]="validationStatus"
+      [value]="value"
+      [form]="form">
+    </ngxp-search-impl>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_EMAIL">
+    <ngxp-email-impl
+      [class]="class"
+      [classAppend]="classAppend"
+      [displayConfig]="displayConfig"
+      [validationStatus]="validationStatus"
+      [value]="value"
+      [form]="form">
+    </ngxp-email-impl>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_URL">
+    <ngxp-url-impl
+      [class]="class"
+      [classAppend]="classAppend"
+      [displayConfig]="displayConfig"
+      [validationStatus]="validationStatus"
+      [value]="value"
+      [form]="form">
+    </ngxp-url-impl>
+  </ng-container>
+
   <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_DATETIME || displayConfig.inputType === InputType.INPUT_DATE || displayConfig.inputType === InputType.INPUT_MONTH || displayConfig.inputType === InputType.INPUT_WEEK || displayConfig.inputType === InputType.INPUT_TIME">
     <ngxp-text-or-type-impl
       [class]="class"

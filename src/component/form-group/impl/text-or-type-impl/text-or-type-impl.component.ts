@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ITextOrType } from '../../../../type/TextOrTypeConfig';
 import { InputType } from '../../../../model/InputType';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
@@ -17,29 +17,21 @@ export class TextOrTypeImplComponent extends ReactiveInput implements OnInit {
   textOrType: InputType = InputType.INPUT_TEXT;
   isHovered: boolean = false;
   isFocused: boolean = false
+  @ViewChild('textOrTypeElem', {static: false}) textOrTypeElem!: ElementRef;
 
   constructor() {
     super();
   }
 
   onUnfocus() {
-    if (!this.isHovered) this.textOrType = !!this.value ? this.displayConfig.inputType : InputType.INPUT_TEXT
+    /*if (!this.isHovered) */this.textOrType = !!this.value ? this.displayConfig.inputType : InputType.INPUT_TEXT
     this.isFocused = false;
   }
 
   onFocus() {
     this.textOrType = this.displayConfig.inputType
     this.isFocused = true;
-  }
-
-  onUnhover() {
-    if (!this.isFocused) this.textOrType = !!this.value ? this.displayConfig.inputType : InputType.INPUT_TEXT
-    this.isHovered = false;
-  }
-
-  onHover() {
-    this.textOrType = this.displayConfig.inputType
-    this.isHovered = true;
+    setTimeout(() => this.textOrTypeElem.nativeElement.click())
   }
 
   get formattedDisplayValue() {
@@ -52,6 +44,7 @@ export class TextOrTypeImplComponent extends ReactiveInput implements OnInit {
     this.writeValue(formattedValue);
   }
 
+  val: boolean = false;
   ngOnInit(): void {
     if (!!this.value) this.textOrType = this.displayConfig.inputType;
   }
