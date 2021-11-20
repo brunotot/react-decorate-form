@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgSelect2Component, Select2OptionData } from 'ng-select2';
 import ReactiveInput from '../../../../model/ReactiveInput';
-import { InputType } from '../../../../model/InputType';
 import { ISelect2MultipleId, ISelect2SingleId } from '../../../../model/Select2';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import { Style } from '../../../../model/Style';

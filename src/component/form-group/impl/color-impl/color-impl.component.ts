@@ -15,7 +15,7 @@ export class ColorImplComponent extends ReactiveInput implements OnInit {
   override defaultClass: string = 'checkbox';
   getDefaultColorValue = getDefaultColorValue;
 
-  onColorChange(e: any) {
+  onInput(e: any) {
     let value = e.target.value ? e.target.value : Style.COLOR_BLACK;
     this.writeValue(getInitialColorValue(value));
   }

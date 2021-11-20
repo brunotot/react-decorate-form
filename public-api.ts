@@ -19,6 +19,10 @@ import { RangeImplComponent } from './src/component/form-group/impl/range-impl/r
 import { FileImplComponent } from './src/component/form-group/impl/file-impl/file-impl.component';
 import { PhoneImplComponent } from './src/component/form-group/impl/phone-impl/phone-impl.component';
 import { TextOrTypeImplComponent } from './src/component/form-group/impl/text-or-type-impl/text-or-type-impl.component';
+import { PasswordImplComponent } from './src/component/form-group/impl/password-impl/password-impl.component';
+import { EmailImplComponent } from './src/component/form-group/impl/email-impl/email-impl.component';
+import { SearchImplComponent } from './src/component/form-group/impl/search-impl/search-impl.component';
+import { UrlImplComponent } from './src/component/form-group/impl/url-impl/url-impl.component';
 
 export { RangeImplComponent };
 export { ColorImplComponent };
@@ -42,4 +46,7 @@ export { TextareaImplComponent };
 export { FileImplComponent };
 export { PhoneImplComponent };
 export { TextOrTypeImplComponent };
-
+export { PasswordImplComponent };
+export { SearchImplComponent };
+export { EmailImplComponent };
+export { UrlImplComponent };

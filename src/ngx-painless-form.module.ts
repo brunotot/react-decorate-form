@@ -18,6 +18,10 @@ import { TitleDirective } from './directive/TitleDirective';
 import { FileImplComponent } from './component/form-group/impl/file-impl/file-impl.component';
 import { PhoneImplComponent } from './component/form-group/impl/phone-impl/phone-impl.component';
 import { TextOrTypeImplComponent } from './component/form-group/impl/text-or-type-impl/text-or-type-impl.component';
+import { PasswordImplComponent } from './component/form-group/impl/password-impl/password-impl.component';
+import { SearchImplComponent } from './component/form-group/impl/search-impl/search-impl.component';
+import { EmailImplComponent } from './component/form-group/impl/email-impl/email-impl.component';
+import { UrlImplComponent } from './component/form-group/impl/url-impl/url-impl.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,10 @@ import { TextOrTypeImplComponent } from './component/form-group/impl/text-or-typ
     TitleDirective,
     FileImplComponent,
     TextOrTypeImplComponent,
+    PasswordImplComponent,
+    SearchImplComponent,
+    EmailImplComponent,
+    UrlImplComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +53,7 @@ import { TextOrTypeImplComponent } from './component/form-group/impl/text-or-typ
     NgSelect2Module
   ],
   exports: [
+    UrlImplComponent,
     TextOrTypeImplComponent,
     PhoneImplComponent,
     FileImplComponent,
@@ -58,7 +67,10 @@ import { TextOrTypeImplComponent } from './component/form-group/impl/text-or-typ
     Select2Component,
     DefaultImplComponent,
     CheckboxImplComponent,
-    HiddenImplComponent
+    HiddenImplComponent,
+    PasswordImplComponent,
+    SearchImplComponent,
+    EmailImplComponent
   ]
 })
 export class NgxPainlessFormModule { }

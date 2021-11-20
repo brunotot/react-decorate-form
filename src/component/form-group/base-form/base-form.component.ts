@@ -6,6 +6,7 @@ import { InputType } from '../../../model/InputType';
 import { ValidationStatus } from '../../../model/ValidationStatus';
 import { ValidationErrors } from '@angular/forms';
 import { Style } from '../../../model/Style';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'ngxp-form',

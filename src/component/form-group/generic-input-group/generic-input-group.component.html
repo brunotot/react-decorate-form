@@ -2,16 +2,10 @@
   <ngxp-generic-input
     [displayConfig]="displayConfig"
     [validationStatus]="validationStatus"
-    [classAppend]="displayConfig.inputType === InputType.INPUT_PASSWORD || isPassword ? 'position-relative' : ''"
+    [classAppend]="classAppend"
     [value]="value"
     [form]="form">
   </ngxp-generic-input>
-  <span
-    *ngIf="displayConfig.inputType === InputType.INPUT_PASSWORD || isPassword"  
-    (click)="onPasswordShowClick()" 
-    class="input-group-text user-select-none password">
-    <i [ngClass]="'fa '.concat(passwordShown ? 'fa-slash-eye' : 'fa-eye')"></i>
-  </span>
 </div>
 
 <ng-container *ngIf="validationStatus === ValidationStatus.INVALID">

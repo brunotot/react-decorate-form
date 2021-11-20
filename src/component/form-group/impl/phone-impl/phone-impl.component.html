@@ -1,7 +1,10 @@
-<input 
-  [ngClass]="defaultClassWrapper"
-  [attr.placeholder]="placeholderValue"
-  [value]="!!value ? value.globalNumber : getDefaultPhoneValue().globalNumber"
-  (input)="onPhoneChange($event)"
-  type="tel"
-/>
+<div class="input-icon-wrapper">
+  <input 
+    [ngClass]="defaultClassWrapper"
+    [attr.placeholder]="placeholderValue"
+    [value]="!!value ? value.globalNumber : getDefaultPhoneValue().globalNumber"
+    (input)="onPhoneChange($event)"
+    type="tel"
+  />
+  <span title="Phone" class="fa input-icon fa-phone"></span>
+</div>

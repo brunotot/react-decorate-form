@@ -150,7 +150,7 @@ export default class FormControlWrapper {
       ...select2Config,
       width: select2Config.width ? select2Config.width : defaultSelect2Config.width,
       allowClear: select2Config.allowClear === undefined ? true : defaultSelect2Config.allowClear,
-      tags: select2Config.tags === undefined ? true : defaultSelect2Config.tags
+      tags: select2Config.tags === undefined ? true : defaultSelect2Config.tags,
     };
     return select2Config;
   }
