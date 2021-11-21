@@ -1,13 +1,16 @@
 import { InputType } from "../InputType";
 import InputEntity from "./base/InputEntity";
 
-const FORM_TYPE = 'string'
-const DISPLAY_TYPE = 'string'
-const INPUT_TYPE = InputType.INPUT_TEXT
-
-class TextEntity extends InputEntity<string, string> {
+class TextEntity extends InputEntity<string> {
   constructor() {
-    super(FORM_TYPE, DISPLAY_TYPE, INPUT_TYPE)
+    super([
+      InputType.TEXT,
+      InputType.TEXTAREA,
+      InputType.HIDDEN,
+      InputType.PASSWORD,
+      InputType.SEARCH,
+      InputType.EMAIL
+    ])
   }
 
   override convertToDisplayValue(value: string | null): string {

@@ -1,6 +1,6 @@
 import { ValidatorFn, Validators as FormsValidator } from "@angular/forms";
 import { IValidatorConfig } from "./FormControlWrapper";
-import ValidatorBuilder, { IPhone } from "./ValidatorBuilder";
+import { build, IPhone } from "./ValidatorBuilder";
 
 const URL_PATTERN = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 const PHONE_PATTERN = '^\\+[0-9]{1,3}\\/[0-9]{1,2}\\-.[0-9]{4,10}$';
@@ -59,16 +59,19 @@ function email(validationFailedMessage: string = MSG_DEFAULT_EMAIL_VALIDATION_FA
   return _buildStaticValidator('email', validationFailedMessage, FormsValidator.email)
 }
 
-function url(validationFailedMessage: string = MSG_DEFAULT_URL_VALIDATION_FAILED): IValidatorConfig {
-  return {
-    message: validationFailedMessage,
-    validator: FormsValidator.pattern(URL_PATTERN),
-    validatorName: "pattern"
-  }
+function url(validatorName: string, validationFailedMessage: string = MSG_DEFAULT_URL_VALIDATION_FAILED): IValidatorConfig {
+  return build(validatorName, validationFailedMessage, (value: string) => {
+    try {
+      new URL(value);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  })
 }
 
-function phone(formControlName: string, validationFailedMessage: string = MSG_DEFAULT_PHONE_VALIDATION_FAILED): IValidatorConfig {
-  return ValidatorBuilder.build(formControlName, validationFailedMessage, value => {
+function phone(validatorName: string, validationFailedMessage: string = MSG_DEFAULT_PHONE_VALIDATION_FAILED): IValidatorConfig {
+  return build(validatorName, validationFailedMessage, value => {
     let re = new RegExp(PHONE_PATTERN);
     let phone = value as IPhone;
     let globalNumber = !!phone ? phone.globalNumber : '';

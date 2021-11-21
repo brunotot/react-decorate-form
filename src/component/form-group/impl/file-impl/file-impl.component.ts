@@ -41,7 +41,7 @@ export class FileImplComponent extends ReactiveInput implements OnInit {
       this.defaultClass = DEFAULT_CLASS;
     } else {
       this.defaultClass = DEFAULT_CLASS.concat(' color-placeholder');
-      this.writeValue(this.displayConfig.multiple ? [] : null);
+      this.writeValue(this.displayConfig.inputEntity.getDefaultFormValue(this.displayConfig));
     }
   }
 

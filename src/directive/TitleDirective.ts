@@ -1,9 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 import { Style } from '../model/Style';
 
-@Directive({
-  selector: '.title-mobile'
-})
+@Directive({ selector: '.title-mobile' })
 export class TitleDirective {
   constructor(private el: ElementRef) { 
   }

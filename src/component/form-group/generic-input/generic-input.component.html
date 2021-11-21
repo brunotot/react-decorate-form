@@ -10,7 +10,7 @@
     </ngxp-select2-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_TEXTAREA">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.TEXTAREA">
     <ngxp-textarea-impl 
       [class]="class"
       [value]="value"
@@ -21,7 +21,7 @@
     </ngxp-textarea-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_CHECKBOX">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.CHECKBOX">
     <ngxp-checkbox-impl
       [class]="class"
       [value]="value"
@@ -32,7 +32,7 @@
     </ngxp-checkbox-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_HIDDEN">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.HIDDEN">
     <ngxp-hidden-impl 
       [displayConfig]="displayConfig" 
       [value]="value" 
@@ -40,14 +40,14 @@
     </ngxp-hidden-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_COLOR">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.COLOR">
     <ngxp-color-impl 
       [displayConfig]="displayConfig" 
       [value]="value"
       [form]="form"></ngxp-color-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_RANGE">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.RANGE">
     <ngxp-range-impl 
       [displayConfig]="displayConfig" 
       [value]="value" 
@@ -56,7 +56,7 @@
     </ngxp-range-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_FILE">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.FILE">
     <ngxp-file-impl
       [class]="class"
       [classAppend]="classAppend"
@@ -67,7 +67,7 @@
     </ngxp-file-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_PHONE">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.PHONE">
     <ngxp-phone-impl
       [class]="class"
       [classAppend]="classAppend"
@@ -78,7 +78,7 @@
     </ngxp-phone-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_PASSWORD">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.PASSWORD">
     <ngxp-password-impl
       [class]="class"
       [classAppend]="classAppend"
@@ -89,7 +89,7 @@
     </ngxp-password-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_SEARCH">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.SEARCH">
     <ngxp-search-impl
       [class]="class"
       [classAppend]="classAppend"
@@ -100,7 +100,7 @@
     </ngxp-search-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_EMAIL">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.EMAIL">
     <ngxp-email-impl
       [class]="class"
       [classAppend]="classAppend"
@@ -111,7 +111,7 @@
     </ngxp-email-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_URL">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.URL">
     <ngxp-url-impl
       [class]="class"
       [classAppend]="classAppend"
@@ -122,13 +122,12 @@
     </ngxp-url-impl>
   </ng-container>
 
-  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.INPUT_DATETIME || displayConfig.inputType === InputType.INPUT_DATE || displayConfig.inputType === InputType.INPUT_MONTH || displayConfig.inputType === InputType.INPUT_WEEK || displayConfig.inputType === InputType.INPUT_TIME">
+  <ng-container *ngSwitchCase="displayConfig.inputType === InputType.DATETIME || displayConfig.inputType === InputType.DATE || displayConfig.inputType === InputType.MONTH || displayConfig.inputType === InputType.WEEK || displayConfig.inputType === InputType.TIME">
     <ngxp-text-or-type-impl
       [class]="class"
       [classAppend]="classAppend"
       [displayConfig]="displayConfig"
       [validationStatus]="validationStatus"
-      [textOrTypeConfig]="textOrTypeConfig"
       [value]="value"
       [form]="form">
     </ngxp-text-or-type-impl>
