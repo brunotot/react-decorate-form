@@ -4,6 +4,6 @@
   [value]="formattedDisplayValue ? formattedDisplayValue : null"
   (focus)="onFocus()"
   (focusout)="onUnfocus()"
-  (input)="onInput($event)"
-  [type]="isHovered || isFocused || formattedDisplayValue ? textOrType : InputType.INPUT_TEXT"
+  (input)="onInputChange($event)"
+  [type]="isHovered || isFocused || formattedDisplayValue ? textOrType : InputType.TEXT"
 />

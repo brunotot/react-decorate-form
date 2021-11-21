@@ -1,12 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { getInitialColorValue } from '../../../utility/ColorUtils';
 import { IForm } from '../../../form/base/BaseForm';
 import { Form } from '../../../form/Form';
 import { InputType } from '../../../model/InputType';
 import { ValidationStatus } from '../../../model/ValidationStatus';
 import { ValidationErrors } from '@angular/forms';
-import { Style } from '../../../model/Style';
-import { BehaviorSubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'ngxp-form',
@@ -53,14 +50,12 @@ export class BaseFormComponent implements OnInit {
   }
 
   onResetClick() {
-    this.form.formControlWrapper.displayConfigs.forEach(displayConfig => {
-      let config: any = {};
-      if (displayConfig.inputType === InputType.INPUT_RANGE) {
-        config[displayConfig.formControlName] = Math.round((displayConfig.max! + displayConfig.min!) / 2);
-      } else if (displayConfig.inputType === InputType.INPUT_COLOR) {
-        config[displayConfig.formControlName] = getInitialColorValue(Style.COLOR_BLACK)
-      }
-      this.form.patchValue(config)
-    })
+    let config: {[key: string]: any} = {};
+    this.form
+      .formControlWrapper
+      .displayConfigs
+      .forEach(displayConfig => 
+        config[displayConfig.formControlName] = displayConfig.inputEntity.getDefaultFormValue(displayConfig))
+    this.form.patchValue(config)
   }
 }

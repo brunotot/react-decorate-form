@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { getDefaultPhoneValue, getInitialPhoneValue } from '../../../../utility/PhoneUtils';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import ReactiveInput from '../../../../model/ReactiveInput';
 
@@ -12,13 +11,6 @@ import ReactiveInput from '../../../../model/ReactiveInput';
 })
 export class PhoneImplComponent extends ReactiveInput implements OnInit {
   override defaultClass: string = 'form-control width-auto';
-  getDefaultPhoneValue = getDefaultPhoneValue;
-
-  onPhoneChange($event: any) {
-    let value: string = $event.target.value ? $event.target.value : '';
-    let phone = getInitialPhoneValue(value);
-    this.writeValue(phone);
-  }
 
   constructor() {
     super();

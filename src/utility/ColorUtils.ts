@@ -1,19 +1,4 @@
-import { Style } from "../model/Style";
 import { IColor, IHSL, IRGB } from "../model/ValidatorBuilder";
-
-export function getDefaultColorValue(): IColor {
-  let hex = Style.COLOR_BLACK;
-  return {
-    hex,
-    rgb: hexToRGB(hex),
-    hsl: hexToHSL(hex)
-  }
-}
-
-export function getInitialColorValue(value: string | IColor): IColor {
-  if (!value) return getDefaultColorValue()
-  return typeof value === 'string' ? hexToColor(value) : value as IColor
-}
 
 export function hexToColor(hex: string): IColor {
   return {

@@ -2,7 +2,8 @@
   <input 
     [ngClass]="defaultClassWrapper"
     [attr.placeholder]="placeholderValue"
-    [formControlName]="displayConfig.formControlName"
+    (input)="onInputChange($event)"
+    [value]="value"
     type="url"
   />
   <span title="URL" class="fa input-icon fa-paperclip"></span>

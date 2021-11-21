@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
-import { BehaviorSubject } from "rxjs";
 import { Form } from "../form/Form";
 import { IDisplayConfig } from "./FormControlWrapper";
 import { InputType } from "./InputType";
@@ -28,7 +27,7 @@ export default class ReactiveInput implements ControlValueAccessor {
   defaultInvalidClass: string = Style.CLASS_INPUT_INVALID;
   defaultClass: string = '';
   defaultPlaceholder: string = 'Enter value'
-  defaultType = InputType.INPUT_TEXT;
+  defaultType = InputType.TEXT;
 
   handleUniqueClasses = handleUniqueClasses;
   getValidationClass = getValidationClass;
@@ -46,6 +45,16 @@ export default class ReactiveInput implements ControlValueAccessor {
         getValidationClass(this.validationStatus, validClass, invalidClass)))
   }
 
+  onInputChange($event: any) {
+    let targetValue: string = $event.target.value ? $event.target.value : '';
+    this.value = this.displayConfig.inputEntity.convertToFormValue(targetValue, this.displayConfig);
+    this.writeValue(this.value);
+  }
+
+  getDisplayValue(value: any) {
+    return this.displayConfig.inputEntity.convertToDisplayValue(value);
+  }
+
   get currentFormValue() {
     let formValue: any = this.form.get(this.displayConfig.formControlName);
     return !!formValue ? formValue.value : null;
@@ -61,8 +70,8 @@ export default class ReactiveInput implements ControlValueAccessor {
   
   constructor() { }
 
-  onChange: any = () => {}
   onTouch: any = () => {}
+  onChange: any = () => {}
 
   writeValue(value: any) {
     let config = {} as any;

@@ -1,6 +1,6 @@
 {
   "name": "ngx-painless-form",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "lib:deploy": "npm run lib:build && cd dist/ && npm publish",
     "lib:build": "ng-packagr -p package.json && cd ../ngx-painless-form-test/src/app && echo '' >> app.module.ts && clear"

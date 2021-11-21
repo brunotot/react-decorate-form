@@ -1,4 +1,4 @@
-<div *ngIf="displayConfig.inputType !== InputType.INPUT_HIDDEN" [ngClass]="rowWrapperClass">
+<div *ngIf="displayConfig.inputType !== InputType.HIDDEN" [ngClass]="rowWrapperClass">
   <label [ngClass]="labelClass">{{ displayConfig.label }}</label>
   <div [ngClass]="inputWrapperClass">
     <ngxp-generic-input-group
@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<ng-container *ngIf="displayConfig.inputType === InputType.INPUT_HIDDEN">
+<ng-container *ngIf="displayConfig.inputType === InputType.HIDDEN">
   <ngxp-generic-input
     [displayConfig]="displayConfig"
     [form]="form"

@@ -1,45 +1,21 @@
-import { FormControl, ValidatorFn, Validators as FormValidators } from "@angular/forms";
+import { IFormInputCheckboxConfig, IFormInputColorConfig, IFormInputDateConfig, IFormInputDateTimeConfig, IFormInputEmailConfig, IFormInputFileConfig, IFormInputHiddenConfig, IFormInputMonthConfig, IFormInputNumberConfig, IFormInputPasswordConfig, IFormInputPhoneConfig, IFormInputRangeConfig, IFormInputSearchConfig, IFormInputSelectConfig, IFormInputTextAreaConfig, IFormInputTextConfig, IFormInputTimeConfig, IFormInputURLConfig, IFormInputWeekConfig, ISelect2Config } from "../type/FormInputConfig";
+import { IAnyValidatorConfig, ICheckboxValidatorConfig, IColorValidatorConfig, IDateTimeValidatorConfig, IDateValidatorConfig, IFileValidatorConfig, INumberValidatorConfig, IPasswordValidatorConfig, IPhoneValidatorConfig, IRangeValidatorConfig, ISearchValidatorConfig, ISelectValidatorConfig, ITimeValidatorConfig, IURLValidatorConfig, IWeekValidatorConfig } from "../type/ValidatorConfig";
+import { FormControl, ValidatorFn } from "@angular/forms";
 import { IForm } from "../form/base/BaseForm";
 import { Form } from "../form/Form";
 import { InputType } from "./InputType";
-import { IFormInputCheckboxConfig, IFormInputColorConfig, IFormInputDateConfig, IFormInputDateTimeConfig, IFormInputEmailConfig, IFormInputFileConfig, IFormInputHiddenConfig, IFormInputMonthConfig, IFormInputNumberConfig, IFormInputPasswordConfig, IFormInputPhoneConfig, IFormInputRangeConfig, IFormInputSearchConfig, IFormInputSelectConfig, IFormInputTextAreaConfig, IFormInputTextConfig, IFormInputTimeConfig, IFormInputURLConfig, IFormInputWeekConfig, ISelect2Config } from "../type/FormInputConfig";
-import { IAnyValidatorConfig, ICheckboxValidatorConfig, IColorValidatorConfig, IDateTimeValidatorConfig, IDateValidatorConfig, IFileValidatorConfig, INumberValidatorConfig, IPasswordValidatorConfig, IPhoneValidatorConfig, IRangeValidatorConfig, ISearchValidatorConfig, ISelectValidatorConfig, ITimeValidatorConfig, IURLValidatorConfig, IWeekValidatorConfig } from "../type/ValidatorConfig";
-import ValidatorBuilder, { IPhone } from "./ValidatorBuilder";
-import { getInitialColorValue } from "../utility/ColorUtils";
-import { getInitialPhoneValue } from "../utility/PhoneUtils";
-import { getInitialRangeValue } from "../utility/RangeUtils";
-import { getInitialFileValue } from "../utility/FileUtils";
-import { getInitialDateTimeValue, getInitialDateValue, getInitialMonthValue } from "../utility/DateUtils";
-import { getInitialTimeValue } from "../utility/TimeUtils";
-import { getInitialNumberValue } from "../utility/NumberUtils";
-import { getInitialURLValue } from "../utility/URLUtils";
-import { getInitialWeekValue } from "../utility/WeekUtils";
+import { build } from "./ValidatorBuilder";
 import InputEntity from "./input/base/InputEntity";
-import TextEntity from "./input/TextEntity";
 import Validators from "./Validators";
-
-
-function isText(inputType: InputType) {
-  return inputType === InputType.INPUT_TEXT
-    || inputType === InputType.INPUT_TEXTAREA 
-    || inputType === InputType.INPUT_HIDDEN 
-    || inputType === InputType.INPUT_PASSWORD 
-    || inputType === InputType.INPUT_SEARCH 
-    || inputType === InputType.INPUT_EMAIL;
-}
+import { getInputEntity } from "../utility/InputEntityUtils";
 
 export interface IValidationErrorGroup { [formControlName: string]: IValidatorConfig[] }
 export interface IFormControlWrapper { [formControlName: string]: FormControl }
-
-export interface IValidatorConfig {
-  validator: ValidatorFn, 
-  message: string, 
-  validatorName: string
-}
+export interface IValidatorConfig { validator: ValidatorFn, message: string, validatorName: string }
 
 export interface IDisplayConfig {
   formControlName: string,
-  inputEntity?: InputEntity<any, any>,
+  inputEntity: InputEntity<any>,
   inputType: InputType,
   label: string,
   select2Config?: ISelect2Config,
@@ -77,50 +53,43 @@ export default class FormControlWrapper {
     this.form = form;
   }
 
-  public withHidden   = (formControlName: string)          => this.set({label: '', inputType: InputType.INPUT_HIDDEN, formControlName})
-  public withSelect   = (config: IFormInputSelectConfig)   => this.set({...config, inputType: InputType.SELECT})
-  public withNumber   = (config: IFormInputNumberConfig)   => this.set({...config, inputType: InputType.INPUT_NUMBER})
-  public withText     = (config: IFormInputTextConfig)     => this.set({...config, inputType: InputType.INPUT_TEXT})
-  public withTextArea = (config: IFormInputTextAreaConfig) => this.set({...config, inputType: InputType.INPUT_TEXTAREA})
-  public withDate     = (config: IFormInputDateConfig)     => this.set({...config, inputType: InputType.INPUT_DATE})
-  public withDateTime = (config: IFormInputDateTimeConfig) => this.set({...config, inputType: InputType.INPUT_DATETIME})
-  public withCheckbox = (config: IFormInputCheckboxConfig) => this.set({...config, inputType: InputType.INPUT_CHECKBOX})
-  public withPassword = (config: IFormInputPasswordConfig) => this.set({...config, inputType: InputType.INPUT_PASSWORD})
-  public withColor    = (config: IFormInputColorConfig)    => this.set({...config, inputType: InputType.INPUT_COLOR})
-  public withEmail    = (config: IFormInputEmailConfig)    => this.set({...config, inputType: InputType.INPUT_EMAIL})
-  public withMonth    = (config: IFormInputMonthConfig)    => this.set({...config, inputType: InputType.INPUT_MONTH})
-  public withUrl      = (config: IFormInputURLConfig)      => this.set({...config, inputType: InputType.INPUT_URL})
-  public withPhone    = (config: IFormInputPhoneConfig)    => this.set({...config, inputType: InputType.INPUT_PHONE})
-  public withSearch   = (config: IFormInputSearchConfig)   => this.set({...config, inputType: InputType.INPUT_SEARCH})
-  public withRange    = (config: IFormInputRangeConfig)    => this.set({...config, inputType: InputType.INPUT_RANGE})
-  public withWeek     = (config: IFormInputWeekConfig)     => this.set({...config, inputType: InputType.INPUT_WEEK})
-  public withTime     = (config: IFormInputTimeConfig)     => this.set({...config, inputType: InputType.INPUT_TIME})
-  public withFile     = (config: IFormInputFileConfig)     => this.set({...config, inputType: InputType.INPUT_FILE})
+  public withHidden   = (formControlName: string)          => this.set({inputType: InputType.HIDDEN, formControlName} as any)
+  public withSelect   = (config: IFormInputSelectConfig)   => this.set({...config, inputType: InputType.SELECT} as any)
+  public withNumber   = (config: IFormInputNumberConfig)   => this.set({...config, inputType: InputType.NUMBER} as any)
+  public withText     = (config: IFormInputTextConfig)     => this.set({...config, inputType: InputType.TEXT} as any)
+  public withTextArea = (config: IFormInputTextAreaConfig) => this.set({...config, inputType: InputType.TEXTAREA} as any)
+  public withDate     = (config: IFormInputDateConfig)     => this.set({...config, inputType: InputType.DATE} as any)
+  public withDateTime = (config: IFormInputDateTimeConfig) => this.set({...config, inputType: InputType.DATETIME} as any)
+  public withCheckbox = (config: IFormInputCheckboxConfig) => this.set({...config, inputType: InputType.CHECKBOX} as any)
+  public withPassword = (config: IFormInputPasswordConfig) => this.set({...config, inputType: InputType.PASSWORD} as any)
+  public withColor    = (config: IFormInputColorConfig)    => this.set({...config, inputType: InputType.COLOR} as any)
+  public withEmail    = (config: IFormInputEmailConfig)    => this.set({...config, inputType: InputType.EMAIL} as any)
+  public withMonth    = (config: IFormInputMonthConfig)    => this.set({...config, inputType: InputType.MONTH} as any)
+  public withUrl      = (config: IFormInputURLConfig)      => this.set({...config, inputType: InputType.URL} as any)
+  public withPhone    = (config: IFormInputPhoneConfig)    => this.set({...config, inputType: InputType.PHONE} as any)
+  public withSearch   = (config: IFormInputSearchConfig)   => this.set({...config, inputType: InputType.SEARCH} as any)
+  public withRange    = (config: IFormInputRangeConfig)    => this.set({...config, inputType: InputType.RANGE} as any)
+  public withWeek     = (config: IFormInputWeekConfig)     => this.set({...config, inputType: InputType.WEEK} as any)
+  public withTime     = (config: IFormInputTimeConfig)     => this.set({...config, inputType: InputType.TIME} as any)
+  public withFile     = (config: IFormInputFileConfig)     => this.set({...config, inputType: InputType.FILE} as any)
 
-  public getInitialDisplayValue(inputType: InputType, displayConfig: IDisplayConfig): any {
-    let { formControlName } = displayConfig;
-    let value: any = this.form[formControlName];
-    switch (inputType) {
-      case InputType.INPUT_DATE: return getInitialDateValue(value)
-      case InputType.INPUT_DATETIME: return getInitialDateTimeValue(value)
-      case InputType.INPUT_MONTH: return getInitialMonthValue(value)
-      case InputType.INPUT_PHONE: return getInitialPhoneValue(value)
-      case InputType.INPUT_RANGE: return getInitialRangeValue(displayConfig.min!, displayConfig.max!, value)
-      case InputType.INPUT_TIME: return getInitialTimeValue(value)
-      case InputType.INPUT_COLOR: return getInitialColorValue(value)
-      case InputType.INPUT_FILE: return getInitialFileValue(!!displayConfig.multiple)
-      case InputType.INPUT_NUMBER: return getInitialNumberValue(value)
-      case InputType.INPUT_URL: return getInitialURLValue(value)
-      case InputType.INPUT_CHECKBOX: return !!value
-      case InputType.INPUT_WEEK: return getInitialWeekValue(value)
-      default: return !!value ? value : ''
-    }
+  public getInitialDisplayValue(displayConfig: IDisplayConfig): any {
+    let { formControlName, inputType } = displayConfig;
+    let value = this.form[formControlName];
+    let inputEntity = getInputEntity(inputType);
+    return inputEntity.convertToFormValue(value, displayConfig);
   } 
 
-  public buildValidatorSetupAndGetValidators(inputType: InputType, formControlName: string, validatorConfigs: (IValidatorConfig | IAnyValidatorConfig)[]): ValidatorFn[] {
+  public buildValidatorSetupAndGetValidators(
+    displayConfig: IDisplayConfig, 
+    formControlName: string, 
+    validatorConfigs: (IValidatorConfig | IAnyValidatorConfig)[]
+  ): ValidatorFn[] {
     let i = 0;
     let validators: ValidatorFn[] = [];
     this.errorMessagesWrapper[formControlName] = [];
+    let { inputType } = displayConfig;
+    let inputEntity = getInputEntity(inputType);
     for (let validatorConfig of validatorConfigs) {
       if ("validator" in validatorConfig) {
         let { validator } = validatorConfig;
@@ -129,7 +98,11 @@ export default class FormControlWrapper {
       } else {
         let key = `${formControlName}${i++}`;
         let { message, isValid } = validatorConfig;
-        let validatorBuild = ValidatorBuilder.build(key, message, isText(inputType) ? text => isValid(typeof text === 'string' ? text : '') : isValid);
+        let validatorBuild = build(
+          key, 
+          message, 
+          v => isValid(inputEntity.convertToFormValue(v, displayConfig))
+        );
         validators.push(validatorBuild.validator);
         this.errorMessagesWrapper[formControlName].push(validatorBuild);
       }
@@ -157,20 +130,21 @@ export default class FormControlWrapper {
 
   public set(displayConfig: IDisplayConfig) {
     let { inputType, formControlName } = displayConfig;
+    displayConfig.inputEntity = getInputEntity(inputType);
     
     let validatorConfigs: IValidatorConfig[] = (displayConfig as any)?.validatorConfigs || [];
     if (inputType === InputType.SELECT) {
       displayConfig.select2Config = this.getNormalizedSelect2Config(displayConfig);
-    } else if (inputType === InputType.INPUT_EMAIL && !validatorConfigs.find(cfg => cfg.validator === FormValidators.email)) {
+    } else if (inputType === InputType.EMAIL) {
       validatorConfigs.push(Validators.email())
-    } else if (inputType === InputType.INPUT_URL && !validatorConfigs.find(cfg => cfg.validatorName === "pattern")) {
-      validatorConfigs.push(Validators.url())
-    } else if (inputType === InputType.INPUT_PHONE && !validatorConfigs.find(cfg => cfg.validatorName === "pattern")) {
+    } else if (inputType === InputType.URL) {
+      validatorConfigs.push(Validators.url(formControlName))
+    } else if (inputType === InputType.PHONE) {
       validatorConfigs.push(Validators.phone(formControlName))
     }
 
-    let validators: ValidatorFn[] = this.buildValidatorSetupAndGetValidators(inputType, formControlName, validatorConfigs);
-    this.form[formControlName] = this.getInitialDisplayValue(inputType, displayConfig);
+    let validators: ValidatorFn[] = this.buildValidatorSetupAndGetValidators(displayConfig, formControlName, validatorConfigs);
+    this.form[formControlName] = this.getInitialDisplayValue(displayConfig);
     this.initialControls[formControlName] = new FormControl(this.form[formControlName], validators);
     this.displayConfigs.push(displayConfig);
 

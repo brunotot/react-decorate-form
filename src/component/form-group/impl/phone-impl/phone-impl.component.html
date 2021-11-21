@@ -2,8 +2,8 @@
   <input 
     [ngClass]="defaultClassWrapper"
     [attr.placeholder]="placeholderValue"
-    [value]="!!value ? value.globalNumber : getDefaultPhoneValue().globalNumber"
-    (input)="onPhoneChange($event)"
+    (input)="onInputChange($event)"
+    [value]="getDisplayValue(value)"
     type="tel"
   />
   <span title="Phone" class="fa input-icon fa-phone"></span>

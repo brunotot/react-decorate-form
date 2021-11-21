@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ITextOrType } from '../../../../type/TextOrTypeConfig';
 import { InputType } from '../../../../model/InputType';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import ReactiveInput from '../../../../model/ReactiveInput';
@@ -13,8 +12,7 @@ import ReactiveInput from '../../../../model/ReactiveInput';
 })
 export class TextOrTypeImplComponent extends ReactiveInput implements OnInit {
   override defaultClass: string = 'form-control width-auto';
-  @Input() textOrTypeConfig!: ITextOrType;
-  textOrType: InputType = InputType.INPUT_TEXT;
+  textOrType: InputType = InputType.TEXT;
   isHovered: boolean = false;
   isFocused: boolean = false
   @ViewChild('textOrTypeElem', {static: false}) textOrTypeElem!: ElementRef;
@@ -24,7 +22,7 @@ export class TextOrTypeImplComponent extends ReactiveInput implements OnInit {
   }
 
   onUnfocus() {
-    /*if (!this.isHovered) */this.textOrType = !!this.value ? this.displayConfig.inputType : InputType.INPUT_TEXT
+    /*if (!this.isHovered) */this.textOrType = !!this.value ? this.displayConfig.inputType : InputType.TEXT
     this.isFocused = false;
   }
 
@@ -35,13 +33,7 @@ export class TextOrTypeImplComponent extends ReactiveInput implements OnInit {
   }
 
   get formattedDisplayValue() {
-    return this.textOrTypeConfig.getValueForDisplay(this.value);
-  }
-
-  onInput($event: any) {
-    let value = $event.target.value;
-    let formattedValue = this.textOrTypeConfig.getValueForForm(value);
-    this.writeValue(formattedValue);
+    return this.displayConfig.inputEntity.convertToDisplayValue(this.value);
   }
 
   val: boolean = false;

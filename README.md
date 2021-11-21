@@ -81,54 +81,54 @@ formTitle: string = 'Example title';
 formInstance: Form = FormControlWrapper.builder(exampleFormValue)
   .set({
     key: 'id', 
-    inputType: InputType.INPUT_HIDDEN
+    inputType: InputType.HIDDEN
   })
   .set({
     key: 'datetime', 
     validatorConfigs: [{validator: Validators.required, message: 'Datetime required!', validatorName: 'required'}],
-    inputType: InputType.INPUT_DATETIME,
+    inputType: InputType.DATETIME,
     label: 'Datetime label',
     placeholder: 'Datetime placeholder'
   })
   .set({
     key: 'number', 
     validatorConfigs: [{validator: Validators.required, message: 'Number required!', validatorName: 'required'}],
-    inputType: InputType.INPUT_NUMBER,
+    inputType: InputType.NUMBER,
     label: 'Number label',
     placeholder: 'Number placeholder'
   })
   .set({
     key: 'text', 
     validatorConfigs: [{validator: Validators.required, message: 'Text required!', validatorName: 'required'}],
-    inputType: InputType.INPUT_TEXT,
+    inputType: InputType.TEXT,
     label: 'Text label',
     placeholder: 'Text placeholder'
   })
   .set({
     key: 'textarea', 
     validatorConfigs: [{validator: Validators.required, message: 'Textarea required!', validatorName: 'required'}],
-    inputType: InputType.INPUT_TEXTAREA,
+    inputType: InputType.TEXTAREA,
     label: 'Textarea label',
     placeholder: 'Textarea placeholder'
   })
   .set({
     key: 'password', 
     validatorConfigs: [{validator: Validators.required, message: 'Password required!', validatorName: 'required'}],
-    inputType: InputType.INPUT_PASSWORD,
+    inputType: InputType.PASSWORD,
     label: 'Password label',
     placeholder: 'Password placeholder'
   })
   .set({
     key: 'date', 
     validatorConfigs: [{validator: Validators.required, message: 'Date required!', validatorName: 'required'}],
-    inputType: InputType.INPUT_DATE,
+    inputType: InputType.DATE,
     label: 'Date label',
     placeholder: 'Date placeholder'
   })
   .set({
     key: 'checkbox', 
     validatorConfigs: [{validator: Validators.pattern('true'), message: 'Checkbox required!', validatorName: 'pattern'}],
-    inputType: InputType.INPUT_CHECKBOX,
+    inputType: InputType.CHECKBOX,
     label: 'Checkbox label',
     placeholder: 'Checkbox placeholder'
   })

@@ -2,9 +2,9 @@
 <div class="d-flex align-items-center">
   <input
     [ngClass]="defaultClassWrapper"
-    (input)="onInput($event)"
-    [value]="hexValue"
+    (input)="onInputChange($event)"
+    [value]="getDisplayValue(value)"
     type="color"
   />&nbsp;
-  <span>{{ hexValue }}</span>
+  <span>{{ getDisplayValue(value) }}</span>
 </div>
