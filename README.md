@@ -34,6 +34,19 @@ npm install ngx-simple-form
 }
 ```
 
+4. Add module to local `module.ts`
+```ts
+// ...
+import { NgxPainlessFormModule } from 'ngx-painless-form';
+@NgModule({
+  // ...
+  imports: [
+    NgxPainlessFormModule
+  ],
+})
+export class AppModule { }
+```
+
 ## Usage
 
 ### Component call in template file
