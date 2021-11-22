@@ -9,7 +9,6 @@ import { FormInputRowComponent } from './src/component/form-group/form-input-row
 import { GenericInputComponent } from './src/component/form-group/generic-input/generic-input.component';
 import { GenericInputGroupComponent } from './src/component/form-group/generic-input-group/generic-input-group.component';
 import { IForm } from './src/form/base/BaseForm';
-import { ISelect2MultipleId, ISelect2SingleId} from './src/model/Select2';
 import { DefaultImplComponent } from './src/component/form-group/impl/default-impl/default-impl.component';
 import { HiddenImplComponent } from './src/component/form-group/impl/hidden-impl/hidden-impl.component';
 import { CheckboxImplComponent } from './src/component/form-group/impl/checkbox-impl/checkbox-impl.component';
@@ -38,8 +37,6 @@ export { GenericInputComponent };
 export { GenericInputGroupComponent };
 export { FormInputRowComponent };
 export { IForm };
-export { ISelect2MultipleId };
-export { ISelect2SingleId };
 export { DefaultImplComponent };
 export { HiddenImplComponent };
 export { CheckboxImplComponent };

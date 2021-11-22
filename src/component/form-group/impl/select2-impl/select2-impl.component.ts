@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { NgSelect2Component, Select2OptionData } from 'ng-select2';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { NgSelect2Component } from 'ng-select2';
 import ReactiveInput from '../../../../model/ReactiveInput';
-import { ISelect2MultipleId, ISelect2SingleId } from '../../../../model/Select2';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import { Style } from '../../../../model/Style';
 import { ValidationStatus } from '../../../../model/ValidationStatus';
@@ -18,24 +17,11 @@ export class Select2Component extends ReactiveInput implements OnInit {
   @Output() valueChanged: EventEmitter<any> = new EventEmitter();
 
   String = String;
-  valueSet: boolean = false;
   select2ContainerSelector!: string;
   firstTimeValidation: boolean = false;
 
   constructor() {
     super();
-  }
-
-  private mapValue: () => void = () => {
-    this.valueSet = true;
-    let valueAsAny = this.value as any;
-    if (this.value === null || this.value === undefined || this.value === '' || typeof this.value === "string" || Array.isArray(this.value)) {
-      return;
-    } else if ('id' in valueAsAny) {
-      this.value = (valueAsAny as ISelect2SingleId).id;
-    } else {
-      this.value = (valueAsAny as ISelect2MultipleId).ids;
-    }
   }
 
   ngOnInit(): void {
@@ -61,7 +47,6 @@ export class Select2Component extends ReactiveInput implements OnInit {
       $selectionContainer
         .css('border', Style.STYLE_BORDER_INPUT_DEFAULT)
     }
-    this.mapValue();
   }
 
   ngAfterViewChecked() {
@@ -69,7 +54,6 @@ export class Select2Component extends ReactiveInput implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.mapValue();    
     this.select2Component?.writeValue(this.value);
   }
 
