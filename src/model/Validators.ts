@@ -2,7 +2,7 @@ import { ValidatorFn, Validators as FormsValidator } from "@angular/forms";
 import { IValidatorConfig } from "./FormControlWrapper";
 import { build, IPhone } from "./ValidatorBuilder";
 
-const URL_PATTERN = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+//const URL_PATTERN = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 const PHONE_PATTERN = '^\\+[0-9]{1,3}\\/[0-9]{1,2}\\-.[0-9]{4,10}$';
 const MSG_DEFAULT_URL_VALIDATION_FAILED = 'Input must be in format of a URL (ex: http://www.example.com/index.html)'
 const MSG_DEFAULT_PHONE_VALIDATION_FAILED = 'Input must be in format of a telephone number (ex: +123/45-67890)'

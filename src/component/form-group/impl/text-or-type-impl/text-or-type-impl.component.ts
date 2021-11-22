@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { InputType } from '../../../../model/InputType';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import ReactiveInput from '../../../../model/ReactiveInput';
@@ -12,17 +12,18 @@ import ReactiveInput from '../../../../model/ReactiveInput';
 })
 export class TextOrTypeImplComponent extends ReactiveInput implements OnInit {
   override defaultClass: string = 'form-control width-auto';
+  
+  @ViewChild('textOrTypeElem', {static: false}) textOrTypeElem!: ElementRef;
   textOrType: InputType = InputType.TEXT;
   isHovered: boolean = false;
   isFocused: boolean = false
-  @ViewChild('textOrTypeElem', {static: false}) textOrTypeElem!: ElementRef;
 
   constructor() {
     super();
   }
 
   onUnfocus() {
-    /*if (!this.isHovered) */this.textOrType = !!this.value ? this.displayConfig.inputType : InputType.TEXT
+    this.textOrType = !!this.value ? this.displayConfig.inputType : InputType.TEXT
     this.isFocused = false;
   }
 
@@ -36,7 +37,6 @@ export class TextOrTypeImplComponent extends ReactiveInput implements OnInit {
     return this.displayConfig.inputEntity.convertToDisplayValue(this.value);
   }
 
-  val: boolean = false;
   ngOnInit(): void {
     if (!!this.value) this.textOrType = this.displayConfig.inputType;
   }

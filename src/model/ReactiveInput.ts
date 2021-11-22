@@ -1,8 +1,9 @@
 import { Component, Input } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import { Form } from "../form/Form";
+import { IRegexNormalized, isText } from "../utility/InputEntityUtils";
 import { IDisplayConfig } from "./FormControlWrapper";
-import { InputType } from "./InputType";
+import { InputType, PatternInputType } from "./InputType";
 import { getValidationClass, handleUniqueClasses, Style } from "./Style";
 import { ValidationStatus } from "./ValidationStatus";
 
@@ -31,6 +32,30 @@ export default class ReactiveInput implements ControlValueAccessor {
 
   handleUniqueClasses = handleUniqueClasses;
   getValidationClass = getValidationClass;
+
+  get isInputTypeSupportedByBrowser() {
+    let { inputType } = this.displayConfig;
+    if (inputType === InputType.SELECT || isText(inputType) || inputType === InputType.CHECKBOX) return true;
+    var input = document.createElement('input');
+    input.setAttribute('type', inputType);
+    var notTypeString = 'test-string';
+    input.setAttribute('value', notTypeString);
+    return input.value !== notTypeString;
+  }
+
+  get regexInputs(): IRegexNormalized[] {
+    return this.displayConfig.inputEntity.getRegexInputs().map(regex => {
+      return {
+        exampleValue: regex.exampleValue,
+        inputType: regex.inputType ? regex.inputType : PatternInputType.TEXT,
+        label: regex.label,
+        pattern: regex.pattern ? regex.pattern : '.*',
+        placeholder: regex.placeholder ? regex.placeholder : '',
+        validationFailedMessage: regex.validationFailedMessage,
+        key: regex.key
+      } as IRegexNormalized
+    });
+  }
 
   calculateClassWrapper(
     baseValidationClass: string = '',

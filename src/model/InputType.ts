@@ -19,3 +19,10 @@ export enum InputType {
   WEEK = 'week',
   FILE = 'file'
 }
+
+export enum PatternInputType {
+  TEXT = 'text',
+  PASSWORD = 'password',
+  COLOR = 'color',
+  NUMBER = 'number',
+}

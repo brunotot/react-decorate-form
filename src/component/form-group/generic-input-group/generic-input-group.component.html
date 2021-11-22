@@ -11,7 +11,7 @@
 <ng-container *ngIf="validationStatus === ValidationStatus.INVALID">
   <ng-container *ngFor="let errorMessage of errorMessages; let i = index">
     <span class="feedback-invalid">
-      {{ errorMessage }}
+      <span class="fa fa-error"></span>&nbsp;{{ errorMessage }}
     </span>
     <br *ngIf="i < errorMessages.length - 1" />
   </ng-container>

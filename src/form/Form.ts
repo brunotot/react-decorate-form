@@ -1,5 +1,5 @@
 import { FormGroup, ValidatorFn } from "@angular/forms";
-import FormControlWrapper from "../model/FormControlWrapper";
+import FormControlWrapper, { IDisplayConfig } from "../model/FormControlWrapper";
 import { IBaseForm } from "./base/BaseForm";
 
 export class Form extends FormGroup implements IBaseForm {
@@ -10,11 +10,13 @@ export class Form extends FormGroup implements IBaseForm {
     this.formControlWrapper = formControlWrapper;
   }
 
-  getValidationFailedMessage(varName: string, errorKey: string): string {
+  getValidationFailedMessage(varName: string, errorKey: string, displayConfig: IDisplayConfig): string {
     let { errorMessagesWrapper } = this.formControlWrapper;
     let errorValidators = errorMessagesWrapper[varName];
     let t: ValidatorFn = errorValidators[0].validator
     let errorValidator = errorValidators.find(eV => eV.validatorName === errorKey);
-    return errorValidator ? errorValidator.message : `??${varName}.${errorKey}_MSG_MISSING??`;
+    return errorValidator 
+      ? errorValidator.message 
+      : (displayConfig.inputEntity.getRegexInputs().find(regexInput => regexInput.key === errorKey)?.validationFailedMessage || `??${varName}.${errorKey}_MSG_MISSING??`)
   }
 }

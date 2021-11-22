@@ -8,7 +8,7 @@
         <ngxp-form-input-row
           [displayConfig]="displayConfig"
           [validationStatus]="calculateValidationStatus(validationStatus, displayConfig.formControlName)"
-          [errorMessages]="getErrorMessages(displayConfig.formControlName)"
+          [errorMessages]="getErrorMessages(displayConfig)"
           [value]="form.get(displayConfig.formControlName)?.value"
           [form]="form">
         </ngxp-form-input-row>
