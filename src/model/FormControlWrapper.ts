@@ -101,7 +101,10 @@ export default class FormControlWrapper {
         let validatorBuild = build(
           key, 
           message, 
-          v => isValid(inputEntity.convertToFormValue(v, displayConfig))
+          v => {
+            let formattedValue = inputEntity.convertToFormValue(v, displayConfig);
+            return formattedValue === null ? false : isValid(formattedValue);
+          }
         );
         validators.push(validatorBuild.validator);
         this.errorMessagesWrapper[formControlName].push(validatorBuild);
