@@ -4,6 +4,7 @@ import { Form } from '../../../form/Form';
 import { InputType } from '../../../model/InputType';
 import { ValidationStatus } from '../../../model/ValidationStatus';
 import { ValidationErrors } from '@angular/forms';
+import { IDisplayConfig } from '../../../model/FormControlWrapper';
 
 @Component({
   selector: 'ngxp-form',
@@ -41,12 +42,13 @@ export class BaseFormComponent implements OnInit {
     return hasErrors ? ValidationStatus.INVALID : ValidationStatus.VALID;
   }
 
-  getErrorMessages(varName: string): string[] {
+  getErrorMessages(displayConfig: IDisplayConfig): string[] {
+    let varName = displayConfig.formControlName;
     if (this.validationStatus === ValidationStatus.IDLE) return [];
     let validationErrors: ValidationErrors | null = this.form.get(varName)?.errors || null;
     if (!validationErrors) return [];
     let keys = Object.keys(validationErrors);
-    return keys.map(key => this.form.getValidationFailedMessage(varName, key));
+    return keys.map(key => this.form.getValidationFailedMessage(varName, key, displayConfig));
   }
 
   onResetClick() {

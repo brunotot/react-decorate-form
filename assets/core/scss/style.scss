@@ -8,6 +8,11 @@ $box-shadow-danger-focus: 0 0 0 0.25rem rgb(220 53 69 / 25%);
 $box-shadow-success: 0px 0px 0px 1px $color-success;
 $box-shadow-danger: 0px 0px 0px 1px $color-danger;
 
+.box {
+  min-width:30%;
+  flex:1 1 auto;
+}
+
 .header-title {
   font-weight: bold;
   font-size: 1.4rem;

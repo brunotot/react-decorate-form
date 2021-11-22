@@ -1,0 +1,33 @@
+<div class="d-flex flex-wrap w-100" style="gap: 0.5rem">
+  <ng-container *ngIf="regexInputs.length > 0">
+    <ng-container *ngFor="let regexInput of regexInputs; let i = index; trackBy: trackByRegexInput">
+      <div class="box">
+        <div class="w-100 d-flex">
+          <span 
+            [attr.title]="regexInput.label.concat(' (e.g. ', regexInput.exampleValue, ')')" 
+            style="padding-top: 1.05em" 
+            class="badge bg-primary text-ellipsis title-mobile">
+            {{ regexInput.label }}
+          </span>
+          <input  
+            [ngModelOptions]="{standalone: true}"
+            [style.width]="'auto'"
+            [ngClass]="getGroupVariableClass(validationStatus, i).concat(validationStatus === ValidationStatus.IDLE ? '' : ' input-validation ', ' form-control ms-1')"
+            [(ngModel)]="displayConfig.inputEntity.variableGroupValidators[i].value"
+            (input)="onVariableGroupInput(displayConfig.inputEntity.variableGroupValidators[i])"
+            [type]="regexInput.inputType" 
+            [style.flex]="'1'"
+            [attr.placeholder]="regexInput.placeholder"
+            [attr.title]="regexInput.label.concat(regexInput.pattern === '.*' ? '' : ('e.g. ' + regexInput.exampleValue + ')'))"
+          />
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="regexInputs.length === 0">
+    <span class="color-warning">
+      <span class="fa fa-warning"></span>&nbsp;
+      Browser doesn't support "{{ displayConfig.inputType }}" input type. Please update your browser or contact administrators to implement the support for this input type.
+    </span>
+  </ng-container>
+</div>

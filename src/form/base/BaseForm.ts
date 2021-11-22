@@ -1,4 +1,4 @@
-import FormControlWrapper from "../../model/FormControlWrapper";
+import FormControlWrapper, { IDisplayConfig } from "../../model/FormControlWrapper";
 import { IColor, IPhone, ITime, IWeek } from "../../model/ValidatorBuilder";
 
 export interface IForm {
@@ -17,5 +17,5 @@ export interface IForm {
 
 export interface IBaseForm {
   formControlWrapper: FormControlWrapper;
-  getValidationFailedMessage(varName: string, errorKey: string): string;
+  getValidationFailedMessage(varName: string, errorKey: string, displayConfig: IDisplayConfig): string;
 }

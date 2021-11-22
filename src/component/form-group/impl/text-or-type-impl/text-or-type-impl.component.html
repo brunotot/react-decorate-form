@@ -1,4 +1,5 @@
 <input #textOrTypeElem
+  *ngIf="isInputTypeSupportedByBrowser"
   [ngClass]="defaultClassWrapper"
   [attr.placeholder]="placeholderValue"
   [value]="formattedDisplayValue ? formattedDisplayValue : null"

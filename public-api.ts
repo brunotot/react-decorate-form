@@ -23,6 +23,7 @@ import { PasswordImplComponent } from './src/component/form-group/impl/password-
 import { EmailImplComponent } from './src/component/form-group/impl/email-impl/email-impl.component';
 import { SearchImplComponent } from './src/component/form-group/impl/search-impl/search-impl.component';
 import { UrlImplComponent } from './src/component/form-group/impl/url-impl/url-impl.component';
+import { NoBrowserSupportComponent } from './src/component/form-group/no-browser-support/no-browser-support.component';
 
 export { RangeImplComponent };
 export { ColorImplComponent };
@@ -50,3 +51,4 @@ export { PasswordImplComponent };
 export { SearchImplComponent };
 export { EmailImplComponent };
 export { UrlImplComponent };
+export { NoBrowserSupportComponent };

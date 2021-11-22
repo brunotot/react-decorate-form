@@ -1,12 +1,41 @@
 import { Style } from "../../../src/model/Style";
-import { hexToColor } from "../../utility/ColorUtils";
-import { InputType } from "../InputType";
-import { IColor } from "../ValidatorBuilder";
+import { hexToColor, RGBToHex, RGBToHSL } from "../../utility/ColorUtils";
+import { IRegex } from "../../utility/InputEntityUtils";
+import { InputType, PatternInputType } from "../InputType";
+import { IColor, IRGB } from "../ValidatorBuilder";
 import InputEntity from "./base/InputEntity";
+
+const regex1to255 = '^(([0-9]{1,2}$)|(1[0-9]{2}$)|(2[0-4]{1}[0-9]{1}$)|(25[0-5]{1}$))$'
 
 class ColorEntity extends InputEntity<IColor> {
   constructor() {
-    super(InputType.COLOR)
+    super(InputType.COLOR);
+    this.variableGroupValidators = this.getVariableGroupValidators(this.getRegexInputs());
+  }
+
+  override formatInputsToUsedEntity(): IColor | null {
+    let redInputValue = this.variableGroupValidators[0].value;
+    let greenInputValue = this.variableGroupValidators[1].value;
+    let blueInputValue = this.variableGroupValidators[2].value;
+    if (isNaN(redInputValue as any) || isNaN(greenInputValue as any) || isNaN(blueInputValue as any)) return null;
+    let rgb: IRGB = {
+      red: Number(redInputValue),
+      green: Number(greenInputValue),
+      blue: Number(blueInputValue)
+    }
+    return {
+      hex: RGBToHex(rgb),
+      rgb: rgb,
+      hsl: RGBToHSL(rgb)
+    }
+  }
+
+  override getRegexInputs(): IRegex[] {
+    return [
+      {label: 'Red', placeholder: '###', pattern: regex1to255, inputType: PatternInputType.NUMBER, validationFailedMessage: 'Wrong red input', exampleValue: '40', key: 'red'},
+      {label: 'Green', placeholder: '###', pattern: regex1to255, inputType: PatternInputType.NUMBER, validationFailedMessage: 'Wrong green input', exampleValue: '40', key: 'green'},
+      {label: 'Blue', placeholder: '###', pattern: regex1to255, inputType: PatternInputType.NUMBER, validationFailedMessage: 'Wrong blue input', exampleValue: '40', key: 'blue'}
+    ]
   }
 
   override getDefaultDisplayValue(): string {

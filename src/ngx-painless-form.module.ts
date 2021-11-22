@@ -22,6 +22,7 @@ import { PasswordImplComponent } from './component/form-group/impl/password-impl
 import { SearchImplComponent } from './component/form-group/impl/search-impl/search-impl.component';
 import { EmailImplComponent } from './component/form-group/impl/email-impl/email-impl.component';
 import { UrlImplComponent } from './component/form-group/impl/url-impl/url-impl.component';
+import { NoBrowserSupportComponent } from './component/form-group/no-browser-support/no-browser-support.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { UrlImplComponent } from './component/form-group/impl/url-impl/url-impl.
     PasswordImplComponent,
     SearchImplComponent,
     EmailImplComponent,
-    UrlImplComponent
+    UrlImplComponent,
+    NoBrowserSupportComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +55,7 @@ import { UrlImplComponent } from './component/form-group/impl/url-impl/url-impl.
     NgSelect2Module
   ],
   exports: [
+    NoBrowserSupportComponent,
     UrlImplComponent,
     TextOrTypeImplComponent,
     PhoneImplComponent,

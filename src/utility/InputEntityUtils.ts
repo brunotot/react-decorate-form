@@ -13,7 +13,33 @@ import TextEntity from "../model/input/TextEntity";
 import TimeEntity from "../model/input/TimeEntity";
 import URLEntity from "../model/input/URLEntity";
 import WeekEntity from "../model/input/WeekEntity";
-import { InputType } from "../model/InputType";
+import { InputType, PatternInputType } from "../model/InputType";
+
+export interface IVariableGroupValidator {
+  value: string,
+  index: number,
+  isValid: boolean
+}
+
+export interface IRegex {
+  inputType?: PatternInputType,
+  label: string,
+  placeholder?: string,
+  pattern?: string,
+  validationFailedMessage: string,
+  exampleValue: string,
+  key: string
+}
+
+export interface IRegexNormalized {
+  inputType: PatternInputType,
+  label: string,
+  placeholder: string,
+  pattern: string,
+  validationFailedMessage: string,
+  exampleValue: string,
+  key: string
+}
 
 const INPUT_ENTITITES: InputEntity<any>[] = [
   TextEntity,
@@ -38,7 +64,9 @@ const TEXT_INPUT_TYPES = [
   InputType.HIDDEN,
   InputType.PASSWORD,
   InputType.SEARCH,
-  InputType.EMAIL
+  InputType.EMAIL,
+  InputType.PHONE,
+  InputType.URL
 ]
 
 export function getInputEntity(inputType: InputType): InputEntity<any> {
