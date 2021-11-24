@@ -1,5 +1,5 @@
 import { IValidatorConfig } from "../model/FormControlWrapper";
-import { ICheckboxValidatorConfig, IColorValidatorConfig, IDateTimeValidatorConfig, IDateValidatorConfig, IEmailValidatorConfig, IFileValidatorConfig, IMonthValidatorConfig, INumberValidatorConfig, IPasswordValidatorConfig, IPhoneValidatorConfig, IRangeValidatorConfig, ISearchValidatorConfig, ISelectValidatorConfig, ITextAreaValidatorConfig, ITextValidatorConfig, ITimeValidatorConfig, IURLValidatorConfig, IWeekValidatorConfig } from "./ValidatorConfig";
+import { ICheckboxValidatorConfig, IColorValidatorConfig, IDateTimeValidatorConfig, IDateValidatorConfig, IEmailValidatorConfig, IFileMultipleValidatorConfig, IFileSingleValidatorConfig, IMonthValidatorConfig, INumberValidatorConfig, IPasswordValidatorConfig, IPhoneValidatorConfig, IRangeValidatorConfig, ISearchValidatorConfig, ISelectMultipleValidatorConfig, ISelectSingleValidatorConfig, ITextAreaValidatorConfig, ITextValidatorConfig, ITimeValidatorConfig, IURLValidatorConfig, IWeekValidatorConfig } from "./ValidatorConfig";
 
 export interface IFormInputHiddenConfig {
   formControlName: string,
@@ -23,12 +23,20 @@ export interface ISelect2Config {
   multiple?: boolean
 }
 
-export interface IFormInputSelectConfig {
+export interface IFormInputSelectSingleConfig {
   formControlName: string,
   placeholder?: string,
+  data: Select2OptionData[],
   label: string,
-  select2Config?: ISelect2Config,
-  validatorConfigs?: (ISelectValidatorConfig | IValidatorConfig)[]
+  validatorConfigs?: (ISelectSingleValidatorConfig | IValidatorConfig)[]
+}
+
+export interface IFormInputSelectMultipleConfig {
+  formControlName: string,
+  placeholder?: string,
+  data: Select2OptionData[],
+  label: string,
+  validatorConfigs?: (ISelectMultipleValidatorConfig | IValidatorConfig)[]
 }
 
 export interface IFormInputDateConfig {
@@ -121,12 +129,20 @@ export interface IFormInputWeekConfig {
   validatorConfigs?: (IWeekValidatorConfig | IValidatorConfig)[]
 }
 
-export interface IFormInputFileConfig {
+export interface IFormInputFileSingleConfig {
   placeholder?: string,
   label: string,
   formControlName: string, 
   multiple?: boolean,
-  validatorConfigs?: (IFileValidatorConfig | IValidatorConfig)[]
+  validatorConfigs?: (IFileSingleValidatorConfig | IValidatorConfig)[]
+}
+
+export interface IFormInputFileMultipleConfig {
+  placeholder?: string,
+  label: string,
+  formControlName: string, 
+  multiple?: boolean,
+  validatorConfigs?: (IFileMultipleValidatorConfig | IValidatorConfig)[]
 }
 
 export interface IFormInputEmailConfig {

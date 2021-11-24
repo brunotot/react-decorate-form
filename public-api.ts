@@ -23,6 +23,7 @@ import { EmailImplComponent } from './src/component/form-group/impl/email-impl/e
 import { SearchImplComponent } from './src/component/form-group/impl/search-impl/search-impl.component';
 import { UrlImplComponent } from './src/component/form-group/impl/url-impl/url-impl.component';
 import { NoBrowserSupportComponent } from './src/component/form-group/no-browser-support/no-browser-support.component';
+import Validators from './src/model/Validators';
 
 export { RangeImplComponent };
 export { ColorImplComponent };
@@ -49,3 +50,4 @@ export { SearchImplComponent };
 export { EmailImplComponent };
 export { UrlImplComponent };
 export { NoBrowserSupportComponent };
+export { Validators };

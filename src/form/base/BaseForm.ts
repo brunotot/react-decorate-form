@@ -15,6 +15,19 @@ export interface IForm {
     | null
 }
 
+export interface IFormNonNull {
+  [key: string]: 
+      Date 
+    | number 
+    | string 
+    | boolean 
+    | string[]
+    | IWeek 
+    | ITime
+    | IColor
+    | IPhone
+}
+
 export interface IBaseForm {
   formControlWrapper: FormControlWrapper;
   getValidationFailedMessage(varName: string, errorKey: string, displayConfig: IDisplayConfig): string;

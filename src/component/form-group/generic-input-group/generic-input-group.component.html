@@ -9,10 +9,9 @@
 </div>
 
 <ng-container *ngIf="validationStatus === ValidationStatus.INVALID">
-  <ng-container *ngFor="let errorMessage of errorMessages; let i = index">
-    <span class="feedback-invalid">
+  <div class="d-flex flex-column">
+    <span class="feedback-invalid" *ngFor="let errorMessage of errorMessages; let i = index">
       <span class="fa fa-error"></span>&nbsp;{{ errorMessage }}
     </span>
-    <br *ngIf="i < errorMessages.length - 1" />
-  </ng-container>
+  </div>
 </ng-container>

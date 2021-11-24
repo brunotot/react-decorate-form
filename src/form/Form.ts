@@ -13,7 +13,6 @@ export class Form extends FormGroup implements IBaseForm {
   getValidationFailedMessage(varName: string, errorKey: string, displayConfig: IDisplayConfig): string {
     let { errorMessagesWrapper } = this.formControlWrapper;
     let errorValidators = errorMessagesWrapper[varName];
-    let t: ValidatorFn = errorValidators[0].validator
     let errorValidator = errorValidators.find(eV => eV.validatorName === errorKey);
     return errorValidator 
       ? errorValidator.message 

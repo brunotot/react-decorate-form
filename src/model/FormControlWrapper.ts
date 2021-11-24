@@ -1,7 +1,7 @@
-import { IFormInputCheckboxConfig, IFormInputColorConfig, IFormInputDateConfig, IFormInputDateTimeConfig, IFormInputEmailConfig, IFormInputFileConfig, IFormInputMonthConfig, IFormInputNumberConfig, IFormInputPasswordConfig, IFormInputPhoneConfig, IFormInputRangeConfig, IFormInputSearchConfig, IFormInputSelectConfig, IFormInputTextAreaConfig, IFormInputTextConfig, IFormInputTimeConfig, IFormInputURLConfig, IFormInputWeekConfig, ISelect2Config } from "../type/FormInputConfig";
-import { IAnyValidatorConfig, ICheckboxValidatorConfig, IColorValidatorConfig, IDateTimeValidatorConfig, IDateValidatorConfig, IFileValidatorConfig, INumberValidatorConfig, IPasswordValidatorConfig, IPhoneValidatorConfig, IRangeValidatorConfig, ISearchValidatorConfig, ISelectValidatorConfig, ITimeValidatorConfig, IURLValidatorConfig, IWeekValidatorConfig } from "../type/ValidatorConfig";
+import { IFormInputCheckboxConfig, IFormInputColorConfig, IFormInputDateConfig, IFormInputDateTimeConfig, IFormInputEmailConfig, IFormInputFileMultipleConfig, IFormInputFileSingleConfig, IFormInputMonthConfig, IFormInputNumberConfig, IFormInputPasswordConfig, IFormInputPhoneConfig, IFormInputRangeConfig, IFormInputSearchConfig, IFormInputSelectMultipleConfig, IFormInputSelectSingleConfig, IFormInputTextAreaConfig, IFormInputTextConfig, IFormInputTimeConfig, IFormInputURLConfig, IFormInputWeekConfig, ISelect2Config, Select2OptionData } from "../type/FormInputConfig";
+import { IAnyValidatorConfig, ICheckboxValidatorConfig, IColorValidatorConfig, IDateTimeValidatorConfig, IDateValidatorConfig, IFileMultipleValidatorConfig, IFileSingleValidatorConfig, INumberValidatorConfig, IPasswordValidatorConfig, IPhoneValidatorConfig, IRangeValidatorConfig, ISearchValidatorConfig, ISelectMultipleValidatorConfig, ISelectSingleValidatorConfig, ITimeValidatorConfig, IURLValidatorConfig, IWeekValidatorConfig } from "../type/ValidatorConfig";
 import { FormControl, ValidatorFn } from "@angular/forms";
-import { IForm } from "../form/base/BaseForm";
+import { IForm, IFormNonNull } from "../form/base/BaseForm";
 import { Form } from "../form/Form";
 import { InputType } from "./InputType";
 import { build } from "./ValidatorBuilder";
@@ -19,13 +19,15 @@ export interface IDisplayConfig {
   inputType: InputType,
   label: string,
   select2Config?: ISelect2Config,
+  data: Select2OptionData[],
   placeholder?: string,
   multiple?: boolean,
   rows?: number,
   min?: number,
   max?: number,
   validatorConfigs?: (
-      ISelectValidatorConfig
+      ISelectSingleValidatorConfig
+    | ISelectMultipleValidatorConfig
     | INumberValidatorConfig 
     | IDateTimeValidatorConfig 
     | IDateValidatorConfig 
@@ -38,7 +40,8 @@ export interface IDisplayConfig {
     | IRangeValidatorConfig
     | IWeekValidatorConfig
     | ITimeValidatorConfig
-    | IFileValidatorConfig
+    | IFileSingleValidatorConfig
+    | IFileMultipleValidatorConfig
     | IValidatorConfig
   )[]
 }
@@ -53,8 +56,13 @@ export default class FormControlWrapper {
     this.form = form;
   }
 
+  public withSelectMultiple = (config: IFormInputSelectMultipleConfig) => this.set({...config, select2Config: {data: config.data, multiple: true}, inputType: InputType.SELECT} as any)
+  public withSelectSingle   = (config: IFormInputSelectSingleConfig)   => this.set({...config, select2Config: {data: config.data}, inputType: InputType.SELECT} as any)
+
+  public withFileSingle   = (config: IFormInputFileSingleConfig)   => this.set({...config, inputType: InputType.FILE} as any)
+  public withFileMultiple = (config: IFormInputFileMultipleConfig) => this.set({...config, multiple: true, inputType: InputType.FILE} as any)
+
   public withHidden   = (formControlName: string)          => this.set({inputType: InputType.HIDDEN, formControlName} as any)
-  public withSelect   = (config: IFormInputSelectConfig)   => this.set({...config, inputType: InputType.SELECT} as any)
   public withNumber   = (config: IFormInputNumberConfig)   => this.set({...config, inputType: InputType.NUMBER} as any)
   public withText     = (config: IFormInputTextConfig)     => this.set({...config, inputType: InputType.TEXT} as any)
   public withTextArea = (config: IFormInputTextAreaConfig) => this.set({...config, inputType: InputType.TEXTAREA} as any)
@@ -71,7 +79,6 @@ export default class FormControlWrapper {
   public withRange    = (config: IFormInputRangeConfig)    => this.set({...config, inputType: InputType.RANGE} as any)
   public withWeek     = (config: IFormInputWeekConfig)     => this.set({...config, inputType: InputType.WEEK} as any)
   public withTime     = (config: IFormInputTimeConfig)     => this.set({...config, inputType: InputType.TIME} as any)
-  public withFile     = (config: IFormInputFileConfig)     => this.set({...config, inputType: InputType.FILE} as any)
 
   public getInitialDisplayValue(displayConfig: IDisplayConfig): any {
     let { formControlName, inputType } = displayConfig;
@@ -83,7 +90,8 @@ export default class FormControlWrapper {
   public buildValidatorSetupAndGetValidators(
     displayConfig: IDisplayConfig, 
     formControlName: string, 
-    validatorConfigs: (IValidatorConfig | IAnyValidatorConfig)[]
+    validatorConfigs: (IValidatorConfig | IAnyValidatorConfig)[],
+    form: Form
   ): ValidatorFn[] {
     let i = 0;
     let validators: ValidatorFn[] = [];
@@ -102,8 +110,12 @@ export default class FormControlWrapper {
           key, 
           message, 
           v => {
+            let currentControlValues: IFormNonNull = {};
+            for (let [formControlName, control] of Object.entries(form.controls)) {
+              currentControlValues[formControlName] = control.value;
+            }
             let formattedValue = inputEntity.convertToFormValue(v, displayConfig);
-            return formattedValue === null ? false : isValid(formattedValue);
+            return formattedValue === null ? false : isValid(formattedValue, currentControlValues);
           }
         );
         validators.push(validatorBuild.validator);
@@ -120,7 +132,7 @@ export default class FormControlWrapper {
       id: displayConfig.formControlName,
       allowClear: true
     }
-    let select2Config: ISelect2Config = (displayConfig as IFormInputSelectConfig)?.select2Config || defaultSelect2Config;
+    let select2Config: ISelect2Config = (displayConfig as any)?.select2Config || defaultSelect2Config;
     select2Config = {
       ...select2Config,
       width: select2Config.width ? select2Config.width : defaultSelect2Config.width,
@@ -132,27 +144,38 @@ export default class FormControlWrapper {
   public set(displayConfig: IDisplayConfig) {
     let { inputType, formControlName } = displayConfig;
     displayConfig.inputEntity = getInputEntity(inputType);
-    
-    let validatorConfigs: IValidatorConfig[] = (displayConfig as any)?.validatorConfigs || [];
     if (inputType === InputType.SELECT) {
       displayConfig.select2Config = this.getNormalizedSelect2Config(displayConfig);
-    } else if (inputType === InputType.EMAIL) {
-      validatorConfigs.push(Validators.email())
-    } else if (inputType === InputType.URL) {
-      validatorConfigs.push(Validators.url(formControlName))
-    } else if (inputType === InputType.PHONE) {
-      validatorConfigs.push(Validators.phone(formControlName))
-    }
-
-    let validators: ValidatorFn[] = this.buildValidatorSetupAndGetValidators(displayConfig, formControlName, validatorConfigs);
+    } 
     this.form[formControlName] = this.getInitialDisplayValue(displayConfig);
-    this.initialControls[formControlName] = new FormControl(this.form[formControlName], validators);
+    this.initialControls[formControlName] = new FormControl(this.form[formControlName]);
     this.displayConfigs.push(displayConfig);
-
     return this;
   }
 
-  public toForm() {
-    return new Form(this);
+  public toForm(): Form {
+    let form = new Form(this);
+    for (let key in form.controls) {
+      form.controls[key].valueChanges.subscribe(res => {
+        for (let formControlName in form.controls) {
+          if (formControlName !== key) {
+            form.controls[formControlName].updateValueAndValidity({ onlySelf: true, emitEvent: false })
+          }
+        }
+      })  
+      let displayConfig: IDisplayConfig = this.displayConfigs.find(displayConfig => displayConfig.formControlName === key)!;
+      let { inputType } = displayConfig;
+      let validatorConfigs: IValidatorConfig[] = (displayConfig as any)?.validatorConfigs || [];
+      if (inputType === InputType.EMAIL) {
+        validatorConfigs.push(Validators.email())
+      } else if (inputType === InputType.URL) {
+        validatorConfigs.push(Validators.url(key))
+      } else if (inputType === InputType.PHONE) {
+        validatorConfigs.push(Validators.phone(key))
+      }
+      let validators: ValidatorFn[] = this.buildValidatorSetupAndGetValidators(displayConfig, key, validatorConfigs, form);
+      form.controls[key].setValidators(validators);
+    }
+    return form;
   }
 }
