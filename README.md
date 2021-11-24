@@ -238,4 +238,4 @@ export class AppComponent {
 ```
 
 ## Form generation result
-![alt text](https://github.com/brunotot/ngx-painless-form/blob/main/docs/form-example.png?raw=true)
+![Form generation result](https://github.com/brunotot/ngx-painless-form/blob/main/docs/form-example.png?raw=true)
