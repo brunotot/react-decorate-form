@@ -11,27 +11,7 @@ Made with Angular v13 and Bootstrap 5 design.
 npm install ngx-simple-form
 ```
 
-2. Add styles to `angular.json`
-```json
-{
-  "styles": [
-    "node_modules/ngx-simple-form/assets/style.scss",
-    "node_modules/select2/dist/css/select2.min.css"
-  ]
-}
-```
-
-3. Add scripts to `angular.json`
-```json
-{
-  "scripts": [
-    "node_modules/jquery/dist/jquery.js",
-    "node_modules/select2/dist/js/select2.min.js"
-  ]
-}
-```
-
-4. Add module to local `module.ts`
+2. Add module to local `module.ts`
 ```ts
 // ...
 import { NgxPainlessFormModule } from 'ngx-painless-form';
@@ -39,7 +19,7 @@ import { NgxPainlessFormModule } from 'ngx-painless-form';
   // ...
   imports: [
     NgxPainlessFormModule
-  ],
+  ]
 })
 export class AppModule { }
 ```
@@ -57,14 +37,12 @@ export class AppModule { }
 
 ### Important imports
 ```typescript
-import { Validators } from '@angular/forms';
 import { 
   Form, 
   FormControlWrapper, 
   InputType,
   IForm,
-  ISelect2MultipleId,
-  ISelect2SingleId
+  Validators
 } from 'ngx-simple-form';
 ```
 
@@ -79,8 +57,8 @@ let exampleFormValue: IForm = {
   textarea: 'This is a text area example',
   password: 'password-example',
   checkbox: true,
-  select2Multiple: { ids: ["1", "2"] } as ISelect2MultipleId,
-  select2Single: { id: "1" } as ISelect2SingleId
+  select2Multiple: b["1", "2"],
+  select2Single: "1"
 }
 ```
 
