@@ -28,6 +28,8 @@ $color-warning:   $yellow;
 $color-danger:    $red;
 $color-light:     $gray-100;
 $color-dark:      $gray-900;
+$color-input-border: #ced4da;
+$color-placeholder: #c7c1c1;
 
 .color-primary { color: $color-primary }
 .color-success { color: $color-success }
@@ -37,9 +39,5 @@ $color-dark:      $gray-900;
 .color-danger { color: $color-danger }
 .color-faded { color: $color-light }
 .color-dark { color: $color-dark }
-
-$color-input-border: #ced4da;
-$color-placeholder: #c7c1c1;
-
 .color-input-border { color: $color-input-border }
 .color-placeholder { color: $color-placeholder !important }

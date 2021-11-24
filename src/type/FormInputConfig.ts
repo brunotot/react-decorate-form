@@ -1,5 +1,3 @@
-import { Select2OptionData } from "ng-select2";
-import { Options } from "select2";
 import { IValidatorConfig } from "../model/FormControlWrapper";
 import { ICheckboxValidatorConfig, IColorValidatorConfig, IDateTimeValidatorConfig, IDateValidatorConfig, IEmailValidatorConfig, IFileValidatorConfig, IMonthValidatorConfig, INumberValidatorConfig, IPasswordValidatorConfig, IPhoneValidatorConfig, IRangeValidatorConfig, ISearchValidatorConfig, ISelectValidatorConfig, ITextAreaValidatorConfig, ITextValidatorConfig, ITimeValidatorConfig, IURLValidatorConfig, IWeekValidatorConfig } from "./ValidatorConfig";
 
@@ -8,7 +6,12 @@ export interface IFormInputHiddenConfig {
   label: string
 }
 
-export interface ISelect2Config extends Options {
+export interface Select2OptionData {
+  id: string,
+  text: string
+}
+
+export interface ISelect2Config {
   placeholder?: string,
   id?: string,
   value?: string,
@@ -16,7 +19,8 @@ export interface ISelect2Config extends Options {
   disabled?: boolean,
   data?: Select2OptionData[],
   dropdownParent?: any,
-  allowClear?: boolean
+  allowClear?: boolean,
+  multiple?: boolean
 }
 
 export interface IFormInputSelectConfig {

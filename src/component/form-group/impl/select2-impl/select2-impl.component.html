@@ -1,12 +1,43 @@
-<ng-select2
-  [attr.id]="displayConfig.formControlName"
-  [placeholder]="placeholderValue"
-  (valueChanged)="baseValueChanged($event)"
-  [formControlName]="displayConfig.formControlName"
-  [allowClear]="!!displayConfig.select2Config?.allowClear"
-  [width]="displayConfig.select2Config?.width || ''" 
-  [data]="displayConfig.select2Config?.data"
-  [dropdownParent]="!!displayConfig.select2Config?.dropdownParent ? String(displayConfig.select2Config?.dropdownParent) : ''"
-  [value]="!!displayConfig.select2Config?.value ? displayConfig.select2Config.value : ''"
-  [options]="displayConfig.select2Config || {}">
-</ng-select2>
+<div class="select-wrapper">
+  <div #selectionElem [ngClass]="defaultClassWrapper.concat(dropdownOpened ? ' opened' : ' closed')" (click)="onDropdownClick($event)">
+    <span *ngIf="selections.length === 0" class="selection-none">{{ placeholderValue }}</span>
+    <ul *ngIf="selections.length > 0" class="selection-block">
+      <span *ngIf="!isMultiple">{{ selections[0].text }}</span>
+      <ng-container *ngIf="isMultiple">
+        <li class="current-selection" *ngFor="let selection of selections">
+          <button type="button" class="selection-remove" (click)="removeSelection(selection.id)">&times;</button>
+          <span class="selection-value">{{ selection.text }}</span>
+        </li>
+      </ng-container>
+    </ul>
+    <span *ngIf="hasClear" (click)="onClear()" class="selection-clear">&times;</span>
+  </div>
+  <div [ngClass]="selectDropdownCss">
+    <div class="search-wrapper">
+      <input type="text" class="search-input" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchFilter" />
+    </div>
+    <div class="options-wrapper">
+      <ul class="options-list">
+        <li 
+          *ngFor="let option of select2Data | selectFilter : searchFilter" 
+          (click)="onSelectChange(option)" 
+          [ngClass]="isSelected(option.id) ? 'option-selected' : ''">
+          {{ option.text }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!--<div class="select-wrapper">
+  <select 
+    [attr.multiple]="displayConfig.select2Config?.multiple"
+    [style.width]="displayConfig.select2Config?.width || ''"
+    [attr.id]="displayConfig.formControlName"
+    (change)="onSelectChange($event)"
+    [formControlName]="displayConfig.formControlName">
+    <option *ngFor="let option of select2Data" [ngValue]="option.id">
+      {{ option.text }}
+    </option>
+  </select>
+</div>-->

@@ -1,4 +1,5 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
+import $ from '../model/$';
 import { Style } from '../model/Style';
 
 @Directive({ selector: '.title-mobile' })
@@ -7,7 +8,10 @@ export class TitleDirective {
   }
 
   buildMobileTitle(title: string) {
-    return $(`<span class='${Style.CLASS_TITLE_BOX}'>${title}</span>`)
+    let span = document.createElement("SPAN");
+    span.innerHTML = title;
+    span.classList.add(Style.CLASS_TITLE_BOX);
+    return span;
   }
 
   showTitle(title: string) {

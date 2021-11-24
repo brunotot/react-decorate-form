@@ -12,7 +12,6 @@ const SM_BREAKPOINT: number = 767;
   viewProviders: VIEW_PROVIDERS
 })
 export class RangeImplComponent extends ReactiveInput implements OnInit {
-  $ = $;
   @ViewChild('rangeSelectorDivWrapper') rangeSelectorDivWrapper!: ElementRef;
   @ViewChild('rangeContainerWrapper') rangeContainerWrapper!: ElementRef;
   windowWidth: number = 0;
@@ -59,7 +58,7 @@ export class RangeImplComponent extends ReactiveInput implements OnInit {
   getCalculatedWidth(elemRef: ElementRef): number {
     let nativeElement = elemRef?.nativeElement;
     if (!nativeElement) return -1;
-    return this.$(nativeElement).outerWidth(true)!;
+    return nativeElement.offsetWidth!;
   }
 
   ngAfterViewChecked() {

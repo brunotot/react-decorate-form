@@ -18,7 +18,7 @@
             [type]="regexInput.inputType" 
             [style.flex]="'1'"
             [attr.placeholder]="regexInput.placeholder"
-            [attr.title]="regexInput.label.concat(regexInput.pattern === '.*' ? '' : ('e.g. ' + regexInput.exampleValue + ')'))"
+            [attr.title]="regexInput.label.concat(regexInput.pattern === '.*' ? '' : (' (e.g. ' + regexInput.exampleValue + ')'))"
           />
         </div>
       </div>
