@@ -7,7 +7,6 @@ import { GenericInputGroupComponent } from './component/form-group/generic-input
 import { GenericInputComponent } from './component/form-group/generic-input/generic-input.component';
 import { Select2Component } from './component/form-group/impl/select2-impl/select2-impl.component';
 import ReactiveInput from './model/ReactiveInput';
-import { NgSelect2Module } from 'ng-select2';
 import { DefaultImplComponent } from './component/form-group/impl/default-impl/default-impl.component';
 import { CheckboxImplComponent } from './component/form-group/impl/checkbox-impl/checkbox-impl.component';
 import { HiddenImplComponent } from './component/form-group/impl/hidden-impl/hidden-impl.component';
@@ -23,6 +22,7 @@ import { SearchImplComponent } from './component/form-group/impl/search-impl/sea
 import { EmailImplComponent } from './component/form-group/impl/email-impl/email-impl.component';
 import { UrlImplComponent } from './component/form-group/impl/url-impl/url-impl.component';
 import { NoBrowserSupportComponent } from './component/form-group/no-browser-support/no-browser-support.component';
+import { SelectFilterPipe } from './pipe/SelectFilterPipe';
 
 @NgModule({
   declarations: [
@@ -46,13 +46,13 @@ import { NoBrowserSupportComponent } from './component/form-group/no-browser-sup
     SearchImplComponent,
     EmailImplComponent,
     UrlImplComponent,
-    NoBrowserSupportComponent
+    NoBrowserSupportComponent,
+    SelectFilterPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
-    NgSelect2Module
+    ReactiveFormsModule
   ],
   exports: [
     NoBrowserSupportComponent,

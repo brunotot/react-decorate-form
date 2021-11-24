@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { IForm } from '../../../form/base/BaseForm';
 import { Form } from '../../../form/Form';
 import { InputType } from '../../../model/InputType';
@@ -9,7 +9,8 @@ import { IDisplayConfig } from '../../../model/FormControlWrapper';
 @Component({
   selector: 'ngxp-form',
   templateUrl: './base-form.component.html',
-  styleUrls: ['./base-form.component.scss']
+  styleUrls: ['./base-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class BaseFormComponent implements OnInit {
   @Input() form!: Form;

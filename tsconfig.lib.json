@@ -5,8 +5,18 @@
     "outDir": "../../out-tsc/lib",
     "declaration": true,
     "declarationMap": true,
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
     "inlineSources": true,
-    "types": []
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "node_modules/jquery/dist/jquery.js",
+      "node_modules/select2/dist/js/select2.min.js",
+      "dist/vendor/jquery/dist/jquery.js",
+      "dist/vendor/select2/dist/js/select2.min.js"
+    ]
   },
   "exclude": [
     "src/test.ts",

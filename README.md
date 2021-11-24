@@ -6,11 +6,8 @@ Made with Angular v13 and Bootstrap 5 design.
 
 ## Installation
 
-1. Install dependencies
+1. Install library dependency
 ```
-npm install jquery@3.5.x
-npm install select2@4.0.x
-npm install ng-select2@1.3.1
 npm install ngx-simple-form
 ```
 

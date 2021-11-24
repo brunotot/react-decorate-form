@@ -1,7 +1,18 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/ngx-painless-form",
+  "dest": "./dist",
   "lib": {
-    "entryFile": "src/public-api.ts"
-  }
+    "entryFile": "./public-api.ts",
+    "styleIncludePaths": [
+      "./assets/core/scss/style.scss",
+      "./../assets/core/scss/style.scss"
+    ],
+    "cssUrl": "inline"
+  },
+  "assets": [
+    "./assets/**"
+  ],
+  "allowedNonPeerDependencies": [
+    "."
+  ]
 }

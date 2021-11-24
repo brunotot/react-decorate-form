@@ -1,35 +1,22 @@
 {
   "name": "ngx-painless-form",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "lib:deploy": "npm run lib:build && cd dist/ && npm publish",
-    "lib:build": "ng-packagr -p package.json && cd ../ngx-painless-form-test/src/app && echo '' >> app.module.ts && clear"
+    "lib:build": "ng-packagr -p ng-package.json && cd ../ngx-painless-form-test/src/app && echo '' >> app.module.ts && clear"
   },
   "peerDependencies": {
     "@angular/common": "^13.0.0",
-    "@angular/core": "^13.0.0",
-    "jquery": "^3.5.x",
-    "ng-select2": "^1.3.1",
-    "select2": "^4.0.x"
+    "@angular/core": "^13.0.0"
   },
   "dependencies": {
+    "bootstrap": "^5.1.3",
     "tslib": "^2.3.0"
   },
   "repository": {
     "url": "git://github.com/brunotot/ngx-painless-form.git"
   },
   "publishConfig": {
-    "brunotot:registry":"https://npm.pkg.github.com"
-  },
-  "ngPackage": {
-    "$schema": "./../node_modules/ng-packagr/ng-package.schema.json",
-    "lib": {
-      "cssUrl": "inline",
-      "entryFile": "public-api.ts"
-    },
-    "assets": [
-      "assets/**"
-    ],
-    "dest": "dist"
+    "brunotot:registry": "https://npm.pkg.github.com"
   }
 }
