@@ -7,7 +7,7 @@ function getReadOnlyValue(obj: any) {
   if (typeof obj === "string") return obj;
   if (obj instanceof Date) return dateFormatted(obj) + ' ' + timeFormatted(obj) + ' ' + MONTH_NAMES[obj.getMonth()];
   if (typeof obj === "boolean") return String(obj);
-  return Object.values(obj).map(v => String(v)).join(" ");
+  return typeof obj === "object" ? Object.values(obj).map(v => String(v)).join(" ") : String(obj);
 }
 
 @Pipe({ name: 'paginate' })
