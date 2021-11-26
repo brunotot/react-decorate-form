@@ -6,6 +6,10 @@ class CheckboxEntity extends InputEntity<boolean> {
     super(InputType.CHECKBOX)
   }
 
+  override convertToDatatableValueReadOnly(value: any): string {
+    return String(!!value);
+  }
+
   override convertToDatatableValue(value: any) {
     return `<span class="fa ${!!value ? 'fa-checkmark' : 'fa-times'}"></span>`
   }

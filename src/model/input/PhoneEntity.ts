@@ -21,7 +21,8 @@ class PhoneEntity extends InputEntity<IPhone> {
   }
 
   override convertToDatatableValue(value: any) {
-    return `<a class="number" href="tel:${value}">${value}</a>`
+    value = this.convertToFormValue(value)
+    return `<a class="number" href="tel:${value.globalNumber}">${value.globalNumber}</a>`
   }
 
   override getDefaultFormValue(): IPhone {

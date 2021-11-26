@@ -6,8 +6,12 @@ class PasswordEntity extends InputEntity<string> {
     super(InputType.PASSWORD)
   }
 
+  override convertToDatatableValueReadOnly(value: any) {
+    return 'hidden';
+  }
+
   override convertToDatatableValue(value: any) {
-    return `<span class="no-data">hidden</span>`
+    return `<span class="no-data">${this.convertToDatatableValueReadOnly(value)}</span>`
   }
 
   override convertToDisplayValue(value: string | null): string {

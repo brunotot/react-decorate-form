@@ -10,6 +10,10 @@ class WeekEntity extends InputEntity<IWeek> {
     this.variableGroupValidators = this.getVariableGroupValidators(this.getRegexInputs());
   }
 
+  override convertToDatatableValueReadOnly(value: any) {
+    return weekFormatted(this.convertToFormValue(value));
+  }
+
   override convertToDatatableValue(value: any) {
     return `<span class="number">${weekFormatted(this.convertToFormValue(value))}</span>`
   }

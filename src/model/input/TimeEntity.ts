@@ -8,6 +8,10 @@ class TimeEntity extends InputEntity<ITime> {
     super(InputType.TIME)
   }
 
+  override convertToDatatableValueReadOnly(value: any) {
+    return timeFormatted(this.convertToFormValue(value));
+  }
+
   override convertToDatatableValue(value: any) {
     return `<span>${timeFormatted(this.convertToFormValue(value))}</span>`
   }

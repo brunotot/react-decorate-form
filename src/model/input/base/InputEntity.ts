@@ -6,6 +6,22 @@ import { InputType } from "../../InputType"
 const MSG_METHOD_NOT_IMPLEMENTED = 'Method not implemented'
 const MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX = 15;
 
+function getTextDisplayObject(value: any, displayFullValue: boolean): { text: string, html: string } {
+  let text = String(value);
+  if (!displayFullValue) {
+    let splittedLines = splitIntoLines(text, MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX);
+    if (splittedLines.length > 2) {
+      let secondValue = splittedLines[1];
+      secondValue = secondValue.length <= 12 ? secondValue.concat('...') : secondValue.substring(0, secondValue.length - 3).concat('...')
+      text = splittedLines[0].concat(' ', secondValue);
+    }
+  }
+  return {
+    text,
+    html: `<span title="${text}" class="text-display">${text}</span>`
+  }
+}
+
 export default class InputEntity<FORM_TYPE> {
   variableGroupValidators: IVariableGroupValidator[] = [];
   inputTypes: InputType[]
@@ -30,33 +46,30 @@ export default class InputEntity<FORM_TYPE> {
     return [];
   }
 
-  convertToDisplayValue(value: FORM_TYPE | string | null, displayConfig: IDisplayConfig | undefined = undefined): string | null {
+  convertToDisplayValue(value: FORM_TYPE | string | null, displayConfig?: IDisplayConfig): string | null {
     throw new Error(MSG_METHOD_NOT_IMPLEMENTED)
   }
 
-  convertToFormValue(value: string | FORM_TYPE | null, displayConfig: IDisplayConfig | undefined = undefined): FORM_TYPE | null {
+  convertToFormValue(value: string | FORM_TYPE | null, displayConfig?: IDisplayConfig): FORM_TYPE | null {
     throw new Error(MSG_METHOD_NOT_IMPLEMENTED)
   }
 
-  convertToDatatableValue(value: string | FORM_TYPE | null, displayConfig: IDisplayConfig | undefined = undefined) {
+  convertToDatatableValueReadOnly(value: string | FORM_TYPE | null, displayConfig?: IDisplayConfig) {
+    return String(value);
+  }
+
+  convertToDatatableValue(value: string | FORM_TYPE | null, displayConfig?: IDisplayConfig, displayFullValue: boolean = false) {
     if (isTextDisplay(this.inputTypes)) {
-      let text = String(value);
-      let splittedLines = splitIntoLines(text, MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX);
-      if (splittedLines.length > 2) {
-        let secondValue = splittedLines[1];
-        secondValue = secondValue.length <= 12 ? secondValue.concat('...') : secondValue.substring(0, secondValue.length - 3).concat('...')
-        text = splittedLines[0].concat(' ', secondValue);
-      }
-      return `<span title="${text}" class="text-display">${text}</span>`
+      return getTextDisplayObject(value, displayFullValue).html;
     }
     throw new Error(`${MSG_METHOD_NOT_IMPLEMENTED} [${this.inputTypes.join(", ")}]`)
   }
 
-  getDefaultFormValue(displayConfig: IDisplayConfig | undefined = undefined): FORM_TYPE | null {
+  getDefaultFormValue(displayConfig?: IDisplayConfig): FORM_TYPE | null {
     return isText(this.inputTypes) ? '' as any : null;
   }
 
-  getDefaultDisplayValue(displayConfig: IDisplayConfig | undefined = undefined): string | null {
+  getDefaultDisplayValue(displayConfig?: IDisplayConfig): string | null {
     return this.convertToDisplayValue(this.getDefaultFormValue(displayConfig), displayConfig)
   }
 

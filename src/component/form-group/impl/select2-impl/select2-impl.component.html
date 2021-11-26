@@ -13,7 +13,7 @@
     <span *ngIf="hasClear" (click)="onClear()" class="selection-clear">&times;</span>
   </div>
   <div [ngClass]="selectDropdownCss">
-    <div class="search-wrapper">
+    <div class="search-wrapper" *ngIf="displayConfig.enableSearch">
       <input type="text" class="search-input" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchFilter" />
     </div>
     <div class="options-wrapper">

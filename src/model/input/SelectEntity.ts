@@ -9,9 +9,22 @@ class SelectEntity extends InputEntity<string | string[]> {
     super(InputType.SELECT)
   }
 
+  override convertToDatatableValueReadOnly(value: any, displayConfig: IDisplayConfig) {
+    let ids: string[] = value ? (Array.isArray(value) ? value : [value]) : [];
+    let valueReadOnly: string = '';
+    for (let id of ids) {
+      let data: Select2OptionData[] = displayConfig.select2Config?.data || [];
+      let selectedOption = data.find(option => option.id === id);
+      if (selectedOption) {
+        valueReadOnly += selectedOption.text + ' ';
+      }
+    }
+    return valueReadOnly
+  }
+
   override convertToDatatableValue(value: any, displayConfig: IDisplayConfig) {
     let ids: string[] = value ? (Array.isArray(value) ? value : [value]) : [];
-    let html = '';
+    let html = '<div class="d-flex" style="gap: 4px">';
     for (let id of ids) {
       let data: Select2OptionData[] = displayConfig.select2Config?.data || [];
       let selectedOption = data.find(option => option.id === id);
@@ -19,6 +32,8 @@ class SelectEntity extends InputEntity<string | string[]> {
         html += `<span class="badge bg-primary">${selectedOption.text}</span>`
       }
     }
+    if (html === '<div class="d-flex" style="gap: 4px">') html = '';
+    else html += '</div>'
     return html === '' ? HTML_NO_DATA : html;
   }
 

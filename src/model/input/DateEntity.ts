@@ -7,8 +7,12 @@ class DateEntity extends InputEntity<Date> {
     super(InputType.DATE)
   }
 
+  override convertToDatatableValueReadOnly(value: any) {
+    return dateFormatted(value);
+  }
+
   override convertToDatatableValue(value: any) {
-    return `<span>${dateFormatted(value)}</span>`
+    return `<span>${this.convertToDatatableValueReadOnly(value)}</span>`
   }
 
   override convertToDisplayValue(value: Date | string | null): string | null {

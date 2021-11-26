@@ -9,8 +9,12 @@ class DateMonthEntity extends InputEntity<Date> {
     this.variableGroupValidators = this.getVariableGroupValidators(this.getRegexInputs());
   }
 
+  override convertToDatatableValueReadOnly(value: any) {
+    return monthFormatted(value);
+  }
+
   override convertToDatatableValue(value: any) {
-    return `<span>${monthFormatted(value)}</span>`
+    return `<span>${this.convertToDatatableValueReadOnly(value)}</span>`
   }
 
   override formatInputsToUsedEntity(): Date | null {

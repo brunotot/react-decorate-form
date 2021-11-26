@@ -92,13 +92,18 @@ export class Select2Component extends ReactiveInput implements OnInit {
   onSelectChange(option: Select2OptionData) {
     this.searchFilter = '';
     let selectedValues = this.isMultiple ? this.selectedValues : {};
+    let isClearAllowed = this.displayConfig?.allowClear;
+    let isSelectedClicked = false;
     if (option.id in this.selectedValues) {
-      delete this.selectedValues[option.id]
+      isSelectedClicked = true;
+      if (isClearAllowed) {
+        delete this.selectedValues[option.id]
+      }
     } else {
       selectedValues[option.id] = option.text;
       this.dropdownOpened = this.isMultiple;
     }
-    this.selectedValues = selectedValues;
+    this.selectedValues = !isClearAllowed && isSelectedClicked ? this.selectedValues : selectedValues;
     let values = Object.keys(this.selectedValues);
     this.writeValue(this.isMultiple ? values : values.join(""))
   }
