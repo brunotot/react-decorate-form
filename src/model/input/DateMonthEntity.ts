@@ -1,4 +1,5 @@
-import { IRegex, IVariableGroupValidator } from "../../utility/InputEntityUtils";
+import { monthFormatted } from "../../utility/DateUtils";
+import { IRegex } from "../../utility/InputEntityUtils";
 import { InputType, PatternInputType } from "../InputType";
 import InputEntity from "./base/InputEntity";
 
@@ -6,6 +7,10 @@ class DateMonthEntity extends InputEntity<Date> {
   constructor() {
     super(InputType.MONTH)
     this.variableGroupValidators = this.getVariableGroupValidators(this.getRegexInputs());
+  }
+
+  override convertToDatatableValue(value: any) {
+    return `<span>${monthFormatted(value)}</span>`
   }
 
   override formatInputsToUsedEntity(): Date | null {

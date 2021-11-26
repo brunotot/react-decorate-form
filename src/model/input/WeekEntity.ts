@@ -1,3 +1,4 @@
+import { weekFormatted } from "../../utility/DateUtils";
 import { IRegex } from "../../utility/InputEntityUtils";
 import { InputType, PatternInputType } from "../InputType";
 import { IWeek, splitToTwoValues } from "../ValidatorBuilder";
@@ -7,6 +8,10 @@ class WeekEntity extends InputEntity<IWeek> {
   constructor() {
     super(InputType.WEEK);
     this.variableGroupValidators = this.getVariableGroupValidators(this.getRegexInputs());
+  }
+
+  override convertToDatatableValue(value: any) {
+    return `<span class="number">${weekFormatted(value)}</span>`
   }
 
   override formatInputsToUsedEntity(): IWeek | null {

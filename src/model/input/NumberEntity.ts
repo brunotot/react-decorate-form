@@ -6,13 +6,17 @@ class NumberEntity extends InputEntity<number> {
     super(InputType.NUMBER)
   }
 
+  override convertToDatatableValue(value: any) {
+    return `${Number(value)}`
+  }
+
   override convertToDisplayValue(value: number | null): string | null {
-    if (isNaN(value as any)) return null;
+    if (isNaN(value as any) || value === null || value === undefined) return null;
     return String(value)
   }
 
   override convertToFormValue(value: number | null): number | null {
-    if (isNaN(value as any)) return this.getDefaultFormValue();
+    if (isNaN(value as any) || value === null || value === undefined) return this.getDefaultFormValue();
     return Number(value)
   }
 }

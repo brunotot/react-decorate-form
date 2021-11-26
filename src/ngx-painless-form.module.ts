@@ -23,6 +23,9 @@ import { EmailImplComponent } from './component/form-group/impl/email-impl/email
 import { UrlImplComponent } from './component/form-group/impl/url-impl/url-impl.component';
 import { NoBrowserSupportComponent } from './component/form-group/no-browser-support/no-browser-support.component';
 import { SelectFilterPipe } from './pipe/SelectFilterPipe';
+import { BaseDatatableComponent } from './component/datatable/base-datatable/base-datatable.component';
+import { SafeHtmlPipe } from './pipe/SafeHtmlPipe';
+import { PaginationPipe } from './pipe/PaginationPipe';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { SelectFilterPipe } from './pipe/SelectFilterPipe';
     EmailImplComponent,
     UrlImplComponent,
     NoBrowserSupportComponent,
-    SelectFilterPipe
+    SelectFilterPipe,
+    SafeHtmlPipe,
+    PaginationPipe,
+    BaseDatatableComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +61,7 @@ import { SelectFilterPipe } from './pipe/SelectFilterPipe';
     ReactiveFormsModule
   ],
   exports: [
+    BaseDatatableComponent,
     NoBrowserSupportComponent,
     UrlImplComponent,
     TextOrTypeImplComponent,
@@ -74,6 +81,9 @@ import { SelectFilterPipe } from './pipe/SelectFilterPipe';
     PasswordImplComponent,
     SearchImplComponent,
     EmailImplComponent
+  ],
+  providers: [
+    PaginationPipe
   ]
 })
 export class NgxPainlessFormModule { }

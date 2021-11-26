@@ -56,9 +56,15 @@ export default class FormControlWrapper {
     this.form = form;
   }
 
-  public withSelectMultiple = (config: IFormInputSelectMultipleConfig) => this.set({...config, select2Config: {data: config.data, multiple: true}, inputType: InputType.SELECT} as any)
-  public withSelectSingle   = (config: IFormInputSelectSingleConfig)   => this.set({...config, select2Config: {data: config.data}, inputType: InputType.SELECT} as any)
-
+  public withSelectMultiple = (config: IFormInputSelectMultipleConfig) => {
+    let baseSelect2Config = this.getNormalizedSelect2Config({...config, select2Config: {allowClear: config.allowClear, data: config.data, multiple: true}} as any)
+    return this.set({...config, select2Config: baseSelect2Config, inputType: InputType.SELECT} as any)
+  }
+  public withSelectSingle = (config: IFormInputSelectMultipleConfig) => {
+    let baseSelect2Config = this.getNormalizedSelect2Config({...config, select2Config: {allowClear: config.allowClear, data: config.data}} as any)
+    return this.set({...config, select2Config: baseSelect2Config, inputType: InputType.SELECT} as any)
+  }
+  
   public withFileSingle   = (config: IFormInputFileSingleConfig)   => this.set({...config, inputType: InputType.FILE} as any)
   public withFileMultiple = (config: IFormInputFileMultipleConfig) => this.set({...config, multiple: true, inputType: InputType.FILE} as any)
 
@@ -80,9 +86,8 @@ export default class FormControlWrapper {
   public withWeek     = (config: IFormInputWeekConfig)     => this.set({...config, inputType: InputType.WEEK} as any)
   public withTime     = (config: IFormInputTimeConfig)     => this.set({...config, inputType: InputType.TIME} as any)
 
-  public getInitialDisplayValue(displayConfig: IDisplayConfig): any {
-    let { formControlName, inputType } = displayConfig;
-    let value = this.form[formControlName];
+  public getInitialDisplayValue(displayConfig: IDisplayConfig, value: any): any {
+    let { inputType } = displayConfig;
     let inputEntity = getInputEntity(inputType);
     return inputEntity.convertToFormValue(value, displayConfig);
   } 
@@ -90,8 +95,7 @@ export default class FormControlWrapper {
   public buildValidatorSetupAndGetValidators(
     displayConfig: IDisplayConfig, 
     formControlName: string, 
-    validatorConfigs: (IValidatorConfig | IAnyValidatorConfig)[],
-    form: Form
+    validatorConfigs: (IValidatorConfig | IAnyValidatorConfig)[]
   ): ValidatorFn[] {
     let i = 0;
     let validators: ValidatorFn[] = [];
@@ -111,7 +115,7 @@ export default class FormControlWrapper {
           message, 
           v => {
             let currentControlValues: IFormNonNull = {};
-            for (let [formControlName, control] of Object.entries(form.controls)) {
+            for (let [formControlName, control] of Object.entries(this.initialControls)) {
               currentControlValues[formControlName] = control.value;
             }
             let formattedValue = inputEntity.convertToFormValue(v, displayConfig);
@@ -136,46 +140,55 @@ export default class FormControlWrapper {
     select2Config = {
       ...select2Config,
       width: select2Config.width ? select2Config.width : defaultSelect2Config.width,
-      allowClear: select2Config.allowClear === undefined ? true : defaultSelect2Config.allowClear,
+      allowClear: select2Config.allowClear === undefined ? defaultSelect2Config.allowClear : select2Config.allowClear,
+      data: select2Config.data
     };
     return select2Config;
   }
 
   public set(displayConfig: IDisplayConfig) {
-    let { inputType, formControlName } = displayConfig;
+    let { inputType } = displayConfig;
     displayConfig.inputEntity = getInputEntity(inputType);
-    if (inputType === InputType.SELECT) {
-      displayConfig.select2Config = this.getNormalizedSelect2Config(displayConfig);
-    } 
-    this.form[formControlName] = this.getInitialDisplayValue(displayConfig);
-    this.initialControls[formControlName] = new FormControl(this.form[formControlName]);
     this.displayConfigs.push(displayConfig);
     return this;
   }
 
-  public toForm(): Form {
-    let form = new Form(this);
-    for (let key in form.controls) {
-      form.controls[key].valueChanges.subscribe(res => {
-        for (let formControlName in form.controls) {
-          if (formControlName !== key) {
-            form.controls[formControlName].updateValueAndValidity({ onlySelf: true, emitEvent: false })
-          }
-        }
-      })  
-      let displayConfig: IDisplayConfig = this.displayConfigs.find(displayConfig => displayConfig.formControlName === key)!;
-      let { inputType } = displayConfig;
+  public getClearedValuesConfig() {
+    let config: {[key: string]: any} = {};
+    this.displayConfigs
+      .forEach(displayConfig => 
+        config[displayConfig.formControlName] = displayConfig.inputEntity.getDefaultFormValue(displayConfig))
+    return config;
+  }
+
+  public buildInitialControls(formValue: {[key: string]: any} = this.getClearedValuesConfig()) {
+    for (let displayConfig of this.displayConfigs) {
+      let { formControlName, inputType } = displayConfig;
       let validatorConfigs: IValidatorConfig[] = (displayConfig as any)?.validatorConfigs || [];
       if (inputType === InputType.EMAIL) {
         validatorConfigs.push(Validators.email())
       } else if (inputType === InputType.URL) {
-        validatorConfigs.push(Validators.url(key))
+        validatorConfigs.push(Validators.url(formControlName))
       } else if (inputType === InputType.PHONE) {
-        validatorConfigs.push(Validators.phone(key))
+        validatorConfigs.push(Validators.phone(formControlName))
       }
-      let validators: ValidatorFn[] = this.buildValidatorSetupAndGetValidators(displayConfig, key, validatorConfigs, form);
-      form.controls[key].setValidators(validators);
+      let validators: ValidatorFn[] = this.buildValidatorSetupAndGetValidators(displayConfig, formControlName, validatorConfigs);
+      let displayValue = this.getInitialDisplayValue(displayConfig, formValue[formControlName]);
+
+      this.initialControls[formControlName] = new FormControl(displayValue, validators);
+      this.initialControls[formControlName].valueChanges.subscribe(() => {
+        for (let formControlName in this.initialControls) {
+          if (formControlName !== formControlName) {
+            this.initialControls[formControlName].updateValueAndValidity({ onlySelf: true, emitEvent: false })
+          }
+        }
+      })
     }
-    return form;
+    return this;
+  }
+
+  public toForm(formValue: {[key: string]: any} = this.getClearedValuesConfig()): Form {
+    this.buildInitialControls(formValue);
+    return new Form(this);
   }
 }

@@ -1,3 +1,4 @@
+import { timeFormatted } from "../../utility/DateUtils";
 import { InputType } from "../InputType";
 import { ITime, splitToTwoValues } from "../ValidatorBuilder";
 import InputEntity from "./base/InputEntity";
@@ -5,6 +6,10 @@ import InputEntity from "./base/InputEntity";
 class TimeEntity extends InputEntity<ITime> {
   constructor() {
     super(InputType.TIME)
+  }
+
+  override convertToDatatableValue(value: any) {
+    return `<span>${timeFormatted(this.convertToFormValue(value))}</span>`
   }
 
   override convertToDisplayValue(value: ITime | string | null): string | null {

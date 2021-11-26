@@ -24,6 +24,7 @@ import { SearchImplComponent } from './src/component/form-group/impl/search-impl
 import { UrlImplComponent } from './src/component/form-group/impl/url-impl/url-impl.component';
 import { NoBrowserSupportComponent } from './src/component/form-group/no-browser-support/no-browser-support.component';
 import Validators from './src/model/Validators';
+import { BaseDatatableComponent } from './src/component/datatable/base-datatable/base-datatable.component';
 
 export { RangeImplComponent };
 export { ColorImplComponent };
@@ -51,3 +52,4 @@ export { EmailImplComponent };
 export { UrlImplComponent };
 export { NoBrowserSupportComponent };
 export { Validators };
+export { BaseDatatableComponent };

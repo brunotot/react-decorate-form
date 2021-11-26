@@ -53,12 +53,7 @@ export class BaseFormComponent implements OnInit {
   }
 
   onResetClick() {
-    let config: {[key: string]: any} = {};
-    this.form
-      .formControlWrapper
-      .displayConfigs
-      .forEach(displayConfig => 
-        config[displayConfig.formControlName] = displayConfig.inputEntity.getDefaultFormValue(displayConfig))
+    let config = this.form.formControlWrapper.getClearedValuesConfig();
     this.form.patchValue(config)
   }
 }

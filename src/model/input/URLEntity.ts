@@ -6,6 +6,10 @@ class URLEntity extends InputEntity<URL> {
     super(InputType.URL)
   }
 
+  override convertToDatatableValue(value: any) {
+    return `<a class="number" href="${value}">${value}</a>`
+  }
+
   override convertToDisplayValue(value: URL | string | null): string {
     if (value instanceof URL) return (value as URL).toString()
     return !!value ? value as string : '';

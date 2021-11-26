@@ -18,5 +18,8 @@
   },
   "publishConfig": {
     "brunotot:registry": "https://npm.pkg.github.com"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.177"
   }
 }
