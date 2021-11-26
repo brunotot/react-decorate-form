@@ -26,6 +26,7 @@ import { SelectFilterPipe } from './pipe/SelectFilterPipe';
 import { BaseDatatableComponent } from './component/datatable/base-datatable/base-datatable.component';
 import { SafeHtmlPipe } from './pipe/SafeHtmlPipe';
 import { PaginationPipe } from './pipe/PaginationPipe';
+import { DtEntryDetailsComponent } from './component/datatable/dt-entry-details.ts/dt-entry-details.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { PaginationPipe } from './pipe/PaginationPipe';
     SelectFilterPipe,
     SafeHtmlPipe,
     PaginationPipe,
-    BaseDatatableComponent
+    BaseDatatableComponent,
+    DtEntryDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +82,8 @@ import { PaginationPipe } from './pipe/PaginationPipe';
     HiddenImplComponent,
     PasswordImplComponent,
     SearchImplComponent,
-    EmailImplComponent
+    EmailImplComponent,
+    DtEntryDetailsComponent
   ],
   providers: [
     PaginationPipe

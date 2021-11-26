@@ -6,7 +6,6 @@ class TextEntity extends InputEntity<string> {
     super([
       InputType.TEXT,
       InputType.TEXTAREA,
-      InputType.HIDDEN,
       InputType.SEARCH
     ])
   }

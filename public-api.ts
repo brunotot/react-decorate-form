@@ -25,6 +25,7 @@ import { UrlImplComponent } from './src/component/form-group/impl/url-impl/url-i
 import { NoBrowserSupportComponent } from './src/component/form-group/no-browser-support/no-browser-support.component';
 import Validators from './src/model/Validators';
 import { BaseDatatableComponent } from './src/component/datatable/base-datatable/base-datatable.component';
+import { DtEntryDetailsComponent } from './src/component/datatable/dt-entry-details.ts/dt-entry-details.component';
 
 export { RangeImplComponent };
 export { ColorImplComponent };
@@ -53,3 +54,4 @@ export { UrlImplComponent };
 export { NoBrowserSupportComponent };
 export { Validators };
 export { BaseDatatableComponent };
+export { DtEntryDetailsComponent };

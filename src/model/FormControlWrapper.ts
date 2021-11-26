@@ -8,12 +8,14 @@ import { build } from "./ValidatorBuilder";
 import InputEntity from "./input/base/InputEntity";
 import Validators from "./Validators";
 import { getInputEntity } from "../utility/InputEntityUtils";
+import { cloneDeep } from 'lodash'
 
 export interface IValidationErrorGroup { [formControlName: string]: IValidatorConfig[] }
 export interface IFormControlWrapper { [formControlName: string]: FormControl }
 export interface IValidatorConfig { validator: ValidatorFn, message: string, validatorName: string }
 
 export interface IDisplayConfig {
+  enableSearch?: boolean,
   formControlName: string,
   inputEntity: InputEntity<any>,
   inputType: InputType,
@@ -25,6 +27,7 @@ export interface IDisplayConfig {
   rows?: number,
   min?: number,
   max?: number,
+  allowClear?: boolean,
   validatorConfigs?: (
       ISelectSingleValidatorConfig
     | ISelectMultipleValidatorConfig
@@ -68,7 +71,7 @@ export default class FormControlWrapper {
   public withFileSingle   = (config: IFormInputFileSingleConfig)   => this.set({...config, inputType: InputType.FILE} as any)
   public withFileMultiple = (config: IFormInputFileMultipleConfig) => this.set({...config, multiple: true, inputType: InputType.FILE} as any)
 
-  public withHidden   = (formControlName: string)          => this.set({inputType: InputType.HIDDEN, formControlName} as any)
+  public withHidden   = (formControlName: string, label: string)          => this.set({label, inputType: InputType.HIDDEN, formControlName} as any)
   public withNumber   = (config: IFormInputNumberConfig)   => this.set({...config, inputType: InputType.NUMBER} as any)
   public withText     = (config: IFormInputTextConfig)     => this.set({...config, inputType: InputType.TEXT} as any)
   public withTextArea = (config: IFormInputTextAreaConfig) => this.set({...config, inputType: InputType.TEXTAREA} as any)
@@ -134,14 +137,16 @@ export default class FormControlWrapper {
       placeholder: displayConfig.placeholder || 'Choose',
       width: '100%',
       id: displayConfig.formControlName,
-      allowClear: true
+      allowClear: true,
+      enableSearch: true
     }
     let select2Config: ISelect2Config = (displayConfig as any)?.select2Config || defaultSelect2Config;
     select2Config = {
       ...select2Config,
       width: select2Config.width ? select2Config.width : defaultSelect2Config.width,
       allowClear: select2Config.allowClear === undefined ? defaultSelect2Config.allowClear : select2Config.allowClear,
-      data: select2Config.data
+      data: select2Config.data,
+      enableSearch: select2Config.enableSearch === undefined ? defaultSelect2Config.enableSearch : select2Config.enableSearch,
     };
     return select2Config;
   }
@@ -188,7 +193,6 @@ export default class FormControlWrapper {
   }
 
   public toForm(formValue: {[key: string]: any} = this.getClearedValuesConfig()): Form {
-    this.buildInitialControls(formValue);
-    return new Form(this);
+    return new Form(cloneDeep(this).buildInitialControls(formValue))
   }
 }

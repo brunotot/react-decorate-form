@@ -9,12 +9,20 @@ class FileEntity extends InputEntity<IFile | IFile[]> {
     super(InputType.FILE)
   }
 
+  override convertToDatatableValueReadOnly(value: any) {
+    let files: IFile[] = value ? (Array.isArray(value) ? value : [value]) : [];
+    let fileNames: string[] = files.map(file => file.name);
+    return fileNames.join(" ");
+  }
+
   override convertToDatatableValue(value: any) {
     let files: IFile[] = value ? (Array.isArray(value) ? value : [value]) : [];
-    let html = '';
+    let html = '<div>';
     for (let file of files) {
       html += `<span class="badge bg-primary">${file.name}</span>`
     }
+    if (html === '<div>') html = '';
+    else html += '</div>'
     return html === '' ? HTML_NO_DATA : html;
   }
 

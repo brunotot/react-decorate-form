@@ -7,9 +7,13 @@ class DateTimeEntity extends InputEntity<Date> {
     super(InputType.DATETIME)
   }
 
+  override convertToDatatableValueReadOnly(value: any) {
+    return dateFormatted(value) + ' ' + timeFormatted(value);
+  }
+
   override convertToDatatableValue(value: any) {
     return `
-      <div class="d-flex flex-column">
+      <div class="d-flex dt-datetime-wrapper">
         <span>${dateFormatted(value)}</span>
         <span>${timeFormatted(value)}</span>
       </div>

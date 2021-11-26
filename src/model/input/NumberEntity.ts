@@ -7,7 +7,7 @@ class NumberEntity extends InputEntity<number> {
   }
 
   override convertToDatatableValue(value: any) {
-    return `${Number(value)}`
+    return `<span class="number">${Number(value)}</span>`
   }
 
   override convertToDisplayValue(value: number | null): string | null {

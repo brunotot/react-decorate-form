@@ -1,4 +1,4 @@
-import { IValidatorConfig } from "../model/FormControlWrapper";
+import { IDisplayConfig, IValidatorConfig } from "../model/FormControlWrapper";
 import { ICheckboxValidatorConfig, IColorValidatorConfig, IDateTimeValidatorConfig, IDateValidatorConfig, IEmailValidatorConfig, IFileMultipleValidatorConfig, IFileSingleValidatorConfig, IMonthValidatorConfig, INumberValidatorConfig, IPasswordValidatorConfig, IPhoneValidatorConfig, IRangeValidatorConfig, ISearchValidatorConfig, ISelectMultipleValidatorConfig, ISelectSingleValidatorConfig, ITextAreaValidatorConfig, ITextValidatorConfig, ITimeValidatorConfig, IURLValidatorConfig, IWeekValidatorConfig } from "./ValidatorConfig";
 
 export interface IFormInputHiddenConfig {
@@ -20,8 +20,11 @@ export interface ISelect2Config {
   data?: Select2OptionData[],
   dropdownParent?: any,
   allowClear?: boolean,
-  multiple?: boolean
+  multiple?: boolean,
+  enableSearch?: boolean
 }
+
+export interface IDisplayConfigMap {[key: string]: IDisplayConfig}
 
 export interface IFormInputSelectSingleConfig {
   formControlName: string,
@@ -29,6 +32,7 @@ export interface IFormInputSelectSingleConfig {
   data: Select2OptionData[],
   label: string,
   allowClear?: boolean,
+  enableSearch?: boolean,
   validatorConfigs?: (ISelectSingleValidatorConfig | IValidatorConfig)[]
 }
 
@@ -37,6 +41,7 @@ export interface IFormInputSelectMultipleConfig {
   placeholder?: string,
   data: Select2OptionData[],
   allowClear?: boolean,
+  enableSearch?: boolean,
   label: string,
   validatorConfigs?: (ISelectMultipleValidatorConfig | IValidatorConfig)[]
 }

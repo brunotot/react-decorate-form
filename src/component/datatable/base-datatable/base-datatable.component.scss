@@ -9,6 +9,9 @@
   width: 2em; 
   height: 2em; 
   border-radius: 0.5rem; 
+}
+
+table .dt-color {
   margin: 0 auto;
 }
 
@@ -89,6 +92,46 @@ tbody tr td {
 .row-btns-container {
   justify-content: space-between;
   flex-wrap: nowrap;
+}
+
+.dt-color-wrapper {
+  display: flex;
+}
+
+table .dt-color-wrapper {
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.entry-details .dt-color-wrapper {
+  flex-wrap: nowrap;
+  flex-direction: row;
+  column-gap: 4px;
+}
+
+.entry-details .dt-color-hex {
+  padding-top: 0.25rem;
+}
+
+.entry-details .dt-datetime-wrapper {
+  column-gap: 10px;
+  flex-direction: row;
+}
+
+table .dt-datetime-wrapper {
+  flex-direction: column;
+}
+
+.save-btn {
+  max-width: 100px; 
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 450px) {
+  .save-btn {
+    margin: 0;
+    max-width: 100%;
+  }
 }
 
 @media screen and (max-width: 768px) {

@@ -13,8 +13,18 @@ class ColorEntity extends InputEntity<IColor> {
     this.variableGroupValidators = this.getVariableGroupValidators(this.getRegexInputs());
   }
 
+  override convertToDatatableValueReadOnly(value: any) {
+    return this.convertToFormValue(value).hex;
+  }
+
   override convertToDatatableValue(value: any) {
-    return `<div class="dt-color" style="background-color: ${value}"></div>`
+    value = this.convertToFormValue(value);
+    return `
+      <div class="dt-color-wrapper">
+        <span class="dt-color-hex">${value.hex}</span>
+        <div class="dt-color" title="${value.hex}" style="background-color: ${value.hex}"></div>
+      </div>
+    `
   }
 
   override formatInputsToUsedEntity(): IColor | null {
