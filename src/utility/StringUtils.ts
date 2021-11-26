@@ -31,4 +31,10 @@ export function addWordOntoLine(line: string, word: string) {
   return(line += word);
 }
 
+export function extractHTMLContent(text: string) {
+  var span = document.createElement('span');
+  span.innerHTML = text;
+  return span.textContent || span.innerText;
+};
+
 export const HTML_NO_DATA = `<span class="no-data">no data</span>`

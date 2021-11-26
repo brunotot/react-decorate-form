@@ -135,13 +135,17 @@ export class BaseDatatableComponent implements OnInit {
   }
 
   get totalNumberOfPages() {
-    let filteredElementsWithoutPagination = this.paginatePipe.transform(this.data, this.searchFilter);
+    let filteredElementsWithoutPagination = this.paginatePipe.transform(
+      this.data, 
+      this.searchFilter)
     let val = Math.ceil(filteredElementsWithoutPagination.length / this.entriesValue);
     return val < 1 ? 1 : val;
   }
 
   get totalNumberOfFilteredElements() {
-    return this.paginatePipe.transform(this.data, this.searchFilter).length;
+    return this.paginatePipe.transform(
+      this.data, 
+      this.searchFilter).length;
   }
 
   get totalNumberOfFilteredAndPaginatedElements() {
@@ -149,7 +153,11 @@ export class BaseDatatableComponent implements OnInit {
   }
 
   get filteredAndPaginatedArray() {
-    return this.paginatePipe.transform(this.data, this.searchFilter, this.entriesValue, this.pageNumber);
+    return this.paginatePipe.transform(
+      this.data, 
+      this.searchFilter,
+      this.entriesValue, 
+      this.pageNumber);
   }
 
   getInputEntity(formControlName: string) {

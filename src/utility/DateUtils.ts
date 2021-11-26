@@ -1,6 +1,6 @@
 import { ITime, IWeek } from "../model/ValidatorBuilder";
 
-const MONTH_NAMES = [
+export const MONTH_NAMES = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
@@ -36,7 +36,6 @@ export function monthFormatted(item: any): string {
 }
 
 export function weekFormatted(item: any): string {
-  debugger;
   let weekInstance = item as IWeek;
   let year = `${weekInstance.year}`;
   let week = `${weekInstance.week}`;
