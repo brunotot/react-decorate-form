@@ -11,7 +11,7 @@ class WeekEntity extends InputEntity<IWeek> {
   }
 
   override convertToDatatableValue(value: any) {
-    return `<span class="number">${weekFormatted(value)}</span>`
+    return `<span class="number">${weekFormatted(this.convertToFormValue(value))}</span>`
   }
 
   override formatInputsToUsedEntity(): IWeek | null {

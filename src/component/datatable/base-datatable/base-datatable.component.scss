@@ -91,14 +91,6 @@ tbody tr td {
   flex-wrap: nowrap;
 }
 
-.search::after {
-  content: 'test';
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  background-color: red;
-}
-
 @media screen and (max-width: 768px) {
   .row-btns-container {
     flex-direction: column;

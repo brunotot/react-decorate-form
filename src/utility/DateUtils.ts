@@ -36,6 +36,7 @@ export function monthFormatted(item: any): string {
 }
 
 export function weekFormatted(item: any): string {
+  debugger;
   let weekInstance = item as IWeek;
   let year = `${weekInstance.year}`;
   let week = `${weekInstance.week}`;
