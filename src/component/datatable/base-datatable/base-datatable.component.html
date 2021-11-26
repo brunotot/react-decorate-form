@@ -1,0 +1,108 @@
+<ng-container *ngIf="data.length > 0 && formControlWrapper">
+  <form [formGroup]="entriesForm">
+    <div #containerDiv>
+      <button class="btn btn-outline-success" (click)="toggleModal()">Create new</button><br>
+      <hr>
+      <div class="d-flex justify-content-between" style="row-gap: 8px">
+        <div class="input-group flex-nowrap justify-content-start">
+          <span class="input-group-text">Limit</span>
+          <ngxp-select2-impl
+            [displayConfig]="entriesForm.findDisplayConfig('entries')"
+            [value]="'10'"
+            [form]="entriesForm">
+          </ngxp-select2-impl>
+        </div>
+        <div class="input-group flex-nowrap justify-content-end">
+          <input type="search" class="form-control search" style="max-width: 200px" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchFilter" placeholder="Search" />
+          <span class="input-group-text">
+            <span class="fa fa-search"></span>
+          </span>
+        </div>
+      </div>
+      <table #table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 42px !important; min-width: 42px !important; max-width: 42px !important"></th>
+            <ng-container *ngFor="let pair of controls; let i = index">
+              <th 
+                [style.min-width]="calculateTextColumnWidthBase(pair.key)"
+                [ngClass]="getInputType(pair.key).concat(' ', isText(getInputType(pair.key)) ? 'th-text' : '')" 
+                *ngIf="i < controls.length - removeFromEnd">
+                {{ pair.key }}
+              </th>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody #tableBodyRef>
+          <tr *ngFor="let item of filteredAndPaginatedArray; let i = index">
+            <td style="position: relative; width: 42px !important; min-width: 42px !important; max-width: 42px !important">
+              <span (click)="onClickMore(i)" [ngClass]="'btn-more fa '.concat(clickedIndex === i ? 'fa-minus-red' : 'fa-plus')" style="user-select: none; cursor: pointer; width: 20px; height: 20px; margin-top: 4px"></span>
+              <div 
+                class="more-btns-wrapper"
+                [style.display]="clickedIndex === i ? 'flex' : 'none'"
+                style="position: absolute; flex-direction: row; left: 40px; flex-wrap: nowrap; column-gap: 5px; top: calc(50% - 21px); padding: 7px; border-radius: 0.25rem; border: 1px solid white; background: lightgrey">
+                <button class="action btn btn-primary btn-sm"><span class="action fa fa-info-white"></span></button>
+                <button (click)="toggleModal(item)" class="action btn btn-info btn-sm"><span class="action fa fa-edit"></span></button>
+                <button class="action btn btn-danger btn-sm"><span class="action fa fa-trash-white"></span></button>
+              </div>
+            </td>
+            <ng-container *ngFor="let pair of controls; let i = index">
+              <td [ngClass]="isText(getInputType(pair.key)) ? 'td-text' : ''" *ngIf="i < controls.length - removeFromEnd">
+                <ng-container *ngFor="let inputType of [getInputType(pair.key)]">
+                  <span *ngIf="item[pair.key] === null || item[pair.key] === undefined || item[pair.key] === '' || item[pair.key] === []" class="no-data">no data</span>
+                  <ng-container *ngIf="item[pair.key] !== null && item[pair.key] !== undefined && item[pair.key] !== '' && item[pair.key] !== []" [ngSwitch]="true">
+                    <div [outerHTML]="getReadValue(pair.key, item[pair.key]) | safeHtml"></div>
+                  </ng-container>
+                </ng-container>
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+      <div #container class="d-flex w-100 flex-wrap row-btns-container" style="row-gap: 8px">
+        <span
+          style="padding-top: 7px; white-space: nowrap;">
+          {{ calculateShowingText }}
+        </span>
+  
+        <div class="d-flex" style="column-gap: 2px">
+          <button (click)="toBeginning()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-double-left"></span></button>
+          <button (click)="toPrevious()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-left"></span></button>
+
+          <div class="pagination-wrapper input-group w-auto flex-nowrap">
+            <span class="input-group-text">Page</span>
+            <ngxp-default-impl
+              [displayConfig]="entriesForm.findDisplayConfig('pageNumber')"
+              [value]="pageNumber"
+              [form]="entriesForm">
+            </ngxp-default-impl>
+            <span class="input-group-text">of {{ totalNumberOfPages }}</span>
+          </div>
+
+          <button (click)="toNext()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-right"></span></button>
+          <button (click)="toLast()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-double-right"></span></button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <hr>
+</ng-container>
+
+<ng-container *ngIf="data.length === 0 || !formControlWrapper">
+  <span class="text-danger">No data for display</span>
+</ng-container>
+
+<div id="myModal" class="modal" [style.display]="modalDisplay" #modalRef>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="mb-0">{{ modalTitle }}</h5>
+        <span (click)="closeModal()" style="margin-right: 8px; cursor: pointer" class="close">&times;</span>
+      </div>
+      <ngxp-form
+        [form]="form"
+        [fnSubmit]="onSubmitFn">
+      </ngxp-form>
+    </div>
+  </div>
+</div>

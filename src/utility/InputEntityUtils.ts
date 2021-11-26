@@ -4,8 +4,11 @@ import ColorEntity from "../model/input/ColorEntity";
 import DateEntity from "../model/input/DateEntity";
 import DateMonthEntity from "../model/input/DateMonthEntity";
 import DateTimeEntity from "../model/input/DateTimeEntity";
+import EmailEntity from "../model/input/EmailEntity";
 import FileEntity from "../model/input/FileEntity";
+import HiddenEntity from "../model/input/HiddenEntity";
 import NumberEntity from "../model/input/NumberEntity";
+import PasswordEntity from "../model/input/PasswordEntity";
 import PhoneEntity from "../model/input/PhoneEntity";
 import RangeEntity from "../model/input/RangeEntity";
 import SelectEntity from "../model/input/SelectEntity";
@@ -55,7 +58,10 @@ const INPUT_ENTITITES: InputEntity<any>[] = [
   FileEntity,
   WeekEntity,
   RangeEntity,
-  SelectEntity
+  SelectEntity,
+  EmailEntity,
+  PasswordEntity,
+  HiddenEntity
 ]
 
 const TEXT_INPUT_TYPES = [
@@ -69,6 +75,13 @@ const TEXT_INPUT_TYPES = [
   InputType.URL
 ]
 
+const TEXT_INPUT_DISPLAY_TYPES = [
+  InputType.TEXT,
+  InputType.TEXTAREA,
+  InputType.HIDDEN,
+  InputType.SEARCH,
+]
+
 export function getInputEntity(inputType: InputType): InputEntity<any> {
   return INPUT_ENTITITES.find(inputEntity => inputEntity.inputTypes.includes(inputType)) || TextEntity;
 }
@@ -77,8 +90,18 @@ function isTextInternal(inputType: InputType) {
   return TEXT_INPUT_TYPES.includes(inputType);
 }
 
+function isTextDisplayInternal(inputType: InputType) {
+  return TEXT_INPUT_DISPLAY_TYPES.includes(inputType);
+}
+
 export function isText(inputTypes: InputType | InputType[] = []) {
   return Array.isArray(inputTypes) 
     ? !!inputTypes.find(inputType => isTextInternal(inputType)) 
     : isTextInternal(inputTypes)
+}
+
+export function isTextDisplay(inputTypes: InputType | InputType[] = []) {
+  return Array.isArray(inputTypes) 
+    ? !!inputTypes.find(inputType => isTextDisplayInternal(inputType)) 
+    : isTextDisplayInternal(inputTypes)
 }

@@ -13,6 +13,10 @@ class ColorEntity extends InputEntity<IColor> {
     this.variableGroupValidators = this.getVariableGroupValidators(this.getRegexInputs());
   }
 
+  override convertToDatatableValue(value: any) {
+    return `<div class="dt-color" style="background-color: ${value}"></div>`
+  }
+
   override formatInputsToUsedEntity(): IColor | null {
     let redInputValue = this.variableGroupValidators[0].value;
     let greenInputValue = this.variableGroupValidators[1].value;

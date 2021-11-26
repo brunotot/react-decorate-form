@@ -6,6 +6,10 @@ class RangeEntity extends InputEntity<number> {
   constructor() {
     super(InputType.RANGE)
   }
+  
+  override convertToDatatableValue(value: any) {
+    return `${Number(value)}`
+  }
 
   override getDefaultFormValue(displayConfig: IDisplayConfig) {
     return Math.round((displayConfig.max! + displayConfig.min!) / 2)

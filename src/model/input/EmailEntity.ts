@@ -1,14 +1,13 @@
 import { InputType } from "../InputType";
 import InputEntity from "./base/InputEntity";
 
-class TextEntity extends InputEntity<string> {
+class EmailEntity extends InputEntity<string> {
   constructor() {
-    super([
-      InputType.TEXT,
-      InputType.TEXTAREA,
-      InputType.HIDDEN,
-      InputType.SEARCH
-    ])
+    super(InputType.EMAIL)
+  }
+
+  override convertToDatatableValue(value: any) {
+    return `<a class="number" href="mailto:${value}">${value}</a>`
   }
 
   override convertToDisplayValue(value: string | null): string {
@@ -20,4 +19,4 @@ class TextEntity extends InputEntity<string> {
   }
 }
 
-export default new TextEntity();
+export default new EmailEntity();

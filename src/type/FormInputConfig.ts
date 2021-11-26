@@ -28,6 +28,7 @@ export interface IFormInputSelectSingleConfig {
   placeholder?: string,
   data: Select2OptionData[],
   label: string,
+  allowClear?: boolean,
   validatorConfigs?: (ISelectSingleValidatorConfig | IValidatorConfig)[]
 }
 
@@ -35,6 +36,7 @@ export interface IFormInputSelectMultipleConfig {
   formControlName: string,
   placeholder?: string,
   data: Select2OptionData[],
+  allowClear?: boolean,
   label: string,
   validatorConfigs?: (ISelectMultipleValidatorConfig | IValidatorConfig)[]
 }

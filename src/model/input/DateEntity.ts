@@ -1,9 +1,14 @@
+import { dateFormatted } from "../../utility/DateUtils";
 import { InputType } from "../InputType";
 import InputEntity from "./base/InputEntity";
 
 class DateEntity extends InputEntity<Date> {
   constructor() {
     super(InputType.DATE)
+  }
+
+  override convertToDatatableValue(value: any) {
+    return `<span>${dateFormatted(value)}</span>`
   }
 
   override convertToDisplayValue(value: Date | string | null): string | null {

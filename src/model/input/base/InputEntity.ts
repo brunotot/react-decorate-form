@@ -1,8 +1,10 @@
-import { IRegex, isText, IVariableGroupValidator } from "../../../utility/InputEntityUtils";
+import { splitIntoLines } from "../../../utility/StringUtils";
+import { IRegex, isText, isTextDisplay, IVariableGroupValidator } from "../../../utility/InputEntityUtils";
 import { IDisplayConfig } from "../../FormControlWrapper"
 import { InputType } from "../../InputType"
 
 const MSG_METHOD_NOT_IMPLEMENTED = 'Method not implemented'
+const MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX = 15;
 
 export default class InputEntity<FORM_TYPE> {
   variableGroupValidators: IVariableGroupValidator[] = [];
@@ -34,6 +36,20 @@ export default class InputEntity<FORM_TYPE> {
 
   convertToFormValue(value: string | FORM_TYPE | null, displayConfig: IDisplayConfig | undefined = undefined): FORM_TYPE | null {
     throw new Error(MSG_METHOD_NOT_IMPLEMENTED)
+  }
+
+  convertToDatatableValue(value: string | FORM_TYPE | null, displayConfig: IDisplayConfig | undefined = undefined) {
+    if (isTextDisplay(this.inputTypes)) {
+      let text = String(value);
+      let splittedLines = splitIntoLines(text, MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX);
+      if (splittedLines.length > 2) {
+        let secondValue = splittedLines[1];
+        secondValue = secondValue.length <= 12 ? secondValue.concat('...') : secondValue.substring(0, secondValue.length - 3).concat('...')
+        text = splittedLines[0].concat(' ', secondValue);
+      }
+      return `<span title="${text}" class="text-display">${text}</span>`
+    }
+    throw new Error(`${MSG_METHOD_NOT_IMPLEMENTED} [${this.inputTypes.join(", ")}]`)
   }
 
   getDefaultFormValue(displayConfig: IDisplayConfig | undefined = undefined): FORM_TYPE | null {

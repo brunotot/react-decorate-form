@@ -20,6 +20,10 @@ class PhoneEntity extends InputEntity<IPhone> {
     super(InputType.PHONE)
   }
 
+  override convertToDatatableValue(value: any) {
+    return `<a class="number" href="tel:${value}">${value}</a>`
+  }
+
   override getDefaultFormValue(): IPhone {
     return {
       areaCode: '',

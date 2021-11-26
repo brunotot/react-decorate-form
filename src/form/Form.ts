@@ -5,6 +5,10 @@ import { IBaseForm } from "./base/BaseForm";
 export class Form extends FormGroup implements IBaseForm {
   formControlWrapper: FormControlWrapper;
 
+  findDisplayConfig(formControlName: string) {
+    return this.formControlWrapper.displayConfigs.find(dc => dc.formControlName === formControlName)!;
+  }
+
   constructor(formControlWrapper: FormControlWrapper) {
     super(formControlWrapper.initialControls)
     this.formControlWrapper = formControlWrapper;
