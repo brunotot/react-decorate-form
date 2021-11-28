@@ -31,7 +31,18 @@ tbody tr td {
   max-width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
-  //word-break: break-word;
+}
+
+.row-btns-container-column .nav-btns-wrapper {
+  flex-wrap: wrap;
+}
+
+.nav-btns-wrapper {
+  display: flex !important;
+  column-gap: 2px; 
+  max-width: 100%; 
+  flex: 1; 
+  justify-content: flex-end
 }
 
 .btn-nav {
@@ -126,6 +137,44 @@ table .dt-datetime-wrapper {
   margin: 0 auto;
 }
 
+.limit-container {
+  flex-wrap: nowrap !important;
+  justify-content: flex-start;
+  width: auto 
+}
+
+.actions-wrapper-row .limit-container {
+  width: auto !important;
+}
+
+.actions-wrapper {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 8px;
+  &-row {
+    flex-wrap: nowrap;
+  }
+}
+
+.search-container {
+  display: flex;
+  row-gap: 8px; 
+  column-gap: 4px
+}
+
+.actions-wrapper-column .search-container,
+.actions-wrapper-column .limit-container {
+  width: 100%
+}
+
+.btn-create {
+  z-index: 1; 
+  column-gap: 4px;
+  display: flex !important;
+  align-items: center
+}
+
 // TODO: Fix
 @media screen and (max-width: 450px) {
   .save-btn {
@@ -150,4 +199,49 @@ table .dt-datetime-wrapper {
   justify-content: space-between;
   flex-direction: row;
   flex-wrap: nowrap;
+}
+
+.sorting {
+  position: relative;
+  padding-right: 15px !important;
+  user-select: none;
+  cursor: pointer
+}
+
+.sorting::after,
+.sorting::before {
+  border-color: #DDDDDD;
+}
+
+.sorting::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top-width: 5px;
+  border-top-style: solid;
+  position: absolute;
+  bottom: 10px;
+  right: 0;
+}
+
+.sorting::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom-width: 5px;
+  border-bottom-style: solid;
+  position: absolute;
+  top: 10px;
+  right: 0;
+}
+
+.sorting_desc::after {
+  border-top-color: #7A80DD;
+}
+.sorting_asc::before {
+  border-bottom-color: #7A80DD;
 }

@@ -1,32 +1,40 @@
 <ng-container *ngIf="data.length > 0 && formControlWrapper">
   <form [formGroup]="entriesForm">
     <div #containerDiv>
-      <hr>
-      <div class="d-flex justify-content-between" style="row-gap: 8px">
-        <div class="input-group flex-nowrap justify-content-start">
-          <span class="input-group-text">Limit</span>
-          <ngxp-select2-impl
-            [displayConfig]="entriesForm.findDisplayConfig('entriesPerPage')"
-            [value]="'10'"
-            [form]="entriesForm">
-          </ngxp-select2-impl>
+      <div [ngClass]="'actions-wrapper '.concat(actionsClassCalculated)" #actionsContainer>
+        <div class="search-container" #actionsLeft>
+          <div class="input-group limit-container">
+            <span class="input-group-text">Limit</span>
+            <ngxp-select2-impl
+              [displayConfig]="entriesForm.findDisplayConfig('entriesPerPage')"
+              [value]="'10'"
+              [form]="entriesForm">
+            </ngxp-select2-impl>
+          </div>
+          <button class="btn btn-primary btn-icon btn-create" (click)="openCreateModal()">
+            <span class="fa fa-plus-white d-flex mt-0" style="margin-bottom: 2px"></span>
+            <span>Create</span>
+          </button>
         </div>
-        <div class="input-group flex-nowrap justify-content-end">
-          <input type="search" class="form-control search" style="max-width: 200px" formControlName="searchFilter" placeholder="Search" />
-          <span class="input-group-text">
-            <span class="fa fa-search"></span>
-          </span>
-          <button style="z-index: 1" class="btn btn-primary btn-icon" (click)="openCreateModal()"><span class="fa fa-plus-white"></span></button>
+        <div class="search-container" #actionsRight>
+          <div class="input-group flex-nowrap justify-content-end">
+            <input type="search" class="form-control search" formControlName="searchFilter" placeholder="Search" />
+            <span class="input-group-text">
+              <span class="fa fa-search"></span>
+            </span>
+          </div>
         </div>
       </div>
+
       <table #table class="table table-striped">
         <thead>
           <tr>
             <th style="width: 42px !important; min-width: 42px !important; max-width: 42px !important"></th>
             <ng-container *ngFor="let formControlName of formControlNames; trackBy:trackByIndex; let i = index">
               <th 
+                (click)="onSortClick(formControlName)"
                 [style.min-width]="calculateTextColumnWidthBase(formControlName)"
-                [ngClass]="getInputType(formControlName).concat(' ', isText(getInputType(formControlName)) ? 'th-text' : '')" 
+                [ngClass]="getInputType(formControlName).concat(' sorting', sortingFormControlName === formControlName ? ' sorting_'.concat(sortingType) : '', isText(getInputType(formControlName)) ? ' th-text' : '')" 
                 *ngIf="i < formControlNames.length - removeFromEnd">
                 {{ formControlName }}
               </th>
@@ -57,14 +65,15 @@
         </tbody>
       </table>
       <div #navContainer [ngClass]="'d-flex w-100 flex-wrap row-btns-container '.concat(navClassCalculated)" style="row-gap: 8px; column-gap: 4px;">
-        <span #navLeft
-          style="padding-top: 7px; white-space: nowrap;">
+        <span #navLeft class="pt-2">
           {{ calculateShowingText }}
         </span>
   
-        <div #navMiddle class="d-flex" style="column-gap: 2px; max-width: 100%; flex: 1; justify-content: flex-end">
-          <button (click)="toBeginning()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-double-left"></span></button>
-          <button (click)="toPrevious()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-left"></span></button>
+        <div #navMiddle class="nav-btns-wrapper">
+          <div class="d-flex">
+            <button (click)="toBeginning()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-double-left"></span></button>
+            <button (click)="toPrevious()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-left"></span></button>
+          </div>
 
           <div class="pagination-wrapper input-group w-auto flex-nowrap">
             <span class="input-group-text">Page</span>
@@ -75,8 +84,10 @@
             <span class="input-group-text">of {{ maxNumberOfPages }}</span>
           </div>
 
-          <button (click)="toNext()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-right"></span></button>
-          <button (click)="toLast()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-double-right"></span></button>
+          <div class="d-flex">
+            <button (click)="toNext()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-right"></span></button>
+            <button (click)="toLast()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-double-right"></span></button>
+          </div>
         </div>
 
         <button #navRight (click)="doSave()" [ngClass]="'btn btn-success btn-icon save-btn'.concat(changesMade ? '' : ' disabled')">
@@ -86,7 +97,6 @@
       </div>
     </div>
   </form>
-  <hr>
 </ng-container>
 
 <ng-container *ngIf="data.length === 0 || !formControlWrapper">

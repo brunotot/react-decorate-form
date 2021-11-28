@@ -3,11 +3,12 @@ import { Form } from "../../../form/Form";
 import { IForm } from "../../../form/base/BaseForm";
 import { InputType } from "../../../model/InputType";
 import FormControlWrapper from "../../../model/FormControlWrapper";
-import { isTextDisplay } from "../../../utility/InputEntityUtils";
+import { getCompareFn, isTextDisplay, SortingType } from "../../../utility/InputEntityUtils";
 import { IDisplayConfigMap } from "../../../type/FormInputConfig";
 import { ModalComponent } from "../../dialog/modal/modal.component";
 import { ISave } from "../../../type/DatatableConfig";
 
+const MAX_ACTIONS_CONTAINER_WIDTH = 453;
 const MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX = 15;
 const MAX_TEXT_COLUMN_WIDTH_IN_PX = 150;
 const PX_IN_EM = 0.6668;
@@ -57,6 +58,9 @@ export class BaseDatatableComponent implements OnInit {
   @ViewChild('navRight') navRight!: ElementRef;
   @ViewChild('navLeft') navLeft!: ElementRef;
   @ViewChild("table") table!: ElementRef;
+  @ViewChild('actionsContainer') actionsContainer!: ElementRef;
+  @ViewChild('actionsLeft') actionsLeft!: ElementRef;
+  @ViewChild('actionsRight') actionsRight!: ElementRef;
 
   paginationState: IPaginationState = DEFAULT_PAGINATION_STATE
   previousContainerDivWidths: {[key: string]: number} = {};
@@ -64,6 +68,8 @@ export class BaseDatatableComponent implements OnInit {
   previousTableWidths: {[key: string]: number} = {};
   totalNumberOfFilteredElements!: number;
   filteredAndPaginatedArray: any[] = [];
+  actionsClassCalculated: string = '';
+  navClassCalculated: string = '';
   formControlNames: string[] = [];
   containerDivWidth: number = 0;
   createdEntries: any[] = [];
@@ -75,6 +81,8 @@ export class BaseDatatableComponent implements OnInit {
   InputType = InputType;
   form!: Form;
   isText = isTextDisplay;
+  sortingFormControlName: string = '';
+  sortingType: SortingType = SortingType.ASC
 
   entriesForm: Form = new FormControlWrapper()
     .withSelectSingle({
@@ -174,10 +182,26 @@ export class BaseDatatableComponent implements OnInit {
     return this.navMiddleWidth + this.navRightWidth 
   }
 
-  get navClassCalculated() { 
+  getNavClassCalculated() { 
     return this.navContainerWidth - this.navLeftSideWidth - this.navRightSideWidth < 0 
       ? 'row-btns-container-column' 
       : 'row-btns-container-row'
+  }
+
+  getActionsClassCalculated() {
+    let actionsContainerWidth = Number(this.actionsContainer?.nativeElement.offsetWidth);
+    return actionsContainerWidth > MAX_ACTIONS_CONTAINER_WIDTH 
+      ? 'actions-wrapper-row' 
+      : 'actions-wrapper-column'
+  }
+
+  ngDoCheck(): void {
+    if (this.actionsContainer?.nativeElement) {
+      this.actionsClassCalculated = this.getActionsClassCalculated()
+    }
+    if (this.navContainer?.nativeElement) {
+      this.navClassCalculated = this.getNavClassCalculated();
+    }
   }
   
   constructor() {
@@ -318,6 +342,16 @@ export class BaseDatatableComponent implements OnInit {
       }
       return false;
     })
+    if (this.sortingFormControlName) {
+      let displayConfig = this.displayConfigsByFormControlName[this.sortingFormControlName];
+      let { inputEntity } = displayConfig;
+      filteredArray.sort((a, b) => {
+        let valueA = a[this.sortingFormControlName];
+        let valueB = b[this.sortingFormControlName];
+        let compareFn = getCompareFn(inputEntity, displayConfig, this.sortingType)
+        return compareFn(valueA, valueB)
+      })
+    }
     this.totalNumberOfFilteredElements = filteredArray.length
     let startIndex = (currentPageNumber - 1) * entriesPerPage;
     let endIndex = startIndex + entriesPerPage;
@@ -415,5 +449,19 @@ export class BaseDatatableComponent implements OnInit {
 
   trackByIndex(index: number) { 
     return index 
+  }
+
+  onSortClick(formControlName: string) {
+    if (this.sortingFormControlName === formControlName) {
+      if (this.sortingType === 'asc') {
+        this.sortingType = SortingType.DESC;
+      } else {
+        this.sortingType = SortingType.ASC;
+        this.sortingFormControlName = '';
+      }
+    } else {
+      this.sortingFormControlName = formControlName;
+    }
+    this.triggerPaginationArrayChange()
   }
 }
