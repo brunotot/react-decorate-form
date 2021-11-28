@@ -1,6 +1,8 @@
 <div class="card px-3 py-2 entry-details" *ngIf="entry && displayConfigMap && formControlNames.length > 0">
   <div *ngFor="let formControlName of formControlNames" class="row mb-1">
-    <label class="col-form-label col-4 pt-2"><strong>{{ displayConfigMap[formControlName].label }}</strong></label>
+    <label class="col-form-label col-4 pt-2">
+      <strong>{{ displayConfigMap[formControlName].label }}</strong>
+    </label>
     <div class="col-8 py-2" [innerHTML]="getReadValue(formControlName) | safeHtml"></div>
   </div>
 </div>

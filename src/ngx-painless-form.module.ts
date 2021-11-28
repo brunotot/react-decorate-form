@@ -27,6 +27,7 @@ import { BaseDatatableComponent } from './component/datatable/base-datatable/bas
 import { SafeHtmlPipe } from './pipe/SafeHtmlPipe';
 import { PaginationPipe } from './pipe/PaginationPipe';
 import { DtEntryDetailsComponent } from './component/datatable/dt-entry-details.ts/dt-entry-details.component';
+import { ModalComponent } from './component/dialog/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { DtEntryDetailsComponent } from './component/datatable/dt-entry-details.
     SafeHtmlPipe,
     PaginationPipe,
     BaseDatatableComponent,
-    DtEntryDetailsComponent
+    DtEntryDetailsComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +65,7 @@ import { DtEntryDetailsComponent } from './component/datatable/dt-entry-details.
     ReactiveFormsModule
   ],
   exports: [
+    ModalComponent,
     BaseDatatableComponent,
     NoBrowserSupportComponent,
     UrlImplComponent,

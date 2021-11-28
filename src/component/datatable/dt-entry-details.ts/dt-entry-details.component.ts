@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { IDisplayConfigMap } from "../../../type/FormInputConfig";
 import { IForm } from "../../../form/base/BaseForm";
 
@@ -20,7 +20,6 @@ export class DtEntryDetailsComponent implements OnInit {
 
   getReadValue(formControlName: string) {
     let displayConfig = this.displayConfigMap[formControlName];
-    let { inputEntity } = displayConfig;
-    return inputEntity.convertToDatatableValue(this.entry[formControlName], displayConfig, true)
+    return displayConfig.inputEntity.convertToDatatableValue(this.entry[formControlName], displayConfig, true)
   }
 }
