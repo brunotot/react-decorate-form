@@ -3,7 +3,7 @@
 Agonising form creation made easy. 
 Simply create fully responsive and validated forms within minutes. 
 Made with Angular v13 and Bootstrap 5 design.
-Fully responsive for screen widths 250px or higher!
+Fully responsive for screen widths 250px and higher!
 
 ## Installation
 
