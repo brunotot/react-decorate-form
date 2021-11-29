@@ -18,7 +18,7 @@ function getTextDisplayObject(value: any, displayFullValue: boolean): { text: st
   }
   return {
     text,
-    html: `<span title="${text}" class="text-display">${text}</span>`
+    html: `<span class="text-display">${text}</span>`
   }
 }
 

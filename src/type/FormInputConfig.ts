@@ -24,6 +24,11 @@ export interface ISelect2Config {
   enableSearch?: boolean
 }
 
+export interface IColumnConfig {
+  formControlName: string,
+  label?: string
+}
+
 export interface IDisplayConfigMap {[key: string]: IDisplayConfig}
 
 export interface IFormInputSelectSingleConfig {

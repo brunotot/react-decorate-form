@@ -3,10 +3,13 @@ import { Form } from "../../../form/Form";
 import { IForm } from "../../../form/base/BaseForm";
 import { InputType } from "../../../model/InputType";
 import FormControlWrapper from "../../../model/FormControlWrapper";
-import { getCompareFn, isTextDisplay, SortingType } from "../../../utility/InputEntityUtils";
-import { IDisplayConfigMap } from "../../../type/FormInputConfig";
+import { getCompareFn, isTextDisplay, isText, SortingType, IAjax, IPaginationState } from "../../../utility/InputEntityUtils";
+import { IColumnConfig, IDisplayConfigMap } from "../../../type/FormInputConfig";
 import { ModalComponent } from "../../dialog/modal/modal.component";
 import { ISave } from "../../../type/DatatableConfig";
+import { LoaderComponent } from "../../dialog/loader/loader.component";
+import { debounce } from "lodash";
+import { ToastService, ToastType } from "../../../service/toast.service";
 
 const MAX_ACTIONS_CONTAINER_WIDTH = 453;
 const MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX = 15;
@@ -15,6 +18,8 @@ const PX_IN_EM = 0.6668;
 const MAX_LENGTH = 20;
 const EM_IN_PX = 12;
 
+const DEFAULT_SORTING_FORM_CONTROL_NAME = '';
+const DEFAULT_SORTING_TYPE = SortingType.ASC;
 const DEFAULT_CREATE_MODAL_TITLE = 'Create new';
 const DEFAULT_DELETE_MODAL_TITLE = 'Warning';
 const DEFAULT_CURRENT_PAGE_NUMBER = 1;
@@ -24,13 +29,9 @@ const DEFAULT_SEARCH_FILTER = ''
 const DEFAULT_PAGINATION_STATE: IPaginationState = {
   currentPageNumber: DEFAULT_CURRENT_PAGE_NUMBER,
   entriesPerPage: DEFAULT_ENTRIES_PER_PAGE,
-  searchFilter: DEFAULT_SEARCH_FILTER
-}
-
-interface IPaginationState {
-  currentPageNumber: number,
-  entriesPerPage: number,
-  searchFilter: string
+  searchFilter: DEFAULT_SEARCH_FILTER,
+  sortingFormControlName: DEFAULT_SORTING_FORM_CONTROL_NAME,
+  sortingType: DEFAULT_SORTING_TYPE
 }
 
 @Component({
@@ -46,11 +47,32 @@ export class BaseDatatableComponent implements OnInit {
   @Input('getDisplayName') _getDisplayName: (item: IForm) => string = () => '';
   @Input('formControlWrapper') formControlWrapper!: FormControlWrapper;
   @Input('data') _data: IForm[] = [];
+  @Input('columns') _columns: IColumnConfig[] = [];
+  @Input('ajax') ajax: IAjax = null as any;
+
+  get columns(): IColumnConfig[] {
+    if (this._columns.length === 0) {
+      return this.formControlNames.map(formControlName => {
+        let displayConfig = this.displayConfigsByFormControlName[formControlName];
+        return { formControlName, label: displayConfig.label ? displayConfig.label : formControlName }
+      })
+    }
+    return this._columns
+      .filter(column => column.formControlName ? !!this.displayConfigsByFormControlName[column.formControlName] : false)
+      .map(column => {
+        if (!column.label) {
+          let displayConfig = this.displayConfigsByFormControlName[column.formControlName];
+          column.label = displayConfig.label ? displayConfig.label : column.formControlName
+        }
+        return column;
+      })
+  }
 
   @ViewChild("detailsModal") detailsModal!: ModalComponent;
   @ViewChild("createModal") createModal!: ModalComponent;
   @ViewChild("updateModal") updateModal!: ModalComponent;
   @ViewChild("deleteModal") deleteModal!: ModalComponent;
+  @ViewChild("tableLoader") tableLoader!: LoaderComponent;
   @ViewChild("containerDiv") containerDiv!: ElementRef;
   @ViewChild("tableBodyRef") tableBodyRef!: ElementRef;
   @ViewChild('navContainer') navContainer!: ElementRef;
@@ -71,6 +93,7 @@ export class BaseDatatableComponent implements OnInit {
   actionsClassCalculated: string = '';
   navClassCalculated: string = '';
   formControlNames: string[] = [];
+  btnSaveExpandClass: string = '';
   containerDivWidth: number = 0;
   createdEntries: any[] = [];
   deletedEntries: any[] = [];
@@ -81,8 +104,6 @@ export class BaseDatatableComponent implements OnInit {
   InputType = InputType;
   form!: Form;
   isText = isTextDisplay;
-  sortingFormControlName: string = '';
-  sortingType: SortingType = SortingType.ASC
 
   entriesForm: Form = new FormControlWrapper()
     .withSelectSingle({
@@ -149,7 +170,15 @@ export class BaseDatatableComponent implements OnInit {
   get calculateShowingTextWidthNumber() { 
     return this.calculateShowingText.length * PX_IN_EM 
   }
-  
+
+  get sortingType() {
+    return this.paginationState.sortingType;
+  }
+
+  get sortingFormControlName() {
+    return this.paginationState.sortingFormControlName
+  }
+
   get searchFilter() { 
     return (this.entriesForm.get('searchFilter')?.value || '').trim() 
   }
@@ -175,11 +204,17 @@ export class BaseDatatableComponent implements OnInit {
   }
 
   get navRightWidth() { 
-    return Number(this.navRight?.nativeElement.offsetWidth) 
+    let val = Number(this.navRight?.nativeElement.offsetWidth) 
+    if (isNaN(val)) return 0
+    return val 
   }
 
   get navRightSideWidth() { 
     return this.navMiddleWidth + this.navRightWidth 
+  }
+
+  getBtnSaveExpandClass() {
+    return this.navContainerWidth < 440 ? ' btn-save-expand' : ''
   }
 
   getNavClassCalculated() { 
@@ -201,11 +236,18 @@ export class BaseDatatableComponent implements OnInit {
     }
     if (this.navContainer?.nativeElement) {
       this.navClassCalculated = this.getNavClassCalculated();
+      this.btnSaveExpandClass = this.getBtnSaveExpandClass()
     }
   }
   
-  constructor() {
+  constructor(private toast: ToastService) {
   }
+
+  debouncePagination = debounce((value, entriesPerPageChange) => {
+    this.paginationState = value
+    this.triggerPaginationArrayChange()
+    if (entriesPerPageChange) setTimeout(() => this.entriesForm.patchValue(value))
+  }, 600)
 
   ngOnInit(): void {
     this.formControlNames = this.formControlWrapper.displayConfigs.map(cfg => cfg.formControlName);
@@ -214,22 +256,30 @@ export class BaseDatatableComponent implements OnInit {
         .displayConfigs.find(d => d.formControlName === formControlName)!)
 
     this.entriesForm.valueChanges.subscribe(() => {
-      let value = {
+      let value: IPaginationState = {
         entriesPerPage: this.entriesPerPage,
         searchFilter: this.searchFilter,
-        currentPageNumber: this.currentPageNumber
+        currentPageNumber: this.currentPageNumber,
+        sortingType: this.sortingType,
+        sortingFormControlName: this.sortingFormControlName
       }
       let entriesPerPageChange: boolean = this.paginationState.entriesPerPage !== this.entriesPerPage;
       let searchFilterChange: boolean = this.paginationState.searchFilter !== this.searchFilter;
       let currentPageNumberChange: boolean = this.paginationState.currentPageNumber !== this.currentPageNumber;
       if (entriesPerPageChange || searchFilterChange || currentPageNumberChange) {
+        if (entriesPerPageChange || searchFilterChange) value.currentPageNumber = 1;
+        if (searchFilterChange) {
+          this.debouncePagination(value, entriesPerPageChange)
+          return;
+        }
         this.paginationState = value
         this.triggerPaginationArrayChange()
         if (entriesPerPageChange) setTimeout(() => this.entriesForm.patchValue(value))
       }
     })
 
-    this.triggerPaginationArrayChange()
+    // Doesn't work if ajax used
+    //this.triggerPaginationArrayChange()
   }
 
   @HostListener('window:resize')
@@ -239,6 +289,7 @@ export class BaseDatatableComponent implements OnInit {
 
   ngAfterViewInit() {
     setTimeout(() => this.handleResponsiveness());
+    setTimeout(() => this.triggerPaginationArrayChange());
   }
 
   handleResponsiveness() {
@@ -282,7 +333,11 @@ export class BaseDatatableComponent implements OnInit {
       index = this.createdEntries.findIndex(c => c === this.selectedEntry)
       if (index === -1) {
         index = this.updatedEntries.findIndex(c => c === this.selectedEntry)
-        if (index === -1) throw new Error(`Item ${this.selectedEntry} cannot be deleted because it doesn't exist.`)
+        if (index === -1) {
+          this.deleteModal.closeModal()
+          this.toast.showError('Deletion failure', `Entry "${this.displayName}" cannot be deleted because it doesn't exist.`)
+          return
+        }
         this.updatedEntries.splice(index, 1);
       } else {
         this.createdEntries.splice(index, 1);
@@ -293,6 +348,7 @@ export class BaseDatatableComponent implements OnInit {
     this.deletedEntries.push(this.selectedEntry)
     this.deleteModal.closeModal()
     this.triggerPaginationArrayChange()
+    this.toast.showSuccess('Deletion successful', `Successfully deleted "${this.displayName}" entry.`)
   }
 
   updateEntry(value: IForm) {
@@ -328,7 +384,25 @@ export class BaseDatatableComponent implements OnInit {
     this.createEntry(value)
   }
 
+  getTitle(formControlName: string, value: any) {
+    let displayConfig = this.displayConfigsByFormControlName[formControlName];
+    if (isText(this.getInputType(formControlName))) return value[formControlName];
+    return displayConfig.inputEntity.convertToDatatableValueReadOnly(value[formControlName], displayConfig)
+  }
+
   triggerPaginationArrayChange() {
+    if (this.ajax) {
+      this.tableLoader.start();
+      this.ajax.loadData(this.paginationState, this.displayConfigsByFormControlName)
+        .then(ajaxResponse => {
+          let { count, data } = ajaxResponse;
+          this.totalNumberOfFilteredElements = count
+          this.filteredAndPaginatedArray = data;
+          this.tableLoader.stop()
+        })
+      return;
+    }
+
     let { searchFilter, currentPageNumber, entriesPerPage } = this.paginationState
     let searchFilterLowercase = searchFilter.toLowerCase();
     let filteredArray = this.data.filter(item => {
@@ -364,7 +438,7 @@ export class BaseDatatableComponent implements OnInit {
       deleted: this.deletedEntries,
       updated: this.updatedEntries
     })
-    this.data = this.data.concat(this.createdEntries, this.updatedEntries);
+    this._data = this._data.concat(this.createdEntries, this.updatedEntries);
     this.createdEntries = []
     this.deletedEntries = []
     this.updatedEntries = []
@@ -454,13 +528,14 @@ export class BaseDatatableComponent implements OnInit {
   onSortClick(formControlName: string) {
     if (this.sortingFormControlName === formControlName) {
       if (this.sortingType === 'asc') {
-        this.sortingType = SortingType.DESC;
+        this.paginationState.sortingType = SortingType.DESC;
       } else {
-        this.sortingType = SortingType.ASC;
-        this.sortingFormControlName = '';
+        this.paginationState.sortingType = SortingType.ASC;
+        this.paginationState.sortingFormControlName = '';
       }
     } else {
-      this.sortingFormControlName = formControlName;
+      this.paginationState.sortingType = SortingType.ASC;
+      this.paginationState.sortingFormControlName = formControlName;
     }
     this.triggerPaginationArrayChange()
   }

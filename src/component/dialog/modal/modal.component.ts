@@ -1,12 +1,11 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from "@angular/core";
 
 const DEFAULT_MODAL_CLASS = 'modal';
 
 @Component({
   selector: 'ngxp-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
   @Input() isShowing: boolean = false;

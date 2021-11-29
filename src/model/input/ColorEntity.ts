@@ -22,7 +22,7 @@ class ColorEntity extends InputEntity<IColor> {
     return `
       <div class="dt-color-wrapper">
         <span class="dt-color-hex">${value.hex}</span>
-        <div class="dt-color" title="${value.hex}" style="background-color: ${value.hex}"></div>
+        <div class="dt-color" title="${value.hex}" style="border: 1px solid black; background-color: ${value.hex}"></div>
       </div>
     `
   }
