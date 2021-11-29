@@ -1,3 +1,4 @@
+import { IForm } from "../form/base/BaseForm";
 import { IDisplayConfig } from "../model/FormControlWrapper";
 import InputEntity from "../model/input/base/InputEntity";
 import CheckboxEntity from "../model/input/CheckboxEntity";
@@ -25,6 +26,14 @@ export interface IVariableGroupValidator {
   isValid: boolean
 }
 
+export interface IPaginationState {
+  currentPageNumber: number,
+  entriesPerPage: number,
+  searchFilter: string,
+  sortingFormControlName: string,
+  sortingType: SortingType
+}
+
 export interface IRegex {
   inputType?: PatternInputType,
   label: string,
@@ -43,6 +52,15 @@ export interface IRegexNormalized {
   validationFailedMessage: string,
   exampleValue: string,
   key: string
+}
+
+export interface IAjaxResponse {
+  data: IForm[],
+  count: number
+}
+
+export interface IAjax {
+  loadData: (paginationState: IPaginationState, displayConfigsByFormControlName: {[key: string]: IDisplayConfig}) => Promise<IAjaxResponse>
 }
 
 const INPUT_ENTITITES: InputEntity<any>[] = [
@@ -145,8 +163,8 @@ export enum SortingType {
 export function getCompareFn(inputEntity: InputEntity<any>, displayConfig: IDisplayConfig, sortingType: SortingType): (a: any, b: any) => 1 | -1 | 0 {
   let { inputType } = displayConfig;
   if (isNumber(inputType)) return (valueA, valueB) => {
-    let a = inputEntity.convertToFormValue(valueA);
-    let b = inputEntity.convertToFormValue(valueB);
+    let a = inputEntity.convertToFormValue(valueA, displayConfig);
+    let b = inputEntity.convertToFormValue(valueB, displayConfig);
     let numberA = a === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(a)
     let numberB = b === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(b)
     return sortingType === SortingType.ASC 
@@ -154,8 +172,8 @@ export function getCompareFn(inputEntity: InputEntity<any>, displayConfig: IDisp
       : (numberB > numberA ? 1 : numberA === numberB ? 0 : -1)
   }
   if (isDate(inputType)) return (valueA, valueB) => {
-    let a = inputEntity.convertToFormValue(valueA);
-    let b = inputEntity.convertToFormValue(valueB);
+    let a = inputEntity.convertToFormValue(valueA, displayConfig);
+    let b = inputEntity.convertToFormValue(valueB, displayConfig);
     let timeA = a === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(a?.getTime())
     let timeB = b === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(b?.getTime())
     return sortingType === SortingType.ASC 
@@ -163,8 +181,8 @@ export function getCompareFn(inputEntity: InputEntity<any>, displayConfig: IDisp
       : (timeB > timeA ? 1 : timeA === timeB ? 0 : -1)
   }
   if (inputType === InputType.WEEK) return (valueA, valueB) => {
-    let a = inputEntity.convertToFormValue(valueA);
-    let b = inputEntity.convertToFormValue(valueB);
+    let a = inputEntity.convertToFormValue(valueA, displayConfig);
+    let b = inputEntity.convertToFormValue(valueB, displayConfig);
     let yearA = a === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(a.year)
     let yearB = b === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(b.year)
     let weekA = a === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(a.week)
@@ -178,8 +196,8 @@ export function getCompareFn(inputEntity: InputEntity<any>, displayConfig: IDisp
     }
   }
   if (inputType === InputType.MONTH) return (valueA, valueB) => {
-    let a = inputEntity.convertToFormValue(valueA);
-    let b = inputEntity.convertToFormValue(valueB);
+    let a = inputEntity.convertToFormValue(valueA, displayConfig);
+    let b = inputEntity.convertToFormValue(valueB, displayConfig);
     let yearA = a === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(a.getFullYear())
     let yearB = b === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(b.getFullYear())
     let monthA = a === null ? (sortingType === SortingType.ASC ? Number.NEGATIVE_INFINITY : Number.POSITIVE_INFINITY) : Number(a.getMonth())

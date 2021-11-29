@@ -28,6 +28,8 @@ import { SafeHtmlPipe } from './pipe/SafeHtmlPipe';
 import { PaginationPipe } from './pipe/PaginationPipe';
 import { DtEntryDetailsComponent } from './component/datatable/dt-entry-details.ts/dt-entry-details.component';
 import { ModalComponent } from './component/dialog/modal/modal.component';
+import { LoaderComponent } from './component/dialog/loader/loader.component';
+import { ToastService } from './service/toast.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { ModalComponent } from './component/dialog/modal/modal.component';
     PaginationPipe,
     BaseDatatableComponent,
     DtEntryDetailsComponent,
-    ModalComponent
+    ModalComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ import { ModalComponent } from './component/dialog/modal/modal.component';
     ReactiveFormsModule
   ],
   exports: [
+    LoaderComponent,
     ModalComponent,
     BaseDatatableComponent,
     NoBrowserSupportComponent,
@@ -89,7 +93,8 @@ import { ModalComponent } from './component/dialog/modal/modal.component';
     DtEntryDetailsComponent
   ],
   providers: [
-    PaginationPipe
+    PaginationPipe,
+    ToastService
   ]
 })
 export class NgxPainlessFormModule { }

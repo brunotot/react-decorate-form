@@ -139,6 +139,7 @@ table .dt-datetime-wrapper {
 
 .limit-container {
   flex-wrap: nowrap !important;
+  flex: 1 1 auto;
   justify-content: flex-start;
   width: auto 
 }
@@ -160,6 +161,7 @@ table .dt-datetime-wrapper {
 .search-container {
   display: flex;
   row-gap: 8px; 
+  flex-wrap: wrap;
   column-gap: 4px
 }
 
@@ -172,15 +174,14 @@ table .dt-datetime-wrapper {
   z-index: 1; 
   column-gap: 4px;
   display: flex !important;
-  align-items: center
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
 }
 
-// TODO: Fix
-@media screen and (max-width: 450px) {
-  .save-btn {
-    margin: 0;
-    max-width: 100%;
-  }
+.btn-save-expand {
+  margin: 0;
+  max-width: 100%;
 }
 
 .row-btns-container-column {
@@ -222,7 +223,7 @@ table .dt-datetime-wrapper {
   border-top-width: 5px;
   border-top-style: solid;
   position: absolute;
-  bottom: 10px;
+  bottom: calc(50% - 6px);
   right: 0;
 }
 
@@ -235,7 +236,7 @@ table .dt-datetime-wrapper {
   border-bottom-width: 5px;
   border-bottom-style: solid;
   position: absolute;
-  top: 10px;
+  top: calc(50% - 6px);
   right: 0;
 }
 

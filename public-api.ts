@@ -27,6 +27,7 @@ import Validators from './src/model/Validators';
 import { BaseDatatableComponent } from './src/component/datatable/base-datatable/base-datatable.component';
 import { DtEntryDetailsComponent } from './src/component/datatable/dt-entry-details.ts/dt-entry-details.component';
 import { ModalComponent } from './src/component/dialog/modal/modal.component';
+import { LoaderComponent } from './src/component/dialog/loader/loader.component';
 
 export { RangeImplComponent };
 export { ColorImplComponent };
@@ -57,3 +58,4 @@ export { Validators };
 export { BaseDatatableComponent };
 export { DtEntryDetailsComponent };
 export { ModalComponent };
+export { LoaderComponent };
