@@ -25,7 +25,6 @@ import { NoBrowserSupportComponent } from './component/form-group/no-browser-sup
 import { SelectFilterPipe } from './pipe/SelectFilterPipe';
 import { BaseDatatableComponent } from './component/datatable/base-datatable/base-datatable.component';
 import { SafeHtmlPipe } from './pipe/SafeHtmlPipe';
-import { PaginationPipe } from './pipe/PaginationPipe';
 import { DtEntryDetailsComponent } from './component/datatable/dt-entry-details.ts/dt-entry-details.component';
 import { ModalComponent } from './component/dialog/modal/modal.component';
 import { LoaderComponent } from './component/dialog/loader/loader.component';
@@ -56,7 +55,6 @@ import { ToastService } from './service/toast.service';
     NoBrowserSupportComponent,
     SelectFilterPipe,
     SafeHtmlPipe,
-    PaginationPipe,
     BaseDatatableComponent,
     DtEntryDetailsComponent,
     ModalComponent,
@@ -93,7 +91,6 @@ import { ToastService } from './service/toast.service';
     DtEntryDetailsComponent
   ],
   providers: [
-    PaginationPipe,
     ToastService
   ]
 })
