@@ -339,6 +339,22 @@ export class BaseDatatableComponent implements OnInit {
   }
 
   createEntry(value: IForm) {
+    if (this.ajax) {
+      this.tableLoader.start()
+      this.ajax.onCreate(value)
+        .then(() => {
+          this.createModal.closeModal()
+          this.triggerPaginationArrayChange()
+          this.toast.showSuccess(`Update successful`, `Successfully created "${this._getDisplayName(value)}" entry.`)      
+          this.selectedEntry = null as any;
+        }, error => {
+          let errorMessage = this.getErrorMessage(error);
+          this.tableLoader.stop();
+          this.toast.showError(`Create for "${this._getDisplayName(value)}" failed`, errorMessage);
+        })
+      return;
+    }
+
     this.createdEntries.push(value);
     this.createModal.closeModal();
     this.toast.showSuccess('Create successful', `Successfully created entry "${this._getDisplayName(value)}"`)
@@ -365,10 +381,9 @@ export class BaseDatatableComponent implements OnInit {
       this.ajax.onDelete(this.selectedEntry)
         .then(() => {
           this.deleteModal.closeModal()
-          this.selectedEntry = null as any;
           this.triggerPaginationArrayChange()
-          this.tableLoader.stop();
           this.toast.showSuccess('Delete successful', `Successfully deleted "${this.displayName}" entry.`)      
+          this.selectedEntry = null as any;
         }, error => {
           let errorMessage = this.getErrorMessage(error);
           this.tableLoader.stop();
@@ -401,6 +416,28 @@ export class BaseDatatableComponent implements OnInit {
   }
 
   updateEntry(value: IForm) {
+    if (this.ajax) {
+      this.tableLoader.start()
+      this.ajax.onUpdate(value)
+        .then(newValue => {
+          this.updateModal.closeModal()
+          this.filteredAndPaginatedArray = this.filteredAndPaginatedArray.map(item => {
+            if (item === this.selectedEntry) {
+              item = newValue ? newValue : value;
+            }
+            return item;
+          })
+          this.tableLoader.stop()
+          this.toast.showSuccess(`Update successful`, `Successfully update "${this.displayName}" entry.`)      
+          this.selectedEntry = null as any;
+        }, error => {
+          let errorMessage = this.getErrorMessage(error);
+          this.tableLoader.stop();
+          this.toast.showError(`Update for "${this.displayName}" failed`, errorMessage);
+        })
+      return;
+    }
+
     let index = this._data.findIndex(o => o === this.selectedEntry)
     if (index === -1) {
       index = this.createdEntries.findIndex(o => o === this.selectedEntry);
