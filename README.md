@@ -1,6 +1,6 @@
-<h1 align="center">NgxRapidInterfaceBuilder</h1>
+<h1 align="center">ngx-rapid-interface-builder</h1>
 
-<p align="center">🚀 Agonising form and datatable creation made easy and splendidly developer-friendly 🚀</p>
+<p align="center">🚀 Agonising form and datatable creation made easy and splendidly developer-friendly</p>
 <p align="center">Quickly and painlessly build <strong>fully responsive</strong> and <strong>validated</strong> forms and/or datatables</p>
 <p align="center">Comes with predefined <strong>Bootstrap 5</strong> styles including barebone modals and toast notifications</p>
 <p align="center">Library bundle is made with <strong>Angular v13</strong> and comes without any 3rd party libraries :blush:</p>
