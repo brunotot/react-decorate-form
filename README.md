@@ -7,9 +7,11 @@ Fully responsive for screen widths 250px and higher! 🚀
 
 ## Contribution
 ### Environment setup
-1. Open command line
-2. Position CLI location to desired folder
-3. Execute following instructions or simply execute prepared shell script:
+1. Install Angular CLI
+2. Install Visual Studio Code
+3. Open command line
+4. Position CLI location to desired folder
+5. Execute following instructions or simply execute prepared shell script:
 ```
 wget https://raw.githubusercontent.com/brunotot/ngx-rapid-interface-builder/8d805c12d3ab3ad02e773f55984ca9f127269e95/docs/boot.sh -O - | sh
 ```
@@ -53,6 +55,7 @@ unzip -o ./docs/app.zip -d ./../ngx-rapid-interface-builder-test/src
 # Open Visual Studio Code in workspace directory
 code ../../.
 ```
+6. Start the application from `projects/ngx-rapid-interface-builder-test` by writing: `ng serve -o`
 
 ## Installation
 
