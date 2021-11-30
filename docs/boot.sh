@@ -11,5 +11,5 @@ git clone https://github.com/brunotot/ngx-rapid-interface-builder.git .
 npm install
 npm run lib:build
 unzip -o ./docs/app.zip -d ./../ngx-rapid-interface-builder-test/src
-code ../../.
+code ../../. && exit
 
