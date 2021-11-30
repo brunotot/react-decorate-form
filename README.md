@@ -1,4 +1,4 @@
-<p align="center">NgxRapidInterfaceBuilder</p>
+<h1 align="center">NgxRapidInterfaceBuilder</h1>
 
 🚀 Agonising form creation made easy. 
 Simply create fully responsive and validated forms within minutes. 
