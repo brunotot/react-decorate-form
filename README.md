@@ -1,4 +1,4 @@
-# NgxPainlessForm
+<p align="center">NgxRapidInterfaceBuilder</p>
 
 🚀 Agonising form creation made easy. 
 Simply create fully responsive and validated forms within minutes. 
