@@ -61,7 +61,7 @@ input:not([type='range']):not(.search-input):hover,
 textarea:hover,
 .range-wrapper:hover,
 .selection-wrapper:hover {
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  box-shadow: #06182c66 0 0 0 1px, #06182ca6 0 4px 6px -3px, #ffffff14 0 1px inset;
 }
 
 .footer-btns-container {
@@ -256,7 +256,8 @@ textarea:hover,
   display: flex;
   flex-direction: column;
   row-gap: 0.9rem;
-  
+  margin-left: auto;
+  width: fit-content;
   
   -webkit-animation-name: animateToastIn;
   -webkit-animation-duration: 0.34s;

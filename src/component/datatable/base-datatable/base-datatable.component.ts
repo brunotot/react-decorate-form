@@ -50,24 +50,6 @@ export class BaseDatatableComponent implements OnInit {
   @Input('columns') _columns: IColumnConfig[] = [];
   @Input('ajax') ajax: IAjax = null as any;
 
-  get columns(): IColumnConfig[] {
-    if (this._columns.length === 0) {
-      return this.formControlNames.map(formControlName => {
-        let displayConfig = this.displayConfigsByFormControlName[formControlName];
-        return { formControlName, label: displayConfig.label ? displayConfig.label : formControlName }
-      })
-    }
-    return this._columns
-      .filter(column => column.formControlName ? !!this.displayConfigsByFormControlName[column.formControlName] : false)
-      .map(column => {
-        if (!column.label) {
-          let displayConfig = this.displayConfigsByFormControlName[column.formControlName];
-          column.label = displayConfig.label ? displayConfig.label : column.formControlName
-        }
-        return column;
-      })
-  }
-
   @ViewChild("detailsModal") detailsModal!: ModalComponent;
   @ViewChild("createModal") createModal!: ModalComponent;
   @ViewChild("updateModal") updateModal!: ModalComponent;
@@ -121,6 +103,23 @@ export class BaseDatatableComponent implements OnInit {
     .withText({ formControlName: 'searchFilter' } as any)
     .toForm(DEFAULT_PAGINATION_STATE)
 
+  get columns(): IColumnConfig[] {
+    if (this._columns.length === 0) {
+      return this.formControlNames.map(formControlName => {
+        let displayConfig = this.displayConfigsByFormControlName[formControlName];
+        return { formControlName, label: displayConfig.label ? displayConfig.label : formControlName }
+      })
+    }
+    return this._columns
+      .filter(column => column.formControlName ? !!this.displayConfigsByFormControlName[column.formControlName] : false)
+      .map(column => {
+        if (!column.label) {
+          let displayConfig = this.displayConfigsByFormControlName[column.formControlName];
+          column.label = displayConfig.label ? displayConfig.label : column.formControlName
+        }
+        return column;
+      })
+  }
 
   get data() { 
     return this._data.concat(this.createdEntries, this.updatedEntries) 
@@ -324,6 +323,7 @@ export class BaseDatatableComponent implements OnInit {
   createEntry(value: IForm) {
     this.createdEntries.push(value);
     this.createModal.closeModal();
+    this.toast.showSuccess('Create successfull', `Successfully created entry "${this._getDisplayName(value)}"`)
     this.triggerPaginationArrayChange()
   }
 
@@ -348,7 +348,7 @@ export class BaseDatatableComponent implements OnInit {
     this.deletedEntries.push(this.selectedEntry)
     this.deleteModal.closeModal()
     this.triggerPaginationArrayChange()
-    this.toast.showSuccess('Deletion successful', `Successfully deleted "${this.displayName}" entry.`)
+    this.toast.showSuccess('Delete successful', `Successfully deleted "${this.displayName}" entry.`)
   }
 
   updateEntry(value: IForm) {
@@ -374,6 +374,7 @@ export class BaseDatatableComponent implements OnInit {
     }
     this.updateModal.closeModal();
     this.triggerPaginationArrayChange()
+    this.toast.showSuccess('Update successful', `Successfully updated entry "${this._getDisplayName(value)}"`);
   }
 
   onUpdateSubmitFn = (value: IForm) => {
@@ -442,7 +443,7 @@ export class BaseDatatableComponent implements OnInit {
     this.createdEntries = []
     this.deletedEntries = []
     this.updatedEntries = []
-    alert('Changes saved')
+    this.toast.showSuccess('Changes saved!')
   }
 
   toBeginning() {

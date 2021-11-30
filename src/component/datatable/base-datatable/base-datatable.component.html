@@ -1,7 +1,7 @@
 <ng-container *ngIf="formControlWrapper">
   <ngxp-loader #tableLoader>
     <form [formGroup]="entriesForm">
-      <div #containerDiv>
+      <div class="p-1" #containerDiv>
         <div [ngClass]="'actions-wrapper pb-3 '.concat(actionsClassCalculated)" #actionsContainer>
           <div class="search-container" #actionsLeft>
             <div class="input-group limit-container">
