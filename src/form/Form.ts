@@ -1,4 +1,4 @@
-import { FormGroup, ValidatorFn } from "@angular/forms";
+import { FormGroup } from "@angular/forms";
 import FormControlWrapper, { IDisplayConfig } from "../model/FormControlWrapper";
 import { IBaseForm } from "./base/BaseForm";
 
@@ -20,6 +20,7 @@ export class Form extends FormGroup implements IBaseForm {
     let errorValidator = errorValidators.find(eV => eV.validatorName === errorKey);
     return errorValidator 
       ? errorValidator.message 
-      : (displayConfig.inputEntity.getRegexInputs().find(regexInput => regexInput.key === errorKey)?.validationFailedMessage || `??${varName}.${errorKey}_MSG_MISSING??`)
+      : (displayConfig.inputEntity.getRegexInputs()
+          .find(regexInput => regexInput.key === errorKey)?.validationFailedMessage || `??${varName}.${errorKey}_MSG_MISSING??`)
   }
 }

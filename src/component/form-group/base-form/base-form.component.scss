@@ -1,1 +1,10 @@
-@import './../../../../assets/core/scss/style'
+@import './../../../../assets/core/scss/style';
+
+input[type='checkbox'] {
+  border-color: #ced4da !important
+}
+
+.dt-form input:not([type='range']):not([type='file']),
+.dt-form textarea {
+  min-height: 38px;
+}

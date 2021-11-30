@@ -1,5 +1,5 @@
 <ng-container *ngIf="form">
-  <form (submit)="onSubmit($event)" [formGroup]="form" (reset)="onResetClick()">
+  <form class="dt-form" (submit)="onSubmit($event)" [formGroup]="form" (reset)="onResetClick()">
     <div class="card shadow">
       <div *ngIf="!!formTitle" class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="header-title color-primary">{{ formTitle }}</h6>

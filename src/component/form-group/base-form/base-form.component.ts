@@ -33,8 +33,11 @@ export class BaseFormComponent implements OnInit {
     }
     this.validationStatus = ValidationStatus.VALID;
     let value = this.form.value;
-    console.log(value);
     this.fnSubmit(value);
+  }
+
+  deepReset() {
+    this.validationStatus = ValidationStatus.IDLE
   }
 
   calculateValidationStatus(validationStatus: ValidationStatus, varName: string): ValidationStatus {

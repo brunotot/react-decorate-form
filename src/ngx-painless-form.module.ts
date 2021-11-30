@@ -13,7 +13,6 @@ import { HiddenImplComponent } from './component/form-group/impl/hidden-impl/hid
 import { TextareaImplComponent } from './component/form-group/impl/textarea-impl/textarea-impl.component';
 import { ColorImplComponent } from './component/form-group/impl/color-impl/color-impl.component';
 import { RangeImplComponent } from './component/form-group/impl/range-impl/range-impl.component';
-import { TitleDirective } from './directive/TitleDirective';
 import { FileImplComponent } from './component/form-group/impl/file-impl/file-impl.component';
 import { PhoneImplComponent } from './component/form-group/impl/phone-impl/phone-impl.component';
 import { TextOrTypeImplComponent } from './component/form-group/impl/text-or-type-impl/text-or-type-impl.component';
@@ -45,7 +44,6 @@ import { ToastService } from './service/toast.service';
     TextareaImplComponent,
     ColorImplComponent,
     RangeImplComponent,
-    TitleDirective,
     FileImplComponent,
     TextOrTypeImplComponent,
     PasswordImplComponent,

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, ViewEncapsulation } from "@angular/core";
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { Form } from "../../../form/Form";
 import { IForm } from "../../../form/base/BaseForm";
 import { InputType } from "../../../model/InputType";
@@ -6,17 +6,18 @@ import FormControlWrapper from "../../../model/FormControlWrapper";
 import { getCompareFn, isTextDisplay, isText, SortingType, IAjax, IPaginationState } from "../../../utility/InputEntityUtils";
 import { IColumnConfig, IDisplayConfigMap } from "../../../type/FormInputConfig";
 import { ModalComponent } from "../../dialog/modal/modal.component";
-import { ISave } from "../../../type/DatatableConfig";
+import { DEFAULT_ACTION_PERMISSIONS, IActionPermissions, IActionPermissionsNonNull, ISave } from "../../../type/DatatableConfig";
 import { LoaderComponent } from "../../dialog/loader/loader.component";
 import { debounce } from "lodash";
-import { ToastService, ToastType } from "../../../service/toast.service";
+import { ToastService } from "../../../service/toast.service";
+import { BaseFormComponent } from "../../form-group/base-form/base-form.component";
 
+const ERROR_MESSAGE_MAX_LENGTH = 200;
 const MAX_ACTIONS_CONTAINER_WIDTH = 453;
 const MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX = 15;
 const MAX_TEXT_COLUMN_WIDTH_IN_PX = 150;
 const PX_IN_EM = 0.6668;
 const MAX_LENGTH = 20;
-const EM_IN_PX = 12;
 
 const DEFAULT_SORTING_FORM_CONTROL_NAME = '';
 const DEFAULT_SORTING_TYPE = SortingType.ASC;
@@ -41,7 +42,7 @@ const DEFAULT_PAGINATION_STATE: IPaginationState = {
   encapsulation: ViewEncapsulation.None
 })
 export class BaseDatatableComponent implements OnInit {
-  @Output('onSave') onSaveEmitter: EventEmitter<ISave> = new EventEmitter<ISave>();
+  @Input('onSave') onSaveEmitter!: (saveData: ISave) => Promise<IForm[] | void>
   @Input('createModalTitle') createModalTitle: string = DEFAULT_CREATE_MODAL_TITLE;
   @Input('deleteModalTitle') deleteModalTitle: string = DEFAULT_DELETE_MODAL_TITLE;
   @Input('getDisplayName') _getDisplayName: (item: IForm) => string = () => '';
@@ -49,12 +50,33 @@ export class BaseDatatableComponent implements OnInit {
   @Input('data') _data: IForm[] = [];
   @Input('columns') _columns: IColumnConfig[] = [];
   @Input('ajax') ajax: IAjax = null as any;
+  @Input('actionPermissions') _actionPermissions!: IActionPermissions;
+
+  get hasAnyChangeAction(): boolean {
+    return this.actionPermissions.create || this.actionPermissions.update || this.actionPermissions.delete
+  }
+
+  get hasAnyChangeActionExceptCreate(): boolean {
+    return this.actionPermissions.read || this.actionPermissions.update || this.actionPermissions.delete
+  }
+
+  get actionPermissions(): IActionPermissionsNonNull {
+    let normalizedActionPermissions = DEFAULT_ACTION_PERMISSIONS;
+    if (!this._actionPermissions) return normalizedActionPermissions;
+    if ('create' in this._actionPermissions) normalizedActionPermissions.create = !!this._actionPermissions.create
+    if ('read' in this._actionPermissions) normalizedActionPermissions.read = !!this._actionPermissions.read
+    if ('update' in this._actionPermissions) normalizedActionPermissions.update = !!this._actionPermissions.update
+    if ('delete' in this._actionPermissions) normalizedActionPermissions.delete = !!this._actionPermissions.delete
+    return normalizedActionPermissions;
+  }
 
   @ViewChild("detailsModal") detailsModal!: ModalComponent;
   @ViewChild("createModal") createModal!: ModalComponent;
   @ViewChild("updateModal") updateModal!: ModalComponent;
   @ViewChild("deleteModal") deleteModal!: ModalComponent;
   @ViewChild("tableLoader") tableLoader!: LoaderComponent;
+  @ViewChild("createForm") createForm!: BaseFormComponent;
+  @ViewChild("updateForm") updateForm!: BaseFormComponent;
   @ViewChild("containerDiv") containerDiv!: ElementRef;
   @ViewChild("tableBodyRef") tableBodyRef!: ElementRef;
   @ViewChild('navContainer') navContainer!: ElementRef;
@@ -70,7 +92,7 @@ export class BaseDatatableComponent implements OnInit {
   previousContainerDivWidths: {[key: string]: number} = {};
   displayConfigsByFormControlName: IDisplayConfigMap = {}
   previousTableWidths: {[key: string]: number} = {};
-  totalNumberOfFilteredElements!: number;
+  totalNumberOfFilteredElements: number = 0;
   filteredAndPaginatedArray: any[] = [];
   actionsClassCalculated: string = '';
   navClassCalculated: string = '';
@@ -134,9 +156,9 @@ export class BaseDatatableComponent implements OnInit {
     let startValue = ((this.currentPageNumber - 1) * this.entriesPerPage) + 1
     let endValue = this.currentPageNumber * this.entriesPerPage
     if (endValue > filteredLength) endValue = filteredLength
-    return filteredLength === 0 
-      ? 'No data shown' 
-      : `Showing ${startValue} to ${endValue} of ${filteredLength} entries`
+    return filteredLength > 0 
+      ? `Showing ${startValue} to ${endValue} of ${filteredLength} entries`
+      : 'No data shown' 
   }
 
   get currentPageNumber() {
@@ -276,9 +298,6 @@ export class BaseDatatableComponent implements OnInit {
         if (entriesPerPageChange) setTimeout(() => this.entriesForm.patchValue(value))
       }
     })
-
-    // Doesn't work if ajax used
-    //this.triggerPaginationArrayChange()
   }
 
   @HostListener('window:resize')
@@ -287,7 +306,6 @@ export class BaseDatatableComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.handleResponsiveness());
     setTimeout(() => this.triggerPaginationArrayChange());
   }
 
@@ -323,11 +341,42 @@ export class BaseDatatableComponent implements OnInit {
   createEntry(value: IForm) {
     this.createdEntries.push(value);
     this.createModal.closeModal();
-    this.toast.showSuccess('Create successfull', `Successfully created entry "${this._getDisplayName(value)}"`)
+    this.toast.showSuccess('Create successful', `Successfully created entry "${this._getDisplayName(value)}"`)
     this.triggerPaginationArrayChange()
   }
 
+  getErrorMessage(error: any) {
+    let errorMessage = '';
+    if (error) {
+      if (typeof error === 'string') errorMessage = error;
+      else if ('message' in error) errorMessage = error.message;
+      else if ('error' in error && 'message' in error.error) errorMessage = error.error.message
+      else errorMessage = JSON.stringify(error, null, 2);
+    }
+    if (errorMessage.length > ERROR_MESSAGE_MAX_LENGTH) {
+      errorMessage = errorMessage.slice(0, ERROR_MESSAGE_MAX_LENGTH) + '...';
+    }
+    return errorMessage;
+  }
+
   deleteEntry() {
+    if (this.ajax) {
+      this.tableLoader.start()
+      this.ajax.onDelete(this.selectedEntry)
+        .then(() => {
+          this.deleteModal.closeModal()
+          this.selectedEntry = null as any;
+          this.triggerPaginationArrayChange()
+          this.tableLoader.stop();
+          this.toast.showSuccess('Delete successful', `Successfully deleted "${this.displayName}" entry.`)      
+        }, error => {
+          let errorMessage = this.getErrorMessage(error);
+          this.tableLoader.stop();
+          this.toast.showError('Delete failed', errorMessage);
+        })
+      return;
+    }
+
     let index = this._data.findIndex(o => o === this.selectedEntry)
     if (index === -1) {
       index = this.createdEntries.findIndex(c => c === this.selectedEntry)
@@ -399,6 +448,7 @@ export class BaseDatatableComponent implements OnInit {
           let { count, data } = ajaxResponse;
           this.totalNumberOfFilteredElements = count
           this.filteredAndPaginatedArray = data;
+          this.handleResponsiveness();
           this.tableLoader.stop()
         })
       return;
@@ -431,19 +481,45 @@ export class BaseDatatableComponent implements OnInit {
     let startIndex = (currentPageNumber - 1) * entriesPerPage;
     let endIndex = startIndex + entriesPerPage;
     this.filteredAndPaginatedArray = filteredArray.slice(startIndex, endIndex);
+    this.handleResponsiveness();
   }
 
-  doSave() {
-    this.onSaveEmitter.emit({
-      created: this.createdEntries,
-      deleted: this.deletedEntries,
-      updated: this.updatedEntries
-    })
-    this._data = this._data.concat(this.createdEntries, this.updatedEntries);
+  clearEntries() {
     this.createdEntries = []
     this.deletedEntries = []
     this.updatedEntries = []
-    this.toast.showSuccess('Changes saved!')
+  }
+
+  rollbackChanges() {
+    this._data = this._data.concat(this.createdEntries, this.updatedEntries, this.deletedEntries);
+    this.clearEntries()
+  }
+
+  joinEntries() {
+    this._data = this._data.concat(this.createdEntries, this.updatedEntries);
+    this.clearEntries()
+  }
+
+  doSave() {
+    this.tableLoader.start()
+    this.onSaveEmitter({
+      created: this.createdEntries,
+      deleted: this.deletedEntries,
+      updated: this.updatedEntries
+    }).then(newEntries => {
+      if (newEntries && Array.isArray(newEntries) && newEntries.length > 0) {
+        this._data = this._data.concat(newEntries);
+        this.clearEntries()
+      } else {
+        this.joinEntries()
+      }
+      this.tableLoader.stop()
+      this.toast.showSuccess('Changes saved successfully!')
+    }, error => {
+      this.tableLoader.stop()
+      let errorMessage = this.getErrorMessage(error);
+      this.toast.showError('Save failed', errorMessage)
+    })
   }
 
   toBeginning() {
@@ -471,11 +547,13 @@ export class BaseDatatableComponent implements OnInit {
 
   openUpdateModal() {
     this.form = this.formControlWrapper.toForm(this.selectedEntry);
+    this.updateForm.deepReset()
     this.updateModal.openModal()
   }
 
   openCreateModal() {
     this.form = this.formControlWrapper.toForm();
+    this.createForm.deepReset()
     this.createModal.openModal()
   }
 
@@ -507,19 +585,13 @@ export class BaseDatatableComponent implements OnInit {
     let emValue = stringMaxLength <= MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX 
       ? stringMaxLength * PX_IN_EM 
       : MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX * PX_IN_EM
+    if (emValue < 0) console.log(emValue)
     return stringMaxLength >= MAX_LENGTH ? `${MAX_TEXT_COLUMN_WIDTH_IN_PX}px` : `${emValue}em`;
   }
 
   calculateTextColumnWidthBase(formControlName: string) {
     if (!this.isText(this.getInputType(formControlName))) return 'auto';
     return this.calculateTextColumnWidth(this.getLargestStringLength(formControlName));
-  }
-
-  calculateColumnGap(offsetWidth: number): string {
-    let totalInEm = this.calculateShowingTextWidthNumber + this.calculateNavBtnsWrapperWidthNumber;
-    let totalInPx = totalInEm * EM_IN_PX;
-    let subtraction = offsetWidth - totalInPx - 33;
-    return `${subtraction}px`;
   }
 
   trackByIndex(index: number) { 

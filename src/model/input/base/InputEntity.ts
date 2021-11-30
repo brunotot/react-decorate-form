@@ -8,7 +8,7 @@ const MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX = 15;
 
 function getTextDisplayObject(value: any, displayFullValue: boolean): { text: string, html: string } {
   let text = String(value);
-  if (!displayFullValue) {
+  if (!displayFullValue) { // TODO: Enable flag to ignore shorting text display
     let splittedLines = splitIntoLines(text, MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX);
     if (splittedLines.length > 2) {
       let secondValue = splittedLines[1];

@@ -60,7 +60,8 @@ export interface IAjaxResponse {
 }
 
 export interface IAjax {
-  loadData: (paginationState: IPaginationState, displayConfigsByFormControlName: {[key: string]: IDisplayConfig}) => Promise<IAjaxResponse>
+  loadData: (paginationState: IPaginationState, displayConfigsByFormControlName: {[key: string]: IDisplayConfig}) => Promise<IAjaxResponse>,
+  onDelete: (value: IForm) => Promise<void>
 }
 
 const INPUT_ENTITITES: InputEntity<any>[] = [

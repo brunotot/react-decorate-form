@@ -12,7 +12,7 @@
                 [form]="entriesForm">
               </ngxp-select2-impl>
             </div>
-            <button class="btn btn-primary btn-icon btn-create" (click)="openCreateModal()">
+            <button *ngIf="actionPermissions.create" class="btn btn-primary btn-icon btn-create" (click)="openCreateModal()">
               <span class="fa fa-plus-white d-flex mt-0" style="margin-bottom: 2px"></span>
               <span>Create</span>
             </button>
@@ -30,7 +30,7 @@
         <table #table class="table table-striped">
           <thead>
             <tr>
-              <th style="width: 42px !important; min-width: 42px !important; max-width: 42px !important"></th>
+              <th *ngIf="hasAnyChangeActionExceptCreate" style="width: 42px !important; min-width: 42px !important; max-width: 42px !important"></th>
               <ng-container *ngFor="let column of columns; trackBy:trackByIndex; let i = index">
                 <th 
                   (click)="onSortClick(column.formControlName)"
@@ -45,14 +45,14 @@
           <tbody #tableBodyRef>
             <ng-container *ngIf="filteredAndPaginatedArray.length > 0">
               <tr *ngFor="let item of filteredAndPaginatedArray; trackBy:trackByIndex; let i = index">
-                <td style="position: relative; width: 42px !important; min-width: 42px !important; max-width: 42px !important">
+                <td *ngIf="hasAnyChangeActionExceptCreate" style="position: relative; width: 42px !important; min-width: 42px !important; max-width: 42px !important">
                   <span (click)="onClickMore(item)" [ngClass]="'btn-more fa '.concat(selectedEntry === item ? 'fa-minus-red' : 'fa-plus')" style="user-select: none; cursor: pointer; width: 20px; height: 20px; margin-top: 4px"></span>
                   <div *ngIf="selectedEntry === item"
                     class="more-btns-wrapper d-flex"
                     style="position: absolute; flex-direction: row; left: 40px; flex-wrap: nowrap; column-gap: 5px; top: calc(50% - 21px); padding: 7px; border-radius: 0.25rem; border: 1px solid white; background: lightgrey">
-                    <button (click)="openDetailsModal()" class="btn btn-primary btn-sm"><span class="fa fa-info-white"></span></button>
-                    <button (click)="openUpdateModal()" class="btn btn-info btn-sm"><span class="fa fa-edit"></span></button>
-                    <button (click)="deleteModal.openModal()" class="btn btn-danger btn-sm"><span class="fa fa-trash-white"></span></button>
+                    <button *ngIf="actionPermissions.read" (click)="openDetailsModal()" class="btn btn-primary btn-sm"><span class="fa fa-info-white"></span></button>
+                    <button *ngIf="actionPermissions.update" (click)="openUpdateModal()" class="btn btn-info btn-sm"><span class="fa fa-edit"></span></button>
+                    <button *ngIf="actionPermissions.delete" (click)="deleteModal.openModal()" class="btn btn-danger btn-sm"><span class="fa fa-trash-white"></span></button>
                   </div>
                 </td>
                 <ng-container *ngFor="let column of columns; trackBy:trackByIndex; let i = index">
@@ -96,7 +96,7 @@
             </div>
           </div>
 
-          <button *ngIf="!ajax" #navRight (click)="doSave()" [ngClass]="'btn btn-success btn-icon save-btn'.concat(changesMade ? '' : ' disabled', btnSaveExpandClass)">
+          <button *ngIf="!ajax && hasAnyChangeAction" #navRight (click)="doSave()" [ngClass]="'btn btn-success btn-icon save-btn'.concat(changesMade ? '' : ' disabled', btnSaveExpandClass)">
             <span class="fa fa-save-white"></span>
             Save
           </button>
@@ -107,14 +107,14 @@
 </ng-container>
 
 <ngxp-modal #updateModal [modalTitle]="displayName">
-  <ngxp-form
+  <ngxp-form #updateForm
     [form]="form"
     [fnSubmit]="onUpdateSubmitFn">
   </ngxp-form>
 </ngxp-modal>
 
 <ngxp-modal #createModal [modalTitle]="createModalTitle">
-  <ngxp-form
+  <ngxp-form #createForm
     [form]="form"
     [fnSubmit]="onCreateSubmitFn">
   </ngxp-form>
