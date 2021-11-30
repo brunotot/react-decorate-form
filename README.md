@@ -1,9 +1,11 @@
 <h1 align="center">NgxRapidInterfaceBuilder</h1>
 
-🚀 Agonising form creation made easy. 
-Simply create fully responsive and validated forms within minutes. 
-Made with Angular v13 and Bootstrap 5 design.
-Fully responsive for screen widths 250px and higher! 🚀
+<p align="center" width="50%">
+  🚀 Agonising form and datatable creation made easy and splendidly developer-friendly. 
+  Quickly and painlessly build fully responsive and validated forms and/or datatables. 
+  Comes with predefined Bootstrap 5 styles including barebone modals and toast notifications.
+  Library bundle is made with Angular v13 and comes without any 3rd party libraries :blush:
+</p>
 
 ## Contribution
 ### Environment setup
