@@ -1,13 +1,8 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "./dist",
+  "dest": "./../../dist/ngx-rapid-interface-builder",
   "lib": {
-    "entryFile": "./public-api.ts",
-    "styleIncludePaths": [
-      "./assets/core/scss/style.scss",
-      "./../assets/core/scss/style.scss"
-    ],
-    "cssUrl": "inline"
+    "entryFile": "./public-api.ts"
   },
   "assets": [
     "./assets/**"

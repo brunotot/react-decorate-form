@@ -2,8 +2,8 @@
   "name": "ngx-painless-form",
   "version": "1.0.5",
   "scripts": {
-    "lib:deploy": "npm run lib:build && cd dist/ && npm publish",
-    "lib:build": "ng-packagr -p ng-package.json && cd ../ngx-painless-form-test/src/app && echo '' >> app.module.ts && clear"
+    "lib:deploy": "npm run lib:build && cd ./../../dist/ngx-rapid-interface-builder && npm publish",
+    "lib:build": "ng-packagr -p ng-package.json && cd ../ngx-rapid-interface-builder-test/src/app && echo '' >> app.module.ts && clear"
   },
   "peerDependencies": {
     "@angular/common": "^13.0.0",
@@ -15,7 +15,7 @@
     "tslib": "^2.3.0"
   },
   "repository": {
-    "url": "git://github.com/brunotot/ngx-painless-form.git"
+    "url": "git://github.com/brunotot/ngx-rapid-interface-builder.git"
   },
   "publishConfig": {
     "brunotot:registry": "https://npm.pkg.github.com"
