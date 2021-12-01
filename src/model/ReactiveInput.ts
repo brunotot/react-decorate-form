@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor } from "@angular/forms";
 import { Form } from "../form/Form";
 import { IRegexNormalized, isText } from "../utility/InputEntityUtils";

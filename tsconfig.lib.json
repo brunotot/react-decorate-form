@@ -13,9 +13,9 @@
     "allowSyntheticDefaultImports": true,
     "types": [
       "node_modules/jquery/dist/jquery.js",
-      "node_modules/select2/dist/js/select2.min.js",
+      "node_modules/select/dist/js/select.min.js",
       "dist/vendor/jquery/dist/jquery.js",
-      "dist/vendor/select2/dist/js/select2.min.js"
+      "dist/vendor/select/dist/js/select.min.js"
     ]
   },
   "exclude": [

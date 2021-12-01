@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { Inject, Injectable, Renderer2, RendererFactory2, ViewEncapsulation } from '@angular/core';
 
 const TOAST_DURATION_IN_MS = 6000;
 const TOAST_END_OPACITY_DURATION_IN_MS = 200;

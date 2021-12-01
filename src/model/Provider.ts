@@ -1,4 +1,4 @@
-import { forwardRef } from "@angular/core";
+import { forwardRef, ViewEncapsulation } from '@angular/core';
 import { ControlContainer, FormGroupDirective, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 const VIEW_PROVIDERS = [{ provide: ControlContainer, useExisting: FormGroupDirective }];

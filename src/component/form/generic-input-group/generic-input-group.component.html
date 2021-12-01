@@ -1,0 +1,17 @@
+<div [ngClass]="inputGroupClass.concat(displayConfig.inputType === InputType.SELECT ? ' d-block' : '')">
+  <rib-generic-input
+    [displayConfig]="displayConfig"
+    [validationStatus]="validationStatus"
+    [classAppend]="classAppend"
+    [value]="value"
+    [form]="form">
+  </rib-generic-input>
+</div>
+
+<ng-container *ngIf="validationStatus === ValidationStatus.INVALID">
+  <div class="d-flex flex-column">
+    <span class="feedback-invalid" *ngFor="let errorMessage of errorMessages; let i = index">
+      <span class="fa fa-error"></span>&nbsp;{{ errorMessage }}
+    </span>
+  </div>
+</ng-container>

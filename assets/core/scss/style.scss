@@ -7,6 +7,13 @@ $box-shadow-danger-focus: 0 0 0 0.25rem rgb(220 53 69 / 25%);
 $box-shadow-success: 0px 0px 0px 1px $color-success;
 $box-shadow-danger: 0px 0px 0px 1px $color-danger;
 
+.dt-color {
+  width: 2em; 
+  height: 2em; 
+  border-radius: 0.5rem;
+  border: 1px solid black;
+}
+
 .btn-icon > .fa {
   margin-top: 3px
 }
@@ -57,7 +64,7 @@ $box-shadow-danger: 0px 0px 0px 1px $color-danger;
 }
 
 input:not([type='range']):not(.search-input):hover,
-.select2-selection:hover,
+.select-selection:hover,
 textarea:hover,
 .range-wrapper:hover,
 .selection-wrapper:hover {

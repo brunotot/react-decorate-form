@@ -81,16 +81,16 @@ export class AppModule { }
 
 ### Component call in template file
 ```html
-<ngxp-form
+<rib-base-form
   [form]="formInstance"
   [formTitle]="formTitle"
   [fnSubmit]="onSubmitFn">
-</ngxp-form>
+</rib-base-form>
 ```
 
 ### Important imports
 ```typescript
-import { Component } from '@angular/core'
+import { Component, ViewEncapsulation } from '@angular/core'
 import { 
   IForm, 
   Form, 
