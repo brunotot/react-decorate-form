@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, Renderer2, RendererFactory2, ViewEncapsulation } from '@angular/core';
+import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 
 const TOAST_DURATION_IN_MS = 6000;
 const TOAST_END_OPACITY_DURATION_IN_MS = 200;
@@ -18,11 +18,6 @@ export interface IToastConfig {
   body?: string
 }
 
-function getRandomToastType() {
-  let values = Object.values(ToastType)
-  return values[Math.floor(Math.random() * values.length)];
-}
-
 function getNormalizedToastConfig(config: IToastConfig) {
   if (!config.type) config.type = ToastType.DEFAULT
   if (!config.title) config.title = ''
@@ -32,17 +27,26 @@ function getNormalizedToastConfig(config: IToastConfig) {
 
 @Injectable()
 export class ToastService {
-  private renderer: Renderer2;
-  private toastListWrapper: HTMLElement
+  private renderer!: Renderer2;
+  private toastListWrapper!: HTMLElement
   
   constructor(
     private rendererFactory: RendererFactory2,
     @Inject(DOCUMENT) private document: Document
   ) { 
+    this.onInit()
+  }
+
+  onInit() {
     this.renderer = this.rendererFactory.createRenderer(null, null);
-    this.toastListWrapper = this.document.createElement('div');
-    this.toastListWrapper.setAttribute('class', 'toast-list-wrapper')
+    this.toastListWrapper = this.buildToastListWrapperElem()
     this.renderer.appendChild(this.document.body, this.toastListWrapper);
+  }
+
+  buildToastListWrapperElem(): HTMLElement {
+    let toastListWrapper = this.document.createElement('div');
+    toastListWrapper.setAttribute('class', 'toast-list-wrapper')
+    return toastListWrapper;
   }
 
   showSuccess(title?: string, body?: string) {
@@ -61,8 +65,35 @@ export class ToastService {
     })
   }
 
+  buildTitleElem(title: string): HTMLElement {
+    const titleElem = this.document.createElement('h5');
+    titleElem.textContent = title as string
+    return titleElem;
+  }
+
+  buildBodyElem(body: string): HTMLElement {
+    const bodyElem = this.document.createElement('p');
+    bodyElem.textContent = body as string
+    return bodyElem;
+  }
+
+  buildCloseElem(): HTMLElement {
+    const spanClose = this.document.createElement('span');
+    spanClose.innerHTML = '&times;'
+    spanClose.classList.add('toast-span-close')
+    return spanClose;
+  }
+
+  buildToastWrapperElem(type: ToastType): HTMLElement {
+    const toastWrapper = this.document.createElement('div');
+    toastWrapper.classList.add('toast-wrapper', `toast-wrapper-${type}`, 'toast-wrapper-loading')
+    return toastWrapper;
+  }
+
   show(config: IToastConfig): void {
     let normalizedConfig = getNormalizedToastConfig(config);
+    let { body, title, type } = normalizedConfig;
+    if (!title && !body) return;
 
     if (false/* if custom configuration through Module.forRoot() exists */) {
       // TODO: implement custom configurations through Module.forRoot()!
@@ -84,22 +115,11 @@ export class ToastService {
       return;
     }
 
-    let { body, title, type } = normalizedConfig;
-
-    const toastWrapper = this.document.createElement('div');
-    toastWrapper.classList.add('toast-wrapper', `toast-wrapper-${type}`, 'toast-wrapper-loading')
-
-    if (title) {
-      const titleElem = this.document.createElement('h5');
-      titleElem.textContent = title as string
-      toastWrapper.appendChild(titleElem);
-    }
-
-    if (body) {
-      const bodyElem = this.document.createElement('p');
-      bodyElem.textContent = body as string
-      toastWrapper.appendChild(bodyElem);
-    }
+    const toastWrapper = this.buildToastWrapperElem(type!)
+    if (title) toastWrapper.appendChild(this.buildTitleElem(title));
+    if (body) toastWrapper.appendChild(this.buildBodyElem(body));
+    let spanClose = this.buildCloseElem()
+    toastWrapper.appendChild(spanClose);
 
     const startCountingUntilLeave = () => {
       return setTimeout(() => {
@@ -109,11 +129,6 @@ export class ToastService {
         }, TOAST_END_OPACITY_DURATION_IN_MS)
       }, TOAST_DURATION_IN_MS)
     }
-
-    const spanClose = this.document.createElement('span');
-    spanClose.innerHTML = '&times;'
-    spanClose.classList.add('toast-span-close')
-    toastWrapper.appendChild(spanClose);
 
     this.renderer.appendChild(this.toastListWrapper, toastWrapper);
     var timeoutFn = startCountingUntilLeave();

@@ -3,7 +3,6 @@ import ReactiveInput from '../../../../model/ReactiveInput';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import { Style } from '../../../../model/Style';
 import { ValidationStatus } from '../../../../model/ValidationStatus';
-import $ from '../../../../model/$';
 import { Select2OptionData } from '../../../../type/FormInputConfig';
 
 declare var window: any;
@@ -157,19 +156,17 @@ export class SelectComponent extends ReactiveInput implements OnInit {
   }
 
   handleValue() {
-    let $selectionContainer = $(this.select2ContainerSelector);
+    let $selectionContainer = document.querySelector(this.select2ContainerSelector);
     if (this.validationStatus !== ValidationStatus.IDLE) {
       if (!this.firstTimeValidation) {
-        $selectionContainer.addClass(Style.CLASS_INPUT_VALIDATION)
+        $selectionContainer?.classList.add(Style.CLASS_INPUT_VALIDATION)
         this.firstTimeValidation = true;
       }
       let validationClass = this.validationStatus === ValidationStatus.VALID ? Style.CLASS_INPUT_VALID : Style.CLASS_INPUT_INVALID;
-      $selectionContainer
-        .addClass(validationClass)
-        .removeClass(this.validationStatus === ValidationStatus.INVALID ? Style.CLASS_INPUT_VALID : Style.CLASS_INPUT_INVALID);
+      $selectionContainer?.classList.add(validationClass)
+      $selectionContainer?.classList.remove(this.validationStatus === ValidationStatus.INVALID ? Style.CLASS_INPUT_VALID : Style.CLASS_INPUT_INVALID)
     } else {
-      $selectionContainer
-        .css('border', Style.STYLE_BORDER_INPUT_DEFAULT)
+      $selectionContainer?.setAttribute('style', `border: ${Style.STYLE_BORDER_INPUT_DEFAULT}`)
     }
   }
 
