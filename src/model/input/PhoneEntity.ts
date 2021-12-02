@@ -1,49 +1,27 @@
 import { InputType } from "../InputType";
-import { IPhone, splitToTwoValues } from "../ValidatorBuilder";
 import InputEntity from "./base/InputEntity";
 
-function stringToPhone(phoneString: string): IPhone {
-  let areaCodeSplit = splitToTwoValues("/", phoneString);
-  let areaCode = areaCodeSplit[0].substring(1);
-  let [countryCode, lineNumber] = splitToTwoValues("-", areaCodeSplit[1]);
-  return {
-    areaCode,
-    countryCode,
-    globalNumber: phoneString,
-    lineNumber,
-    localNumber: `0${countryCode}${lineNumber}`
-  }
-}
-
-class PhoneEntity extends InputEntity<IPhone> {
+class PhoneEntity extends InputEntity<string> {
   constructor() {
     super(InputType.PHONE)
   }
 
   override convertToDatatableValue(value: any) {
     value = this.convertToFormValue(value)
-    return `<a class="number" href="tel:${value.globalNumber}">${value.globalNumber}</a>`
+    return `<a class="number" href="tel:${value}">${value}</a>`
   }
 
-  override getDefaultFormValue(): IPhone {
-    return {
-      areaCode: '',
-      countryCode: '',
-      globalNumber: '',
-      lineNumber: '',
-      localNumber: ''
-    }
+
+  override getDefaultFormValue(): string {
+    return ''
   }
 
-  override convertToDisplayValue(value: IPhone | string | null): string | null {
-    return this.convertToFormValue(value).globalNumber
+  override convertToDisplayValue(value: string | null): string {
+    return this.convertToFormValue(value)
   }
 
-  override convertToFormValue(value: IPhone | string | null): IPhone {
-    if (!value) return this.getDefaultFormValue();
-    return typeof value === "string" 
-      ? stringToPhone(value) 
-      : value;
+  override convertToFormValue(value: string | null): string {
+    return value ? value : this.getDefaultFormValue()
   }
 }
 

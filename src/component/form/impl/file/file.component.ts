@@ -2,9 +2,8 @@ import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angula
 import { IFile } from '../../../../model/ValidatorBuilder';
 import VIEW_PROVIDERS, { buildProviders } from '../../../../model/Provider';
 import ReactiveInput from '../../../../model/ReactiveInput';
-
-const DEFAULT_CLASS = 'form-control width-auto';
-const DEFAULT_CLASS_WITH_COLOR_PLACEHOLDER = 'form-control width-auto color-placeholder';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'rib-file',
@@ -15,7 +14,9 @@ const DEFAULT_CLASS_WITH_COLOR_PLACEHOLDER = 'form-control width-auto color-plac
   encapsulation: ViewEncapsulation.None
 })
 export class FileComponent extends ReactiveInput implements OnInit {
-  override defaultClass: string = DEFAULT_CLASS_WITH_COLOR_PLACEHOLDER;
+  override defaultClass: string = 'form-control rib-file-text';
+  @ViewChild('fileElem') fileElem!: ElementRef;
+  fileTextValue: string = '';
 
   onFileChange(event: any) {
     let resultFiles: IFile[] = [];
@@ -39,11 +40,19 @@ export class FileComponent extends ReactiveInput implements OnInit {
           this.cd.markForCheck();
         };
       }
-      this.defaultClass = DEFAULT_CLASS;
+      if (files.length > 1) {
+        this.fileTextValue = `${files.length} files selected`
+      } else {
+        this.fileTextValue = files[0].name;
+      }
     } else {
-      this.defaultClass = DEFAULT_CLASS.concat(' color-placeholder');
       this.writeValue(this.displayConfig.inputEntity.getDefaultFormValue(this.displayConfig));
+      this.fileTextValue = '';
     }
+  }
+
+  onFileClick() {
+    this.fileElem.nativeElement.click()
   }
 
   constructor(private cd: ChangeDetectorRef) {
@@ -51,6 +60,5 @@ export class FileComponent extends ReactiveInput implements OnInit {
   }
 
   ngOnInit(): void {
-    
   }
 }

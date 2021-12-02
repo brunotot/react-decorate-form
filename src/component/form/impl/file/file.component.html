@@ -1,13 +1,23 @@
-<input *ngIf="!displayConfig.multiple"
-  [ngClass]="defaultClassWrapper"
-  [attr.placeholder]="placeholderValue"
+<div class="input-group rib-file-wrapper" (click)="onFileClick()">
+  <span class="input-group-text">
+    <span class="fa fa-upload"></span>
+  </span>
+  <input
+    [ngClass]="defaultClassWrapper"
+    class="form-control rib-file-text" 
+    placeholder="No file chosen" 
+    [value]="fileTextValue"
+    type="text"
+    readonly
+  />
+</div>
+<input #fileElem *ngIf="!displayConfig.multiple"
+  class="d-none"
   (change)="onFileChange($event)"
   type="file"
 />
-
-<input *ngIf="!!displayConfig.multiple"
-  [ngClass]="defaultClassWrapper"
-  [attr.placeholder]="placeholderValue"
+<input #fileElem *ngIf="!!displayConfig.multiple"
+  class="d-none"
   (change)="onFileChange($event)"
   type="file"
   multiple

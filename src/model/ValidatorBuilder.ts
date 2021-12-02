@@ -72,7 +72,7 @@ function getValidatorFn(
 ): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     let controlValue: any = control.value;
-    let config: any = {};
+    let config: ValidationErrors = {};
     config[validationKey] = controlValue;
     return isValid(controlValue) ? null : config;
   };

@@ -1,6 +1,6 @@
 <div class="select-wrapper">
   <div #selectionElem [ngClass]="defaultClassWrapper.concat(dropdownOpened ? ' opened' : ' closed')" (click)="onDropdownClick($event)">
-    <span *ngIf="selections.length === 0" class="selection-none">{{ placeholderValue }}</span>
+    <span *ngIf="selections.length === 0" class="selection-none">{{ placeholder }}</span>
     <ul *ngIf="selections.length > 0" class="selection-block">
       <span *ngIf="!isMultiple">{{ selections[0].text }}</span>
       <ng-container *ngIf="isMultiple">

@@ -479,6 +479,7 @@ export class DatatableComponent implements OnInit {
   }
 
   triggerPaginationArrayChange() {
+    console.log("Triggering...");
     if (this.ajax) {
       this.tableLoader.start();
       this.ajax.loadData(this.paginationState, this.displayConfigsByFormControlName)
@@ -639,7 +640,7 @@ export class DatatableComponent implements OnInit {
 
   onSortClick(formControlName: string) {
     if (this.sortingFormControlName === formControlName) {
-      if (this.sortingType === 'asc') {
+      if (this.sortingType === SortingType.ASC) {
         this.paginationState.sortingType = SortingType.DESC;
       } else {
         this.paginationState.sortingType = SortingType.ASC;

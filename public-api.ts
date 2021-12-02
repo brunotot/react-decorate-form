@@ -28,7 +28,19 @@ import { DatatableComponent } from './src/component/datatable/datatable.componen
 import { DatatableReadEntryModalComponent } from './src/component/modal/datatable-read-entry-modal/datatable-read-entry-modal.component';
 import { GenericModalComponent } from './src/component/modal/generic-modal/generic-modal.component';
 import { TextComponent } from './src/component/form/impl/text/text.component';
+import { NumberComponent } from './src/component/form/impl/number/number.component';
+import { TimeComponent } from './src/component/form/impl/time/time.component';
+import { DateTimeComponent } from './src/component/form/impl/datetime/datetime.component';
+import { DateComponent } from './src/component/form/impl/date/date.component';
+import { MonthComponent } from './src/component/form/impl/month/month.component';
+import { WeekComponent } from './src/component/form/impl/week/week.component';
 
+export { MonthComponent };
+export { WeekComponent };
+export { DateComponent };
+export { DateTimeComponent };
+export { TimeComponent };
+export { NumberComponent };
 export { TextComponent };
 export { RangeComponent };
 export { ColorComponent };

@@ -26,6 +26,12 @@ import { DatatableComponent } from './component/datatable/datatable.component';
 import { DatatableReadEntryModalComponent } from './component/modal/datatable-read-entry-modal/datatable-read-entry-modal.component';
 import { GenericInputPlaceholderComponent } from './component/form/generic-input-placeholder/generic-input-placeholder.component';
 import { TextComponent } from './component/form/impl/text/text.component';
+import { NumberComponent } from './component/form/impl/number/number.component';
+import { TimeComponent } from './component/form/impl/time/time.component';
+import { DateTimeComponent } from './component/form/impl/datetime/datetime.component';
+import { DateComponent } from './component/form/impl/date/date.component';
+import { MonthComponent } from './component/form/impl/month/month.component';
+import { WeekComponent } from './component/form/impl/week/week.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +58,13 @@ import { TextComponent } from './component/form/impl/text/text.component';
     DatatableReadEntryModalComponent,
     GenericModalComponent,
     LoaderComponent,
-    TextComponent
+    TimeComponent,
+    TextComponent,
+    NumberComponent,
+    DateComponent,
+    DateTimeComponent,
+    MonthComponent,
+    WeekComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +72,11 @@ import { TextComponent } from './component/form/impl/text/text.component';
     ReactiveFormsModule
   ],
   exports: [
+    DateTimeComponent,
+    DateComponent,
     LoaderComponent,
+    TimeComponent,
+    NumberComponent,
     GenericModalComponent,
     DatatableComponent,
     NoBrowserSupportComponent,
@@ -82,7 +98,9 @@ import { TextComponent } from './component/form/impl/text/text.component';
     SearchComponent,
     EmailComponent,
     TextComponent,
-    DatatableReadEntryModalComponent
+    DatatableReadEntryModalComponent,
+    MonthComponent,
+    WeekComponent
   ],
   providers: [
     ToastService

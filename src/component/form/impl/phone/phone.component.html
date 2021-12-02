@@ -1,10 +1,8 @@
-<div class="input-icon-wrapper">
-  <input 
-    [ngClass]="defaultClassWrapper"
-    [attr.placeholder]="placeholderValue"
-    (input)="onInputChange($event)"
-    [value]="getDisplayValue(value)"
-    type="tel"
-  />
-  <span title="Phone" class="fa input-icon fa-phone"></span>
-</div>
+<input 
+  [ngClass]="defaultClassWrapper"
+  [attr.placeholder]="placeholder"
+  (keypress)="onKeyPress($event)"
+  (paste)="onPaste($event)"
+  [formControlName]="formControlName"
+  type="tel"
+/>

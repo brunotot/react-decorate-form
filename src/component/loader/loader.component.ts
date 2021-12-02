@@ -21,6 +21,12 @@ export class LoaderComponent implements OnInit {
     setTimeout(() => this.isLoading = false);
   }
 
+  get contentWrapperClass() {
+    if (!this.isAnyActivated) return ''
+    if (this.isLoading) return 'loading'
+    return 'loaded'
+  }
+
   constructor() {
   }
 

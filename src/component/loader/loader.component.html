@@ -1,5 +1,5 @@
-<div class="loader-wrapper">
-  <div [ngClass]="isAnyActivated ? (isLoading ? 'loading' : 'loaded') : ''">
+<div class="rib-loader-wrapper">
+  <div [ngClass]="contentWrapperClass">
     <ng-content></ng-content>
   </div>
   <div *ngIf="isLoading" class="lds-roller">

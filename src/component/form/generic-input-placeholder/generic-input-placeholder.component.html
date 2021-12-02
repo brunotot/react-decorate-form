@@ -1,7 +1,7 @@
 <input #textOrTypeElem
   *ngIf="isInputTypeSupportedByBrowser"
   [ngClass]="defaultClassWrapper"
-  [attr.placeholder]="placeholderValue"
+  [attr.placeholder]="placeholder"
   [value]="formattedDisplayValue ? formattedDisplayValue : null"
   (focus)="onFocus()"
   (focusout)="onUnfocus()"
