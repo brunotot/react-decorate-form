@@ -1,0 +1,8 @@
+<input 
+  [ngClass]="defaultClassWrapper"
+  [attr.placeholder]="placeholder"
+  (keypress)="onKeyPress($event)"
+  (paste)="onPaste($event)"
+  [formControlName]="formControlName"
+  type="tel"
+/>

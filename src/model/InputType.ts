@@ -1,28 +1,28 @@
 export enum InputType {
-  TEXT = 'text',
-  TIME = 'time',
-  DATETIME = 'datetime-local',
-  DATE = 'date',
-  NUMBER = 'number',
-  TEXTAREA = 'textarea',
-  PASSWORD = 'password',
   CHECKBOX = 'checkbox',
-  HIDDEN = 'hidden',
-  SELECT = 'select',
   COLOR = 'color',
+  DATE = 'date',
+  DATETIME = 'datetime-local',
   EMAIL = 'email',
+  FILE = 'file',
+  HIDDEN = 'hidden',
   MONTH = 'month',
-  URL = 'url',
+  NUMBER = 'number',
+  PASSWORD = 'password',
   PHONE = 'tel',
-  SEARCH = 'search',
   RANGE = 'range',
-  WEEK = 'week',
-  FILE = 'file'
+  SEARCH = 'search',
+  SELECT = 'select',
+  TEXT = 'text',
+  TEXTAREA = 'textarea',
+  TIME = 'time',
+  URL = 'url',
+  WEEK = 'week'
 }
 
 export enum PatternInputType {
-  TEXT = 'text',
-  PASSWORD = 'password',
   COLOR = 'color',
   NUMBER = 'number',
+  PASSWORD = 'password',
+  TEXT = 'text'
 }

@@ -1,0 +1,20 @@
+<div *ngIf="displayConfig.inputType !== InputType.HIDDEN" [ngClass]="rowWrapperClass">
+  <label [ngClass]="labelClass">{{ displayConfig.label }}</label>
+  <div [ngClass]="inputWrapperClass">
+    <rib-generic-input-group
+      [validationStatus]="validationStatus"
+      [displayConfig]="displayConfig"
+      [errorMessages]="errorMessages"
+      [form]="form"
+      [value]="value">
+    </rib-generic-input-group>
+  </div>
+</div>
+
+<ng-container *ngIf="displayConfig.inputType === InputType.HIDDEN">
+  <rib-generic-input
+    [displayConfig]="displayConfig"
+    [form]="form"
+    [value]="value">
+  </rib-generic-input>
+</ng-container>

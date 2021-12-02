@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 import { ControlValueAccessor } from "@angular/forms";
 import { Form } from "../form/Form";
 import { IRegexNormalized, isText } from "../utility/InputEntityUtils";
@@ -20,8 +20,10 @@ export default class ReactiveInput implements ControlValueAccessor {
   ValidationStatus = ValidationStatus;
   Style = Style;
 
-  get placeholderValue() { return this.displayConfig.placeholder ? this.displayConfig.placeholder : this.defaultPlaceholder }
-  get typeValue() { return this.displayConfig.inputType ? this.displayConfig.inputType : this.defaultType }
+  get formControlName() { return this.displayConfig.formControlName }
+
+  get placeholder() { return this.displayConfig.placeholder ? this.displayConfig.placeholder : this.defaultPlaceholder }
+  get inputType() { return this.displayConfig.inputType ? this.displayConfig.inputType : this.defaultType }
 
   defaultBaseValidationClass: string = Style.CLASS_INPUT_VALIDATION;
   defaultValidClass: string = Style.CLASS_INPUT_VALID;

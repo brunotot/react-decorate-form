@@ -1,0 +1,11 @@
+.rib-file-text:read-only {
+  opacity: 1;
+  background-color: #ffff;
+  cursor: pointer;
+}
+
+.rib-file-wrapper {
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  cursor: pointer
+}

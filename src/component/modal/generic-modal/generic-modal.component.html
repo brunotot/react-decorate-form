@@ -1,0 +1,11 @@
+<div *ngIf="isShowing" [ngClass]="modalClass" #modalRef>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header py-0 pe-0">
+        <h5 class="my-3">{{ modalTitle }}</h5>
+        <span (click)="closeModal()" class="rib-close">&times;</span>
+      </div>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

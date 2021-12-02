@@ -1,0 +1,214 @@
+<ng-container *ngIf="isInputTypeSupportedByBrowser">
+  <ng-container [ngSwitch]="inputType">
+    <ng-container *ngSwitchCase="InputType.SELECT">
+      <rib-select
+        [validationStatus]="validationStatus"
+        [displayConfig]="displayConfig"
+        [value]="value"
+        [class]="class"
+        [classAppend]="classAppend"
+        [form]="form">
+      </rib-select>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.TEXTAREA">
+      <rib-textarea 
+        [class]="class"
+        [value]="value"
+        [classAppend]="classAppend"
+        [validationStatus]="validationStatus"
+        [displayConfig]="displayConfig"
+        [form]="form">
+      </rib-textarea>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.CHECKBOX">
+      <rib-checkbox
+        [class]="class"
+        [value]="value"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [form]="form">
+      </rib-checkbox>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.HIDDEN">
+      <rib-hidden 
+        [displayConfig]="displayConfig" 
+        [value]="value" 
+        [form]="form">
+      </rib-hidden>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.COLOR">
+      <rib-color 
+        [displayConfig]="displayConfig" 
+        [value]="value"
+        [form]="form"></rib-color>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.RANGE">
+      <rib-range 
+        [displayConfig]="displayConfig" 
+        [value]="value" 
+        [validationStatus]="validationStatus"
+        [form]="form">
+      </rib-range>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.FILE">
+      <rib-file
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [form]="form"
+        [value]="value">
+      </rib-file>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.PHONE">
+      <rib-phone
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-phone>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.PASSWORD">
+      <rib-password
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-password>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.SEARCH">
+      <rib-search
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-search>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.EMAIL">
+      <rib-email
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-email>
+    </ng-container>
+  
+    <ng-container *ngSwitchCase="InputType.URL">
+      <rib-url
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-url>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="InputType.DATETIME">
+      <rib-datetime
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-datetime>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="InputType.DATE">
+      <rib-date
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-date>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="InputType.MONTH">
+      <rib-month
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-month>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="InputType.WEEK">
+      <rib-week
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-week>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="InputType.TIME">
+      <rib-time
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-time>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="InputType.NUMBER">
+      <rib-number
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-number>
+    </ng-container>
+  
+    <ng-container *ngSwitchDefault>
+      <rib-text
+        [class]="class"
+        [classAppend]="classAppend"
+        [displayConfig]="displayConfig"
+        [validationStatus]="validationStatus"
+        [value]="value"
+        [form]="form">
+      </rib-text>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="!isInputTypeSupportedByBrowser">
+  <rib-no-browser-support
+    [class]="class"
+    [classAppend]="classAppend"
+    [displayConfig]="displayConfig"
+    [validationStatus]="validationStatus"
+    [value]="value"
+    [form]="form">
+  </rib-no-browser-support>
+</ng-container>

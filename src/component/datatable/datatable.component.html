@@ -1,0 +1,139 @@
+<ng-container *ngIf="formControlWrapper">
+  <rib-loader #tableLoader>
+    <form [formGroup]="entriesForm">
+      <div class="p-1" #containerDiv>
+        <div [ngClass]="'actions-wrapper pb-3 '.concat(actionsClassCalculated)" #actionsContainer>
+          <div class="search-container" #actionsLeft>
+            <div class="input-group limit-container">
+              <span class="input-group-text">Limit</span>
+              <rib-select
+                [displayConfig]="entriesForm.findDisplayConfig('entriesPerPage')"
+                [value]="'10'"
+                [form]="entriesForm">
+              </rib-select>
+            </div>
+            <button *ngIf="actionPermissions.create" class="btn btn-primary btn-icon btn-create" (click)="openCreateModal()">
+              <span class="fa fa-plus-white d-flex mt-0" style="margin-bottom: 2px"></span>
+              <span>Create</span>
+            </button>
+          </div>
+          <div class="search-container" #actionsRight>
+            <div class="input-group flex-nowrap justify-content-end">
+              <input type="search" class="form-control search" formControlName="searchFilter" placeholder="Search" />
+              <span class="input-group-text">
+                <span class="fa fa-search"></span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <table #table class="table table-striped">
+          <thead>
+            <tr>
+              <th *ngIf="hasAnyChangeActionExceptCreate" style="width: 42px !important; min-width: 42px !important; max-width: 42px !important"></th>
+              <ng-container *ngFor="let column of columns; trackBy:trackByIndex; let i = index">
+                <th 
+                  (click)="onSortClick(column.formControlName)"
+                  [style.min-width]="calculateTextColumnWidthBase(column.formControlName)"
+                  [ngClass]="getInputType(column.formControlName).concat(' sorting', sortingFormControlName === column.formControlName ? ' sorting_'.concat(sortingType) : '', isText(getInputType(column.formControlName)) ? ' th-text' : '')" 
+                  *ngIf="i < formControlNames.length - removeFromEnd">
+                  {{ column.label }}
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody #tableBodyRef>
+            <ng-container *ngIf="filteredAndPaginatedArray.length > 0">
+              <tr *ngFor="let item of filteredAndPaginatedArray; trackBy:trackByIndex; let i = index">
+                <td *ngIf="hasAnyChangeActionExceptCreate" style="position: relative; width: 42px !important; min-width: 42px !important; max-width: 42px !important">
+                  <span (click)="onClickMore(item)" [ngClass]="'btn-more fa '.concat(selectedEntry === item ? 'fa-minus-red' : 'fa-plus')" style="user-select: none; cursor: pointer; width: 20px; height: 20px; margin-top: 4px"></span>
+                  <div *ngIf="selectedEntry === item"
+                    class="more-btns-wrapper d-flex"
+                    style="position: absolute; flex-direction: row; left: 40px; flex-wrap: nowrap; column-gap: 5px; top: calc(50% - 21px); padding: 7px; border-radius: 0.25rem; border: 1px solid white; background: lightgrey">
+                    <button *ngIf="actionPermissions.read" (click)="openDetailsModal()" class="btn btn-primary btn-sm"><span class="fa fa-info-white"></span></button>
+                    <button *ngIf="actionPermissions.update" (click)="openUpdateModal()" class="btn btn-info btn-sm"><span class="fa fa-edit"></span></button>
+                    <button *ngIf="actionPermissions.delete" (click)="deleteModal.openModal()" class="btn btn-danger btn-sm"><span class="fa fa-trash-white"></span></button>
+                  </div>
+                </td>
+                <ng-container *ngFor="let column of columns; trackBy:trackByIndex; let i = index">
+                  <td [title]="getTitle(column.formControlName, item)" [ngClass]="isText(getInputType(column.formControlName)) ? 'td-text' : ''" *ngIf="i < formControlNames.length - removeFromEnd">
+                    <span *ngIf="item[column.formControlName] === null || item[column.formControlName] === undefined || item[column.formControlName] === '' || item[column.formControlName] === []" class="no-data">no data</span>
+                    <ng-container *ngIf="item[column.formControlName] !== null && item[column.formControlName] !== undefined && item[column.formControlName] !== '' && item[column.formControlName] !== []" [ngSwitch]="true">
+                      <span [innerHTML]="getReadValue(column.formControlName, item[column.formControlName])"></span>
+                    </ng-container>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-container>
+            <tr *ngIf="filteredAndPaginatedArray.length === 0">
+              <td class="text-center" [attr.colspan]="columns.length + 1">No data for display</td>
+            </tr>
+          </tbody>
+        </table>
+        <div #navContainer [ngClass]="'d-flex w-100 flex-wrap row-btns-container '.concat(navClassCalculated)" style="row-gap: 8px; column-gap: 4px;">
+          <span #navLeft class="pt-2">
+            {{ calculateShowingText }}
+          </span>
+    
+          <div #navMiddle class="nav-btns-wrapper">
+            <div class="d-flex" style="column-gap: 4px">
+              <button (click)="toBeginning()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-double-left"></span></button>
+              <button (click)="toPrevious()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-left"></span></button>
+            </div>
+
+            <div class="pagination-wrapper input-group w-auto flex-nowrap">
+              <span class="input-group-text">Page</span>
+              <rib-text
+                [displayConfig]="entriesForm.findDisplayConfig('currentPageNumber')"
+                [form]="entriesForm">
+              </rib-text>
+              <span class="input-group-text">of {{ maxNumberOfPages }}</span>
+            </div>
+
+            <div class="d-flex" style="column-gap: 4px">
+              <button (click)="toNext()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-right"></span></button>
+              <button (click)="toLast()" class="btn btn-light btn-nav btn-icon"><span class="fa fa-angle-double-right"></span></button>
+            </div>
+          </div>
+
+          <button *ngIf="!ajax && hasAnyChangeAction" #navRight (click)="doSave()" [ngClass]="'btn btn-success btn-icon save-btn'.concat(changesMade ? '' : ' disabled', btnSaveExpandClass)">
+            <span class="fa fa-save-white"></span>
+            Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </rib-loader>
+</ng-container>
+
+<rib-generic-modal #updateModal [modalTitle]="displayName">
+  <rib-base-form #updateForm
+    [form]="form"
+    [fnSubmit]="onUpdateSubmitFn">
+  </rib-base-form>
+</rib-generic-modal>
+
+<rib-generic-modal #createModal [modalTitle]="createModalTitle">
+  <rib-base-form #createForm
+    [form]="form"
+    [fnSubmit]="onCreateSubmitFn">
+  </rib-base-form>
+</rib-generic-modal>
+
+<rib-generic-modal #detailsModal [modalTitle]="displayName">
+  <rib-datatable-read-entry-modal
+    [formControlNames]="formControlNames"
+    [displayConfigMap]="displayConfigsByFormControlName"
+    [entry]="selectedEntry">
+  </rib-datatable-read-entry-modal>
+</rib-generic-modal>
+
+<rib-generic-modal #deleteModal [modalTitle]="deleteModalTitle">
+  <div class="modal-body">
+    <span>Are you sure you want to delete {{ displayName }}?</span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" (click)="deleteEntry()">Delete</button>
+    <button class="btn btn-secondary" (click)="deleteModal.closeModal()">Cancel</button>
+  </div>
+</rib-generic-modal>

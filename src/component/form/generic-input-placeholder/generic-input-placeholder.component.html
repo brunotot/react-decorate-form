@@ -1,0 +1,10 @@
+<input #textOrTypeElem
+  *ngIf="isInputTypeSupportedByBrowser"
+  [ngClass]="defaultClassWrapper"
+  [attr.placeholder]="placeholder"
+  [value]="formattedDisplayValue ? formattedDisplayValue : null"
+  (focus)="onFocus()"
+  (focusout)="onUnfocus()"
+  (input)="onInputChange($event)"
+  [type]="isHovered || isFocused || formattedDisplayValue ? textOrType : InputType.TEXT"
+/>

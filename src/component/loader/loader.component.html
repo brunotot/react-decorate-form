@@ -1,0 +1,15 @@
+<div class="rib-loader-wrapper">
+  <div [ngClass]="contentWrapperClass">
+    <ng-content></ng-content>
+  </div>
+  <div *ngIf="isLoading" class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>

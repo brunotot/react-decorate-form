@@ -1,62 +1,70 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { BaseFormComponent } from './component/form-group/base-form/base-form.component';
-import { FormInputRowComponent } from './component/form-group/form-input-row/form-input-row.component';
-import { GenericInputGroupComponent } from './component/form-group/generic-input-group/generic-input-group.component';
-import { GenericInputComponent } from './component/form-group/generic-input/generic-input.component';
-import { Select2Component } from './component/form-group/impl/select2-impl/select2-impl.component';
-import ReactiveInput from './model/ReactiveInput';
-import { DefaultImplComponent } from './component/form-group/impl/default-impl/default-impl.component';
-import { CheckboxImplComponent } from './component/form-group/impl/checkbox-impl/checkbox-impl.component';
-import { HiddenImplComponent } from './component/form-group/impl/hidden-impl/hidden-impl.component';
-import { TextareaImplComponent } from './component/form-group/impl/textarea-impl/textarea-impl.component';
-import { ColorImplComponent } from './component/form-group/impl/color-impl/color-impl.component';
-import { RangeImplComponent } from './component/form-group/impl/range-impl/range-impl.component';
-import { FileImplComponent } from './component/form-group/impl/file-impl/file-impl.component';
-import { PhoneImplComponent } from './component/form-group/impl/phone-impl/phone-impl.component';
-import { TextOrTypeImplComponent } from './component/form-group/impl/text-or-type-impl/text-or-type-impl.component';
-import { PasswordImplComponent } from './component/form-group/impl/password-impl/password-impl.component';
-import { SearchImplComponent } from './component/form-group/impl/search-impl/search-impl.component';
-import { EmailImplComponent } from './component/form-group/impl/email-impl/email-impl.component';
-import { UrlImplComponent } from './component/form-group/impl/url-impl/url-impl.component';
-import { NoBrowserSupportComponent } from './component/form-group/no-browser-support/no-browser-support.component';
-import { SelectFilterPipe } from './pipe/SelectFilterPipe';
-import { BaseDatatableComponent } from './component/datatable/base-datatable/base-datatable.component';
-import { SafeHtmlPipe } from './pipe/SafeHtmlPipe';
-import { DtEntryDetailsComponent } from './component/datatable/dt-entry-details.ts/dt-entry-details.component';
-import { ModalComponent } from './component/dialog/modal/modal.component';
-import { LoaderComponent } from './component/dialog/loader/loader.component';
+import { BaseFormComponent } from './component/form/base-form/base-form.component';
+import { BaseFormInputRowComponent } from './component/form/base-form-input-row/base-form-input-row.component';
+import { GenericInputGroupComponent } from './component/form/generic-input-group/generic-input-group.component';
+import { GenericInputComponent } from './component/form/generic-input/generic-input.component';
+import { NoBrowserSupportComponent } from './component/form/generic-input-browser-support/no-browser-support.component';
+import { LoaderComponent } from './component/loader/loader.component';
 import { ToastService } from './service/toast.service';
+import { PhoneComponent } from './component/form/impl/phone/phone.component';
+import { SelectComponent } from './component/form/impl/select/select.component';
+import { CheckboxComponent } from './component/form/impl/checkbox/checkbox.component';
+import { HiddenComponent } from './component/form/impl/hidden/hidden.component';
+import { TextareaComponent } from './component/form/impl/textarea/textarea.component';
+import { ColorComponent } from './component/form/impl/color/color.component';
+import { RangeComponent } from './component/form/impl/range/range.component';
+import { FileComponent } from './component/form/impl/file/file.component';
+import { PasswordComponent } from './component/form/impl/password/password.component';
+import { SearchComponent } from './component/form/impl/search/search.component';
+import { EmailComponent } from './component/form/impl/email/email.component';
+import { UrlComponent } from './component/form/impl/url/url.component';
+import ReactiveInput from './model/ReactiveInput';
+import { GenericModalComponent } from './component/modal/generic-modal/generic-modal.component';
+import { DatatableComponent } from './component/datatable/datatable.component';
+import { DatatableReadEntryModalComponent } from './component/modal/datatable-read-entry-modal/datatable-read-entry-modal.component';
+import { GenericInputPlaceholderComponent } from './component/form/generic-input-placeholder/generic-input-placeholder.component';
+import { TextComponent } from './component/form/impl/text/text.component';
+import { NumberComponent } from './component/form/impl/number/number.component';
+import { TimeComponent } from './component/form/impl/time/time.component';
+import { DateTimeComponent } from './component/form/impl/datetime/datetime.component';
+import { DateComponent } from './component/form/impl/date/date.component';
+import { MonthComponent } from './component/form/impl/month/month.component';
+import { WeekComponent } from './component/form/impl/week/week.component';
 
 @NgModule({
   declarations: [
     BaseFormComponent,
-    PhoneImplComponent,
+    PhoneComponent,
     GenericInputComponent,
     GenericInputGroupComponent,
-    FormInputRowComponent,
-    Select2Component,
+    BaseFormInputRowComponent,
+    SelectComponent,
     ReactiveInput,
-    DefaultImplComponent,
-    CheckboxImplComponent,
-    HiddenImplComponent,
-    TextareaImplComponent,
-    ColorImplComponent,
-    RangeImplComponent,
-    FileImplComponent,
-    TextOrTypeImplComponent,
-    PasswordImplComponent,
-    SearchImplComponent,
-    EmailImplComponent,
-    UrlImplComponent,
+    CheckboxComponent,
+    HiddenComponent,
+    TextareaComponent,
+    ColorComponent,
+    RangeComponent,
+    FileComponent,
+    GenericInputPlaceholderComponent,
+    PasswordComponent,
+    SearchComponent,
+    EmailComponent,
+    UrlComponent,
     NoBrowserSupportComponent,
-    SelectFilterPipe,
-    SafeHtmlPipe,
-    BaseDatatableComponent,
-    DtEntryDetailsComponent,
-    ModalComponent,
-    LoaderComponent
+    DatatableComponent,
+    DatatableReadEntryModalComponent,
+    GenericModalComponent,
+    LoaderComponent,
+    TimeComponent,
+    TextComponent,
+    NumberComponent,
+    DateComponent,
+    DateTimeComponent,
+    MonthComponent,
+    WeekComponent
   ],
   imports: [
     BrowserModule,
@@ -64,29 +72,35 @@ import { ToastService } from './service/toast.service';
     ReactiveFormsModule
   ],
   exports: [
+    DateTimeComponent,
+    DateComponent,
     LoaderComponent,
-    ModalComponent,
-    BaseDatatableComponent,
+    TimeComponent,
+    NumberComponent,
+    GenericModalComponent,
+    DatatableComponent,
     NoBrowserSupportComponent,
-    UrlImplComponent,
-    TextOrTypeImplComponent,
-    PhoneImplComponent,
-    FileImplComponent,
-    RangeImplComponent,
-    ColorImplComponent,
-    TextareaImplComponent,
+    UrlComponent,
+    GenericInputPlaceholderComponent,
+    PhoneComponent,
+    FileComponent,
+    RangeComponent,
+    ColorComponent,
+    TextareaComponent,
     BaseFormComponent,
     GenericInputComponent,
     GenericInputGroupComponent,
-    FormInputRowComponent,
-    Select2Component,
-    DefaultImplComponent,
-    CheckboxImplComponent,
-    HiddenImplComponent,
-    PasswordImplComponent,
-    SearchImplComponent,
-    EmailImplComponent,
-    DtEntryDetailsComponent
+    BaseFormInputRowComponent,
+    SelectComponent,
+    CheckboxComponent,
+    HiddenComponent,
+    PasswordComponent,
+    SearchComponent,
+    EmailComponent,
+    TextComponent,
+    DatatableReadEntryModalComponent,
+    MonthComponent,
+    WeekComponent
   ],
   providers: [
     ToastService

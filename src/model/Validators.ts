@@ -1,11 +1,10 @@
 import { ValidatorFn, Validators as FormsValidator } from "@angular/forms";
 import { IValidatorConfig } from "./FormControlWrapper";
-import { build, IPhone } from "./ValidatorBuilder";
+import { build } from "./ValidatorBuilder";
 
-//const URL_PATTERN = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
-const PHONE_PATTERN = '^\\+[0-9]{1,3}\\/[0-9]{1,2}\\-.[0-9]{4,10}$';
+const PHONE_PATTERN = '\\+?\\d+';
 const MSG_DEFAULT_URL_VALIDATION_FAILED = 'Input must be in format of a URL (ex: http://www.example.com/index.html)'
-const MSG_DEFAULT_PHONE_VALIDATION_FAILED = 'Input must be in format of a telephone number (ex: +123/45-67890)'
+const MSG_DEFAULT_PHONE_VALIDATION_FAILED = 'Input must be in format of a telephone number (ex: +1234567890)'
 const MSG_DEFAULT_EMAIL_VALIDATION_FAILED = 'Input must be in format of an email (ex: test@mail.com)'
 const MSG_DEFAULT_REQUIRED_VALIDATION_FAILED = 'Field value is required'
 const MSG_DEFAULT_REQUIRED_TRUE_VALIDATION_FAILED = 'Field value must be truthy'
@@ -71,12 +70,7 @@ function url(validatorName: string, validationFailedMessage: string = MSG_DEFAUL
 }
 
 function phone(validatorName: string, validationFailedMessage: string = MSG_DEFAULT_PHONE_VALIDATION_FAILED): IValidatorConfig {
-  return build(validatorName, validationFailedMessage, value => {
-    let re = new RegExp(PHONE_PATTERN);
-    let phone = value as IPhone;
-    let globalNumber = !!phone ? phone.globalNumber : '';
-    return re.test(globalNumber)
-  })
+  return build(validatorName, validationFailedMessage, value => !!/\+?\d+/g.exec(value))
 }
 
 const Validators = {
