@@ -1,4 +1,5 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Output } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewEncapsulation, EventEmitter } from '@angular/core';
 
 const DEFAULT_MODAL_CLASS = 'rib-modal';
 const DEFAULT_MODAL_SHOW_CLASS = 'rib-show';
@@ -12,6 +13,7 @@ const DEFAULT_MODAL_SHOW_CLASS = 'rib-show';
 export class GenericModalComponent implements OnInit {
   @Input() isShowing: boolean = false;
   @Input() modalTitle: string = '';
+  @Output() onClose: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('modalRef') modalRef!: ElementRef;
 
   get modalClass() {
@@ -24,6 +26,7 @@ export class GenericModalComponent implements OnInit {
 
   closeModal() {
     this.isShowing = false;
+    this.onClose.emit();
   }
 
   toggleShowModal() {

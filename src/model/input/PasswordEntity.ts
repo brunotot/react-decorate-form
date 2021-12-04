@@ -7,11 +7,11 @@ class PasswordEntity extends InputEntity<string> {
   }
 
   override convertToDatatableValueReadOnly(value: any) {
-    return 'hidden';
+    return '';
   }
 
-  override convertToDatatableValue(value: any) {
-    return `<span class="no-data">${this.convertToDatatableValueReadOnly(value)}</span>`
+  override convertToDatatableValue() {
+    return `<span class="fa fa-slash-eye glyphicon me-0"></span>`
   }
 
   override convertToDisplayValue(value: string | null): string {

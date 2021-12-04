@@ -1,6 +1,5 @@
 import { Component, ElementRef, HostListener, Input, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import { debounce } from "lodash";
 import { IForm } from "../../form/base/BaseForm";
 import { Form } from "../../form/Form";
 import FormControlWrapper from "../../model/FormControlWrapper";
@@ -12,6 +11,38 @@ import { getCompareFn, IAjax, IPaginationState, isText, isTextDisplay, SortingTy
 import { BaseFormComponent } from "../form/base-form/base-form.component";
 import { LoaderComponent } from "../loader/loader.component";
 import { GenericModalComponent } from "../modal/generic-modal/generic-modal.component";
+
+function roughSizeOfObject(object: any) {
+  var objectList = [];
+  var stack = [object];
+  var bytes = 0;
+  while (stack.length) {
+    var value = stack.pop();
+    if (typeof value === 'boolean') {
+      bytes += 4;
+    } else if (typeof value === 'string') {
+      bytes += value.length * 2;
+    }
+    else if (typeof value === 'number') {
+      bytes += 8;
+    } else if (typeof value === 'object' && objectList.indexOf( value ) === -1) {
+      objectList.push( value );
+      for(var i in value) {
+        stack.push(value[i]);
+      }
+    }
+  }
+  return bytes;
+}
+
+const debounce = (func: Function, timeout = 300) => {
+  let timer: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+ 
 
 const ERROR_MESSAGE_MAX_LENGTH = 200;
 const MAX_ACTIONS_CONTAINER_WIDTH = 453;
@@ -40,7 +71,8 @@ const DEFAULT_PAGINATION_STATE: IPaginationState = {
   selector: 'rib-datatable',
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.scss', './../../../assets/core/scss/style.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  //changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DatatableComponent implements OnInit {
   @Input('onSave') onSaveEmitter!: (saveData: ISave) => Promise<IForm[] | void>
@@ -99,15 +131,12 @@ export class DatatableComponent implements OnInit {
   navClassCalculated: string = '';
   formControlNames: string[] = [];
   btnSaveExpandClass: string = '';
-  containerDivWidth: number = 0;
   createdEntries: any[] = [];
   deletedEntries: any[] = [];
   updatedEntries: any[] = [];
-  removeFromEnd: number = 0;
-  tableWidth: number = 0;
   selectedEntry!: IForm;
   InputType = InputType;
-  form!: Form;
+  form?: Form;
   isText = isTextDisplay;
 
   entriesForm: Form = new FormControlWrapper()
@@ -261,11 +290,15 @@ export class DatatableComponent implements OnInit {
       this.btnSaveExpandClass = this.getBtnSaveExpandClass()
     }
   }
+
+  onCloseDestroyForm() {
+    delete this['form'];
+  }
   
   constructor(private toast: ToastService, private sanitized: DomSanitizer) {
   }
 
-  debouncePagination = debounce((value, entriesPerPageChange) => {
+  debouncePagination = debounce((value: IPaginationState, entriesPerPageChange: number) => {
     this.paginationState = value
     this.triggerPaginationArrayChange()
     if (entriesPerPageChange) setTimeout(() => this.entriesForm.patchValue(value))
@@ -301,42 +334,64 @@ export class DatatableComponent implements OnInit {
     })
   }
 
+  debounceResponsiveness = debounce(() => {
+    this.handleResponsiveness()
+  }, 1000)
+
   @HostListener('window:resize')
   onResize() {
-    this.handleResponsiveness();
+    this.debounceResponsiveness();
   }
 
   ngAfterViewInit() {
     setTimeout(() => this.triggerPaginationArrayChange());
   }
 
-  handleResponsiveness() {
-    let newContainerDivWidth = this.containerDiv.nativeElement.offsetWidth;
-    let newTableWidth = this.table.nativeElement.offsetWidth;
-    let enlarging: boolean = this.containerDivWidth !== 0 && (newTableWidth > this.tableWidth || newContainerDivWidth > this.containerDivWidth);
-    this.containerDivWidth = this.containerDiv.nativeElement.offsetWidth;
-    this.tableWidth = this.table.nativeElement.offsetWidth;
-    if (!enlarging && this.containerDivWidth >= this.tableWidth) return;
+  oldContainerWidth: number = 0;
+  oldTableWidth: number = 0;
+  currContainerWidth: number = 0;
+  currTableWidth: number = 0;
+  _removeFromEnd: number = 0;
 
-    if (enlarging) {
-      let lastTableWidthValue = this.previousTableWidths[this.formControlNames[this.formControlNames.length - this.removeFromEnd]];
-      let secondToLastTableWidthValue = this.previousTableWidths[this.formControlNames[this.formControlNames.length - this.removeFromEnd + 1]];
-      let lastDifference = secondToLastTableWidthValue - lastTableWidthValue;
-      lastDifference = lastDifference < 0 ? 0 : lastDifference;
-      let lastContainerDivWidth = this.previousContainerDivWidths[this.formControlNames[this.formControlNames.length - this.removeFromEnd]];
-      if (this.containerDivWidth >= lastContainerDivWidth + lastDifference) {
-        this.removeFromEnd -= this.removeFromEnd === 0 ? 0 : 1;
-        delete this.previousTableWidths[this.formControlNames[this.formControlNames.length - this.removeFromEnd - 1]]
-        delete this.previousContainerDivWidths[this.formControlNames[this.formControlNames.length - this.removeFromEnd - 1]]
-        return;
-      }
-    } else {
-      this.removeFromEnd++;
-      this.previousContainerDivWidths[this.formControlNames[this.formControlNames.length - this.removeFromEnd]] = this.containerDivWidth;
-      this.previousTableWidths[this.formControlNames[this.formControlNames.length - this.removeFromEnd]] = this.tableWidth;
+  get removeFromEnd() {
+    return this._removeFromEnd;
+  }
+
+  set removeFromEnd(removeFromEnd: number) {
+    let max = this.formControlNames.length - 1;
+    if (removeFromEnd < 0) this._removeFromEnd = 0
+    else if (removeFromEnd > max) this._removeFromEnd = max
+    else this._removeFromEnd = removeFromEnd
+  }
+
+  handleResponsiveness() {
+    this.oldContainerWidth = this.currContainerWidth;
+    this.oldTableWidth = this.currTableWidth;
+    this.currContainerWidth = this.containerDiv.nativeElement.offsetWidth;
+    this.currTableWidth = this.table.nativeElement.offsetWidth;
+    if (this.oldContainerWidth === this.currContainerWidth && this.oldTableWidth === this.currTableWidth) 
+      return
+      
+    this.tableLoader.start()
+    this.removeFromEnd--;
+    let isInitialInRange: boolean = true;
+    const handleResponsivenessInternal = () => {
+      setTimeout(() => {
+        this.currContainerWidth = this.containerDiv.nativeElement.offsetWidth;
+        this.currTableWidth = this.table.nativeElement.offsetWidth;
+        if (this.currTableWidth > this.currContainerWidth) {
+          this.removeFromEnd++
+          isInitialInRange = false;
+          handleResponsivenessInternal()
+        } else if (isInitialInRange && this.removeFromEnd - 1 >= 0) {
+          this.removeFromEnd--;
+          handleResponsivenessInternal();
+        } else {
+          this.tableLoader.stop()
+        }
+      })
     }
-    
-    setTimeout(() => this.handleResponsiveness());
+    handleResponsivenessInternal()
   }
 
   createEntry(value: IForm) {
@@ -478,16 +533,21 @@ export class DatatableComponent implements OnInit {
     return displayConfig.inputEntity.convertToDatatableValueReadOnly(value[formControlName], displayConfig)
   }
 
+  isInitialDataLoaded: boolean = false;
+
   triggerPaginationArrayChange() {
-    console.log("Triggering...");
     if (this.ajax) {
       this.tableLoader.start();
       this.ajax.loadData(this.paginationState, this.displayConfigsByFormControlName)
         .then(ajaxResponse => {
           let { count, data } = ajaxResponse;
           this.totalNumberOfFilteredElements = count
-          this.filteredAndPaginatedArray = data;
-          this.handleResponsiveness();
+          this.filteredAndPaginatedArray = data
+          if (!this.isInitialDataLoaded) {
+            this.handleResponsiveness()
+            this.isInitialDataLoaded = true;
+            return
+          }
           this.tableLoader.stop()
         })
       return;
@@ -520,7 +580,10 @@ export class DatatableComponent implements OnInit {
     let startIndex = (currentPageNumber - 1) * entriesPerPage;
     let endIndex = startIndex + entriesPerPage;
     this.filteredAndPaginatedArray = filteredArray.slice(startIndex, endIndex);
-    this.handleResponsiveness();
+    if (!this.isInitialDataLoaded) {
+      this.handleResponsiveness()
+      this.isInitialDataLoaded = true;
+    }
   }
 
   clearEntries() {
@@ -591,8 +654,20 @@ export class DatatableComponent implements OnInit {
     this.updateModal.openModal()
   }
 
+  printMemoryStats() {
+    let thisKeys = Object.keys(this).filter(key => typeof (this as any)[key] !== 'function');
+    let thisKeysLength = thisKeys.length;
+    let config: any = {};
+    thisKeys.forEach((key, index) => {
+      console.log(`${index+1}/${thisKeysLength}`)
+      config[key] = roughSizeOfObject((this as any)[key])
+    })
+    console.table(config)
+  }
+
   openCreateModal() {
     this.form = this.formControlWrapper.toForm();
+    //this.printMemoryStats()
     this.createForm.deepReset()
     this.createModal.openModal()
   }
@@ -625,7 +700,6 @@ export class DatatableComponent implements OnInit {
     let emValue = stringMaxLength <= MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX 
       ? stringMaxLength * PX_IN_EM 
       : MAX_STRING_LENGTH_TO_FIT_ONE_LINE_IN_PX * PX_IN_EM
-    if (emValue < 0) console.log(emValue)
     return stringMaxLength >= MAX_LENGTH ? `${MAX_TEXT_COLUMN_WIDTH_IN_PX}px` : `${emValue}em`;
   }
 

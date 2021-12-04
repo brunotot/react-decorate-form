@@ -106,14 +106,14 @@
   </rib-loader>
 </ng-container>
 
-<rib-generic-modal #updateModal [modalTitle]="displayName">
+<rib-generic-modal #updateModal [modalTitle]="displayName" (onClose)="onCloseDestroyForm()">
   <rib-base-form #updateForm
     [form]="form"
     [fnSubmit]="onUpdateSubmitFn">
   </rib-base-form>
 </rib-generic-modal>
 
-<rib-generic-modal #createModal [modalTitle]="createModalTitle">
+<rib-generic-modal #createModal [modalTitle]="createModalTitle" (onClose)="onCloseDestroyForm()">
   <rib-base-form #createForm
     [form]="form"
     [fnSubmit]="onCreateSubmitFn">
