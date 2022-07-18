@@ -1,30 +1,30 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { IInputMaterialSearchProps } from '../../decorator/input/FormInputDecorator';
-import DatatableHandler from '../../handler/DatatableHandler';
-import { IInputProperty } from '../../handler/FormHandler';
-import { isValuePresent } from '../../utils/object-utils';
+import { Component, Input, OnInit } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
+import { Subject } from "rxjs";
+import { IInputMaterialSearchProps } from "../../decorator/input/FormInputDecorator";
+import DatatableHandler from "../../handler/DatatableHandler";
+import { IInputProperty } from "../../handler/FormHandler";
+import { isValuePresent } from "../../utils/object-utils";
 
-@Component({ template: '' })
+@Component({ template: "" })
 export default class FilterBaseComponent implements OnInit {
   // TODO: Napisati rucno listu svega sto se jos treba napravit i krenut od tog (redom Inpute koje treba rjesit)
   // TODO: Trenutne filtere prikazati u obliku chipsa iznad tablice ispod akcija
 
-  @Input() datatableHandler: DatatableHandler;
-  @Input() inputProperty: IInputProperty;
-  @Input() resetSubject: Subject<void>;
-  _formGroup: FormGroup;
+  @Input() datatableHandler!: DatatableHandler;
+  @Input() inputProperty!: IInputProperty;
+  @Input() resetSubject!: Subject<void>;
+  _formGroup!: FormGroup;
 
   constructor() {}
 
-  filterSearch: string = '';
+  filterSearch: string = "";
   filterSearchProps: IInputMaterialSearchProps = {
-    label: 'Search filters',
-    placeholder: 'Start typing...',
+    label: "Search filters",
+    placeholder: "Start typing...",
   };
   onFilterSearchChange(filterSearch: string) {
-    this.filterSearch = (filterSearch || '').toLowerCase();
+    this.filterSearch = (filterSearch || "").toLowerCase();
   }
 
   get props(): any {
@@ -69,7 +69,7 @@ export default class FilterBaseComponent implements OnInit {
   }
 
   get propertyName(): string {
-    return this.inputProperty.propertyName;
+    return this.inputProperty.propertyName as string;
   }
 
   get filteredData(): any[] {
@@ -87,7 +87,7 @@ export default class FilterBaseComponent implements OnInit {
   getUniqueSortedStrings(strings: string[]): string[] {
     let collator = new Intl.Collator(undefined, {
       numeric: true,
-      sensitivity: 'base',
+      sensitivity: "base",
     });
     return [...new Set(strings)].sort(collator.compare);
   }
@@ -107,8 +107,8 @@ export default class FilterBaseComponent implements OnInit {
   getDisplayStyle(formControlName: string): object {
     return {
       display: formControlName.toLowerCase().includes(this.filterSearch)
-        ? 'inherit'
-        : 'none',
+        ? "inherit"
+        : "none",
     };
   }
 

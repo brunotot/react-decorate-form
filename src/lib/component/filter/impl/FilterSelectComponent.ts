@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import FilterBaseComponent from '../FilterBaseComponent';
-import { SelectOption } from '../../../types/select-types';
-import { isValuePresent } from '../../../utils/object-utils';
-import { TEMPLATE_DATATABLE_FILTER_NORMAL } from '../../../utils/template-utils';
+import { Component } from "@angular/core";
+import FilterBaseComponent from "../FilterBaseComponent";
+import { SelectOption } from "../../../types/select-types";
+import { isValuePresent } from "../../../utils/object-utils";
+import { TEMPLATE_DATATABLE_FILTER_NORMAL } from "../../../utils/template-utils";
 
 @Component({
-  selector: 'ia-filter-select',
+  selector: "ia-filter-select",
   template: TEMPLATE_DATATABLE_FILTER_NORMAL,
 })
 export class FilterSelectComponent extends FilterBaseComponent {
@@ -21,7 +21,7 @@ export class FilterSelectComponent extends FilterBaseComponent {
     let items: SelectOption[] = super.props.items;
     let mergedUniqueLables = mergedUnique
       .filter((key) => items.some((item) => item.id === key))
-      .map((key) => items.find((item) => item.id === key).text);
+      .map((key) => (items.find((item) => item.id === key) as any).text);
     return super.getUniqueSortedStrings(mergedUniqueLables);
   }
 

@@ -4,30 +4,30 @@ import {
   OnInit,
   ViewChild,
   ViewEncapsulation,
-} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { InputType } from '../../types/input-types';
-import FormHandler from '../../handler/FormHandler';
-import { DialogUpdateComponent } from '../dialog/DialogUpdateComponent';
-import { IInputMaterialChipsProps } from '../../decorator/input/FormInputDecorator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogReadComponent } from '../dialog/DialogReadComponent';
-import DatatableHandler from '../../handler/DatatableHandler';
-import { IInputPropertiesMap } from '../../types/datatable-types';
+} from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { InputType } from "../../types/input-types";
+import FormHandler from "../../handler/FormHandler";
+import { DialogUpdateComponent } from "../dialog/DialogUpdateComponent";
+import { IInputMaterialChipsProps } from "../../decorator/input/FormInputDecorator";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { DialogReadComponent } from "../dialog/DialogReadComponent";
+import DatatableHandler from "../../handler/DatatableHandler";
+import { IInputPropertiesMap } from "../../types/datatable-types";
 
 @Component({
-  selector: 'ia-datatable',
-  templateUrl: './DatatableComponent.html',
-  styleUrls: ['./DatatableComponent.scss'],
+  selector: "ia-datatable",
+  templateUrl: "./DatatableComponent.html",
+  styleUrls: ["./DatatableComponent.scss"],
   encapsulation: ViewEncapsulation.None,
 })
 export class DatatableComponent implements OnInit {
   constructor(public dialog: MatDialog, private _snackBar: MatSnackBar) {}
 
-  datatableHandler: DatatableHandler;
+  datatableHandler!: DatatableHandler;
   InputType = InputType;
   inputPropertiesMap: IInputPropertiesMap = {};
   formHandler!: FormHandler;
@@ -35,12 +35,12 @@ export class DatatableComponent implements OnInit {
   columnNamesWithoutActions: string[] = [];
   @Input() formClass: any;
   @Input() data: any[] = [];
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchProps: IInputMaterialChipsProps = {
-    label: 'Search',
-    placeholder: 'Start typing...',
-    matIconPrefix: 'search',
+    label: "Search",
+    placeholder: "Start typing...",
+    matIconPrefix: "search",
   };
   get dataSource(): MatTableDataSource<any> {
     return this.datatableHandler.dataSource;
@@ -60,7 +60,7 @@ export class DatatableComponent implements OnInit {
         }
       }
     }
-    this.columnNames = [...this.columnNamesWithoutActions, 'actions'];
+    this.columnNames = [...this.columnNamesWithoutActions, "actions"];
     this.datatableHandler = new DatatableHandler(
       this.data,
       this.inputPropertiesMap,
@@ -78,7 +78,7 @@ export class DatatableComponent implements OnInit {
 
   openReadDialog(formModel: any) {
     this.dialog.open(DialogReadComponent, {
-      width: '90%',
+      width: "90%",
       data: {
         model: formModel,
       },
@@ -87,10 +87,10 @@ export class DatatableComponent implements OnInit {
 
   openUpdateDialog(formModel: any, variableIndex?: number): void {
     const dialogRef = this.dialog.open(DialogUpdateComponent, {
-      width: '90%',
+      width: "90%",
       data: {
         model: formModel,
-        index: typeof variableIndex === 'number' ? variableIndex : -1,
+        index: typeof variableIndex === "number" ? variableIndex : -1,
       },
     });
 

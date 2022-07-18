@@ -1,17 +1,17 @@
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { getSearchableString } from '../setup/search-filtering-setup';
-import { isValuePresent } from '../utils/object-utils';
-import { messages } from '../constants/messages';
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
+import { getSearchableString } from "../setup/search-filtering-setup";
+import { isValuePresent } from "../utils/object-utils";
+import { messages } from "../constants/messages";
 import {
   DatatableFiltersMap,
   IInputPropertiesMap,
-} from '../types/datatable-types';
+} from "../types/datatable-types";
 
 export default class DatatableHandler {
-  private static INDEX_VAR_NAME = '_idx';
+  private static INDEX_VAR_NAME = "_idx";
   private static SNACK_DURATION_MS: number = 3000;
 
   inputPropertiesMap: IInputPropertiesMap;
@@ -26,7 +26,7 @@ export default class DatatableHandler {
   }
 
   private get _paginator(): MatPaginator {
-    return this.dataSource.paginator;
+    return this.dataSource.paginator as MatPaginator;
   }
 
   constructor(
@@ -124,9 +124,9 @@ export default class DatatableHandler {
     return isValuePresent(search)
       ? String(search)
           .trim()
-          .replace(/ +(?= )/g, '')
+          .replace(/ +(?= )/g, "")
           .toLowerCase()
-      : '';
+      : "";
   }
 
   private findIndex(variableIndex: number) {

@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import {
   ButtonAppearance,
   ButtonColor,
   ButtonType,
-} from '../../types/button-types';
+} from "../../types/button-types";
 
 @Component({
-  selector: 'ia-button',
+  selector: "ia-button",
   styles: [
     /*css*/ `
       .button-content {
@@ -119,21 +119,20 @@ import {
   `,
 })
 export class ButtonComponent implements OnInit {
-  @Input() color: ButtonColor = 'basic';
-  @Input() type: ButtonType = 'button';
-  @Input() appearance: ButtonAppearance = 'mat-button';
+  @Input() color: ButtonColor = "basic";
+  @Input() type: ButtonType = "button";
+  @Input() appearance: ButtonAppearance = "mat-button";
   @Input() disabled: boolean = false;
   @Input() link: boolean = false;
-  @Input() icon: string = '';
-  @Input() label: string = '';
-  @Input() css: string = '';
+  @Input() icon: string = "";
+  @Input() label: string = "";
+  @Input() css: string = "";
 
-  @Output('onClick') onClickEmitter: EventEmitter<PointerEvent> =
-    new EventEmitter();
+  @Output("onClick") onClickEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
-  onClick(event: PointerEvent) {
+  onClick(event: any) {
     this.onClickEmitter.next(event);
   }
 
