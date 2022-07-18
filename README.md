@@ -19,7 +19,7 @@
 5. Execute following instructions or simply execute prepared shell script:
 
 ```
-wget https://raw.githubusercontent.com/brunotot/ngx-input-annotations/8d805c12d3ab3ad02e773f55984ca9f127269e95/docs/boot.sh -O - | sh
+wget https://raw.githubusercontent.com/brunotot/ngx-input-annotations/master/docs/boot.sh -O - | sh
 ```
 
 ```sh
