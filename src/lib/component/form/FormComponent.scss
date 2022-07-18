@@ -1,0 +1,12 @@
+.mat-card-actions {
+  gap: 0.75rem;
+}
+@media screen and (max-width: 300px) {
+  .mat-card-actions {
+    flex-direction: column;
+    button {
+      margin: 0;
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+<section style="margin-bottom: 1.75em">
+  <mat-checkbox
+    [color]="'primary'"
+    [formControl]="control"
+    class="example-margin"
+    >{{ props.label }}</mat-checkbox
+  >
+  <ia-errors [errors]="errors" [display]="shouldDisplayErrors"></ia-errors>
+</section>

@@ -1,0 +1,8 @@
+<div *ngIf="!empty">
+  <div class="ia-color-container">
+    <span>{{ data }}</span>
+    <div class="ia-color-display" [style.backgroundColor]="data"></div>
+  </div>
+</div>
+
+<div *ngIf="empty">-</div>

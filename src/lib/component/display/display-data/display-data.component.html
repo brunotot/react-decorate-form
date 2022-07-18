@@ -1,0 +1,15 @@
+<div class="display-data-cards">
+  <mat-card
+    *ngFor="let inputProperty of inputProperties"
+    class="mat-card-left-border"
+  >
+    <mat-card-title>{{ inputProperty.props.label }}</mat-card-title>
+    <mat-card-content class="card-content-padd">
+      <ia-display
+        [data]="model[inputProperty.propertyName]"
+        [type]="inputProperty.inputType"
+        [props]="inputProperty.props"
+      ></ia-display>
+    </mat-card-content>
+  </mat-card>
+</div>

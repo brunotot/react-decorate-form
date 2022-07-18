@@ -1,0 +1,21 @@
+<mat-form-field
+  [attr.style]="'width: ' + props.width"
+  [appearance]="props.appearance"
+>
+  <mat-label>{{ props.label }}</mat-label>
+  <mat-icon matPrefix *ngIf="props.matIconPrefix">{{
+    props.matIconPrefix
+  }}</mat-icon>
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [formControl]="control"
+    [placeholder]="props.placeholder"
+  />
+  <mat-hint>{{ props.hint }}</mat-hint>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  <mat-error *ngFor="let error of errors">
+    {{ error }}
+  </mat-error>
+</mat-form-field>

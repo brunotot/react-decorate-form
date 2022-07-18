@@ -1,0 +1,32 @@
+<div class="filter-container">
+  <mat-card-title>
+    <div class="title-container">
+      <mat-icon>filter_list</mat-icon>
+      <span>Filters</span>
+    </div>
+  </mat-card-title>
+  <mat-card-content>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let inputProperty of inputProperties">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ inputProperty.props.label }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <ia-filter-content
+          [inputProperty]="inputProperty"
+          [datatableHandler]="datatableHandler"
+          [resetSubject]="resetSubject"
+        ></ia-filter-content>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+  <mat-card-actions align="end" class="card-actions-container">
+    <div class="card-actions-button-container">
+      <ia-button
+        (onClick)="onReset()"
+        appearance="mat-raised-button"
+        icon="restart_alt"
+        label="Reset"
+      ></ia-button>
+    </div>
+  </mat-card-actions>
+</div>

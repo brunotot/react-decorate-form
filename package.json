@@ -1,0 +1,15 @@
+{
+  "name": "ngx-input-annotations",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^13.3.0",
+    "@angular/core": "^13.3.0",
+    "@angular/cdk": "^13.3.0",
+    "@angular/material": "^13.3.9",
+    "reflect-metadata": "^0.1.13",
+    "language-flag-colors": "^2.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

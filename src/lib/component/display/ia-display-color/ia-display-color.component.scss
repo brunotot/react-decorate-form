@@ -1,0 +1,13 @@
+.ia-color-container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  column-gap: 0.25rem;
+}
+
+.ia-color-display {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+  border: 1px solid #000;
+}

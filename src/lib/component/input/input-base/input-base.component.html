@@ -1,0 +1,139 @@
+<ia-input-text
+  *ngIf="inputType === InputType.TEXT"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-text>
+
+<ia-input-text-area
+  *ngIf="inputType === InputType.TEXTAREA"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-text-area>
+
+<ia-input-password
+  *ngIf="inputType === InputType.PASSWORD"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-password>
+
+<ia-input-number
+  *ngIf="inputType === InputType.NUMBER"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-number>
+
+<ia-input-email
+  *ngIf="inputType === InputType.EMAIL"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-email>
+
+<ia-input-date
+  *ngIf="inputType === InputType.DATE"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-date>
+
+<ia-input-chips
+  *ngIf="inputType === InputType.CHIPS"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-chips>
+
+<ia-input-checkbox
+  *ngIf="inputType === InputType.CHECKBOX"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-checkbox>
+
+<ia-input-select
+  *ngIf="inputType === InputType.SELECT"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-select>
+
+<ia-input-search
+  *ngIf="inputType === InputType.SEARCH"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-search>
+
+<ia-input-color
+  *ngIf="inputType === InputType.COLOR"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-color>
+
+<ia-input-tel
+  *ngIf="inputType === InputType.TEL"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-tel>
+
+<ia-input-url
+  *ngIf="inputType === InputType.URL"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-url>
+
+<ia-input-multilanguage
+  *ngIf="inputType === InputType.MULTILANGUAGE && !propertyName.includes('.')"
+  [type]="inputType"
+  [name]="propertyName"
+  [validators]="validators"
+  [props]="props"
+  (onChange)="inputChangeEmitter.emit($event)"
+>
+</ia-input-multilanguage>
