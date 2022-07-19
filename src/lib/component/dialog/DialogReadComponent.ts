@@ -1,11 +1,38 @@
-import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { getOwnPropertyNames } from '../../handler/FormHandler';
+import { Component, Inject, OnInit, ViewEncapsulation } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { getOwnPropertyNames } from "../../handler/FormHandler";
 
 @Component({
-  selector: 'ia-dialog-read',
+  selector: "ia-dialog-read",
+  styles: [
+    /*css*/ `
+      .ia-dialog-header {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        margin-bottom: 1.5rem;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .ia-dialog-header > div > h1 {
+        margin-bottom: 0;
+      }
+      .ia-dialog-form {
+        margin-bottom: 1.5rem;
+      }
+    `,
+  ],
   template: /*html*/ `
-    <ia-display-data [title]="title" [model]="model"></ia-display-data>
+    <div class="ia-dialog-header">
+      <div>
+        <h1 *ngIf="title">{{ title }}</h1>
+      </div>
+      <ia-button appearance="mat-fab" icon="close" (onClick)="onCloseClick()">
+      </ia-button>
+    </div>
+    <mat-dialog-content class="mat-typography">
+      <ia-display-data [title]="title" [model]="model"></ia-display-data>
+    </mat-dialog-content>
   `,
   encapsulation: ViewEncapsulation.None,
 })
@@ -19,7 +46,11 @@ export class DialogReadComponent implements OnInit {
   ) {
     this.model = data.model;
     let keys = getOwnPropertyNames(this.model);
-    this.title = data[keys[0]];
+    this.title = this.model[keys[0]];
+  }
+
+  onCloseClick(): void {
+    this.onNoClick();
   }
 
   onNoClick(): void {
