@@ -10,7 +10,10 @@ import { isValuePresent } from "../../utils/object-utils";
 export default class FilterBaseComponent implements OnInit {
   // TODO: Napisati rucno listu svega sto se jos treba napravit i krenut od tog (redom Inpute koje treba rjesit)
   // TODO: Trenutne filtere prikazati u obliku chipsa iznad tablice ispod akcija
+  private static CONTENT_MULTIPLIER_VALUE = 25;
+  private static CONTENT_MULTIPLIER_DEFAULT = 1;
 
+  contentMultiplier: number = FilterBaseComponent.CONTENT_MULTIPLIER_DEFAULT;
   @Input() datatableHandler!: DatatableHandler;
   @Input() inputProperty!: IInputProperty;
   @Input() resetSubject!: Subject<void>;
@@ -25,6 +28,20 @@ export default class FilterBaseComponent implements OnInit {
   };
   onFilterSearchChange(filterSearch: string) {
     this.filterSearch = (filterSearch || "").toLowerCase();
+  }
+
+  increaseBatch() {
+    this.contentMultiplier++;
+  }
+
+  resetBatch() {
+    this.contentMultiplier = FilterBaseComponent.CONTENT_MULTIPLIER_DEFAULT;
+  }
+
+  get formControlNamesBatch(): string[] {
+    let batchedCount: number =
+      this.contentMultiplier * FilterBaseComponent.CONTENT_MULTIPLIER_VALUE;
+    return this.formControlNames.slice(0, batchedCount);
   }
 
   get props(): any {

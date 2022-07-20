@@ -79,7 +79,7 @@ import FormHandler, { IInputProperty } from "../../handler/FormHandler";
   `,
   encapsulation: ViewEncapsulation.None,
 })
-export class FormComponent<T> implements OnInit {
+export class FormComponent implements OnInit {
   formHandler!: FormHandler;
 
   @Input() titleClass: string = "";

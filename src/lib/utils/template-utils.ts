@@ -8,7 +8,7 @@ const TEMPLATE_DATATABLE_FILTER_NORMAL: string = /*html*/ `
     [formGroup]="formGroup"
     class="filter-content-container ia-scrollbar ia-scrollbar-vertical"
   >
-    <p *ngFor="let formControlName of formControlNames" [ngStyle]="getDisplayStyle(formControlName)">
+    <p *ngFor="let formControlName of formControlNamesBatch" [ngStyle]="getDisplayStyle(formControlName)">
       <ng-container *ngFor="let count of [getNonFilteredCount(formControlName)]">
         <mat-checkbox [formControlName]="formControlName">
           <div style="display: -webkit-box">
@@ -23,6 +23,14 @@ const TEMPLATE_DATATABLE_FILTER_NORMAL: string = /*html*/ `
         </mat-checkbox>
       </ng-container>
     </p>
+    <ia-button 
+      *ngIf="formControlNames.length > formControlNamesBatch.length"
+      appearance="mat-stroked-button"
+      icon="add"
+      label="Load more" 
+      (onClick)="increaseBatch()"
+    >
+    </ia-button>
   </section>`;
 
 const TEMPLATE_DATATABLE_FILTER_CHECKBOX: string = /*html*/ `
@@ -30,7 +38,7 @@ const TEMPLATE_DATATABLE_FILTER_CHECKBOX: string = /*html*/ `
     [formGroup]="formGroup"
     class="filter-content-container ia-scrollbar ia-scrollbar-vertical"
   >
-    <p *ngFor="let formControlName of formControlNames" [ngStyle]="getDisplayStyle(formControlName)">
+    <p *ngFor="let formControlName of formControlNamesBatch" [ngStyle]="getDisplayStyle(formControlName)">
       <ng-container *ngFor="let count of [getNonFilteredCount(formControlName)]">
         <mat-checkbox [formControlName]="formControlName">
           <div style="display: -webkit-box">
@@ -59,7 +67,7 @@ const TEMPLATE_DATATABLE_FILTER_COLOR: string = /*html*/ `
     [formGroup]="formGroup"
     class="filter-content-container ia-scrollbar ia-scrollbar-vertical"
   >
-    <p *ngFor="let formControlName of formControlNames" [ngStyle]="getDisplayStyle(formControlName)">
+    <p *ngFor="let formControlName of formControlNamesBatch" [ngStyle]="getDisplayStyle(formControlName)">
       <ng-container *ngFor="let count of [getNonFilteredCount(formControlName)]">
         <mat-checkbox [formControlName]="formControlName">
           <div style="display: -webkit-box">
@@ -74,6 +82,14 @@ const TEMPLATE_DATATABLE_FILTER_COLOR: string = /*html*/ `
         </mat-checkbox>
       </ng-container>
     </p>
+    <ia-button 
+      *ngIf="formControlNames.length > formControlNamesBatch.length"
+      appearance="mat-stroked-button"
+      icon="add"
+      label="Load more" 
+      (onClick)="increaseBatch()"
+    >
+    </ia-button>
   </section>`;
 
 const TEMPLATE_DATATABLE_FILTER_CONTENT: string = /*html*/ `
