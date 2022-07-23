@@ -1,4 +1,5 @@
-import { IInputProperty } from '../handler/FormHandler';
+import { SortDirection } from "@angular/material/sort";
+import { IInputProperty } from "../handler/FormHandler";
 
 interface DatatableFiltersMap {
   [key: string]: (value: any) => boolean;
@@ -8,4 +9,12 @@ interface IInputPropertiesMap {
   [key: string]: IInputProperty;
 }
 
-export { DatatableFiltersMap, IInputPropertiesMap };
+interface PaginationOffset {
+  pageIndex: number;
+  pageSize: number;
+  sortBy: string;
+  sortDirection: SortDirection;
+  keywords: string[];
+}
+
+export { DatatableFiltersMap, IInputPropertiesMap, PaginationOffset };

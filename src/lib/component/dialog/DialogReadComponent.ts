@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { getOwnPropertyNames } from "../../handler/FormHandler";
+import { getEntityNameVariable } from "../../utils/decorator-utils";
 
 @Component({
   selector: "ia-dialog-read",
@@ -45,8 +45,8 @@ export class DialogReadComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.model = data.model;
-    let keys = getOwnPropertyNames(this.model);
-    this.title = this.model[keys[0]];
+    let entityNameVariable = getEntityNameVariable(this.model);
+    this.title = this.model[entityNameVariable];
   }
 
   onCloseClick(): void {

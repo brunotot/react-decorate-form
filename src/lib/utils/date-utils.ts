@@ -1,13 +1,16 @@
-export function formatDate(date: any): string {
-  let d = new Date(date),
-    month = '' + (d.getMonth() + 1),
-    day = '' + d.getDate(),
-    year = d.getFullYear();
-  if (month.length < 2) {
-    month = '0' + month;
+import { DatePipe } from "@angular/common";
+import { variables } from "../constants/variables";
+import { isValuePresent } from "./object-utils";
+
+function formatDate(date: any, localeId?: string): string {
+  let localeIdNormalized: string = variables.localeId;
+  if (isValuePresent(localeId)) {
+    localeIdNormalized = localeId as string;
   }
-  if (day.length < 2) {
-    day = '0' + day;
+  if (!isValuePresent(date)) {
+    return "";
   }
-  return [month, day, year].join('/');
+  return new DatePipe(localeIdNormalized).transform(date) as string;
 }
+
+export { formatDate };

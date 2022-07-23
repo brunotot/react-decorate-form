@@ -143,9 +143,27 @@ const TEMPLATE_DATATABLE_FILTER_CONTENT: string = /*html*/ `
     </ia-filter-default>
   </ng-container>`;
 
+const CREATE_UPDATE_DIALOG_HTML: string = /*html*/ `
+  <div class="ia-dialog-header">
+    <div>
+      <h1 *ngIf="title">{{ title }}</h1>
+    </div>
+    <ia-button appearance="mat-fab" icon="close" (onClick)="onCloseClick()">
+    </ia-button>
+  </div>
+  <mat-dialog-content class="mat-typography">
+    <ia-form
+      formClass="ia-dialog-form"
+      [model]="model"
+      (onSubmit)="onSubmit($event)"
+    ></ia-form>
+  </mat-dialog-content>
+`;
+
 export {
   TEMPLATE_DATATABLE_FILTER_CHECKBOX,
   TEMPLATE_DATATABLE_FILTER_NORMAL,
   TEMPLATE_DATATABLE_FILTER_COLOR,
   TEMPLATE_DATATABLE_FILTER_CONTENT,
+  CREATE_UPDATE_DIALOG_HTML,
 };

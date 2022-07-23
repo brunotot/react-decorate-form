@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { formatDate } from '../../../utils/date-utils';
-import DisplayContentBaseComponent from '../DisplayContentBaseComponent';
+import { Component, OnInit } from "@angular/core";
+import { formatDate } from "../../../utils/date-utils";
+import DisplayContentBaseComponent from "../DisplayContentBaseComponent";
 
 @Component({
-  selector: 'ia-display-date',
-  templateUrl: './ia-display-date.component.html',
-  styleUrls: ['./ia-display-date.component.scss'],
+  selector: "ia-display-date",
+  templateUrl: "./ia-display-date.component.html",
+  styleUrls: ["./ia-display-date.component.scss"],
 })
 export class DisplayDateComponent
   extends DisplayContentBaseComponent
@@ -16,12 +16,7 @@ export class DisplayDateComponent
   }
 
   public static override getSearchableString(data: any): string {
-    return formatDate(data as Date);
-  }
-
-  get dataFormatted(): string {
-    let dataAsDate: Date = this.data as Date;
-    return formatDate(dataAsDate);
+    return formatDate(data);
   }
 
   ngOnInit(): void {}

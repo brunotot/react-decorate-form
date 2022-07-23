@@ -1,7 +1,7 @@
-import 'reflect-metadata';
-import { getMetadataKeyName } from '../../handler/FormHandler';
-import { InputType } from '../../types/input-types';
-import { SelectOption } from '../../types/select-types';
+import "reflect-metadata";
+import { getMetadataKeyName } from "../../handler/FormHandler";
+import { InputType } from "../../types/input-types";
+import { SelectOption } from "../../types/select-types";
 
 export default function FormInput(
   inputMetadata:
@@ -42,78 +42,78 @@ interface IInputMaterialProps extends IInputMaterialPropsNoSuffix {
   matIconSuffix?: string;
 }
 
-interface IInputTextMetadata {
+export interface IInputTextMetadata {
   type: InputType.TEXT;
   metadata: IInputMaterialTextProps;
 }
 
-interface IInputEmailMetadata {
+export interface IInputEmailMetadata {
   type: InputType.EMAIL;
   metadata: IInputMaterialEmailProps;
 }
 
-interface IInputTextAreaMetadata {
+export interface IInputTextAreaMetadata {
   type: InputType.TEXTAREA;
   metadata: IInputMaterialTextAreaProps;
 }
 
-interface IInputPasswordMetadata {
+export interface IInputPasswordMetadata {
   type: InputType.PASSWORD;
   metadata: IInputMaterialPasswordProps;
 }
 
-interface IInputCheckboxMetadata {
+export interface IInputCheckboxMetadata {
   type: InputType.CHECKBOX;
   metadata: IInputMaterialCheckboxProps;
 }
 
-interface IInputNumberMetadata {
+export interface IInputNumberMetadata {
   type: InputType.NUMBER;
   metadata: IInputMaterialNumberProps;
 }
 
-interface IInputDateMetadata {
+export interface IInputDateMetadata {
   type: InputType.DATE;
   metadata: IInputMaterialDateProps;
 }
 
-interface IInputChipsMetadata {
+export interface IInputChipsMetadata {
   type: InputType.CHIPS;
   metadata: IInputMaterialChipsProps;
 }
 
-interface IInputSelectMetadata {
+export interface IInputSelectMetadata {
   type: InputType.SELECT;
   metadata: IInputMaterialSelectProps;
 }
 
-interface IInputSearchMetadata {
+export interface IInputSearchMetadata {
   type: InputType.SEARCH;
   metadata: IInputMaterialSearchProps;
 }
 
-interface IInputMultilanguageMetadata {
+export interface IInputMultilanguageMetadata {
   type: InputType.MULTILANGUAGE;
   metadata: IInputMaterialMultilanguageProps;
 }
 
-interface IInputColorMetadata {
+export interface IInputColorMetadata {
   type: InputType.COLOR;
   metadata: IInputMaterialColorProps;
 }
 
-interface IInputTelMetadata {
+export interface IInputTelMetadata {
   type: InputType.TEL;
   metadata: IInputMaterialTelProps;
 }
 
-interface IInputUrlMetadata {
+export interface IInputUrlMetadata {
   type: InputType.URL;
   metadata: IInputMaterialUrlProps;
 }
 
 /** Props types **/
-type InputAppearanceType = 'legacy' | 'standard' | 'fill' | 'outline';
+type InputAppearanceType = "legacy" | "standard" | "fill" | "outline";
 export { InputAppearanceType };
 export interface IInputMaterialTextProps extends IInputMaterialProps {}
 export interface IInputMaterialEmailProps extends IInputMaterialProps {}

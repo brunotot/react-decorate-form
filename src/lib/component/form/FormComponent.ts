@@ -9,6 +9,7 @@ import {
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import FormHandler, { IInputProperty } from "../../handler/FormHandler";
+import { ROW_ACTIONS_CONTAINER_CSS } from "../../utils/style-utils";
 
 @Component({
   selector: "ia-form",
@@ -17,24 +18,8 @@ import FormHandler, { IInputProperty } from "../../handler/FormHandler";
       .ia-form > .ia-form-title {
         margin-bottom: 1.75rem;
       }
-
-      .ia-form-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 0.75rem;
-      }
-
-      @media screen and (max-width: 300px) {
-        .ia-form-actions {
-          flex-direction: column;
-        }
-
-        .ia-form-actions button {
-          margin: 0;
-          width: 100%;
-        }
-      }
     `,
+    ROW_ACTIONS_CONTAINER_CSS,
   ],
   template: /*html*/ `
     <form

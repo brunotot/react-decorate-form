@@ -1,18 +1,38 @@
-import { FormArray, FormControl, FormGroup, ValidatorFn } from '@angular/forms';
-import { InputType } from '../types/input-types';
-import 'reflect-metadata';
-import { METADATA_VALIDATION_KEY_PREFIX } from '../decorator/validator/BaseValidatorDecorator';
+import { FormArray, FormControl, FormGroup, ValidatorFn } from "@angular/forms";
+import { InputType } from "../types/input-types";
+import "reflect-metadata";
+import { METADATA_VALIDATION_KEY_PREFIX } from "../decorator/validator/BaseValidatorDecorator";
+import { getMetadataValue } from "../utils/decorator-utils";
 
-export const METADATA_KEY_PREFIX = 'input:formhandler:';
+function filterProtoFields(propertyName: string): boolean {
+  return (
+    propertyName !== "constructor" &&
+    propertyName !== "__defineGetter__" &&
+    propertyName !== "__defineSetter__" &&
+    propertyName !== "hasOwnProperty" &&
+    propertyName !== "__lookupGetter__" &&
+    propertyName !== "__lookupSetter__" &&
+    propertyName !== "isPrototypeOf" &&
+    propertyName !== "propertyIsEnumerable" &&
+    propertyName !== "toString" &&
+    propertyName !== "valueOf" &&
+    propertyName !== "__proto__" &&
+    propertyName !== "toLocaleString"
+  );
+}
+
+export const METADATA_KEY_PREFIX = "input:formhandler:";
 
 export function getMetadataKeyName(inputType: InputType) {
   return `${METADATA_KEY_PREFIX}${inputType}`;
 }
 
 export function getOwnPropertyNames(object: any): string[] {
-  return Object.getOwnPropertyNames(object.__proto__).filter(
-    (propertyName) => propertyName !== 'constructor'
+  let keys = Object.keys(object);
+  let keysProto = Object.getOwnPropertyNames(object.__proto__).filter(
+    (propertyName) => filterProtoFields(propertyName)
   );
+  return [...new Set([...keys, ...keysProto])];
 }
 
 export interface IFormControls {
@@ -33,8 +53,8 @@ export default class FormHandler {
   propertyNames!: string[];
 
   constructor(model: any, empty?: boolean) {
-    this.model = typeof model === 'object' ? model : {};
-    if (typeof empty === 'boolean' && empty) {
+    this.model = typeof model === "object" ? model : {};
+    if (typeof empty === "boolean" && empty) {
       let keys = getOwnPropertyNames(this.model);
       for (let key of keys) {
         this.model.__proto__[key] = undefined;
@@ -174,6 +194,6 @@ export default class FormHandler {
   }
 
   private getMetadataValue(metadataKey: string, propertyName: string): any {
-    return Reflect.getMetadata(metadataKey, this.model, propertyName);
+    return getMetadataValue(this.model, propertyName, metadataKey);
   }
 }

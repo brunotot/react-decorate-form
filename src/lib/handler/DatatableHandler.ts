@@ -58,7 +58,8 @@ export default class DatatableHandler {
     this.navigateLastPage();
   }
 
-  update(variableIndex: number, object: any) {
+  update(object: any) {
+    let variableIndex = 0; // TODO
     let index = this.findIndex(variableIndex);
     this._tableData[index] = object;
     this.renderTable();

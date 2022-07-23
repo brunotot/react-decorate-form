@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import FilterBaseComponent from '../FilterBaseComponent';
-import { TEMPLATE_DATATABLE_FILTER_NORMAL } from '../../../utils/template-utils';
-import { formatDate } from '../../../utils/date-utils';
+import { Component } from "@angular/core";
+import FilterBaseComponent from "../FilterBaseComponent";
+import { TEMPLATE_DATATABLE_FILTER_NORMAL } from "../../../utils/template-utils";
+import { formatDate } from "../../../utils/date-utils";
 
 @Component({
-  selector: 'ia-filter-date',
+  selector: "ia-filter-date",
   template: TEMPLATE_DATATABLE_FILTER_NORMAL,
 })
 export class FilterDateComponent extends FilterBaseComponent {
