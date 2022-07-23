@@ -1,27 +1,11 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { getEntityNameVariable } from "../../utils/decorator-utils";
+import { CREATE_UPDATE_DIALOG_CSS } from "../../utils/style-utils";
 
 @Component({
   selector: "ia-dialog-read",
-  styles: [
-    /*css*/ `
-      .ia-dialog-header {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: nowrap;
-        margin-bottom: 1.5rem;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .ia-dialog-header > div > h1 {
-        margin-bottom: 0;
-      }
-      .ia-dialog-form {
-        margin-bottom: 1.5rem;
-      }
-    `,
-  ],
+  styles: [CREATE_UPDATE_DIALOG_CSS],
   template: /*html*/ `
     <div class="ia-dialog-header">
       <div>
