@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from "@angular/core";
 import { Subject } from "rxjs";
-import DatatableHandler from "../../../handler/DatatableHandler";
+import { BaseDatatableHandler } from "../../../handler/BaseDatatableHandler";
 import { IInputProperty } from "../../../handler/FormHandler";
 import { IInputPropertiesMap } from "../../../types/datatable-types";
 
@@ -12,7 +12,7 @@ import { IInputPropertiesMap } from "../../../types/datatable-types";
 })
 export class FilterContainerComponent implements OnInit {
   resetSubject: Subject<void> = new Subject();
-  @Input() datatableHandler!: DatatableHandler;
+  @Input() datatableHandler!: BaseDatatableHandler;
   @Input() inputPropertiesMap!: IInputPropertiesMap;
   inputProperties: IInputProperty[] = [];
 

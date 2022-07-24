@@ -1,15 +1,15 @@
-import { Observable } from "rxjs";
+import { Observable, of as observableOf } from "rxjs";
 import { PaginationOffset } from "../types/datatable-types";
 
-export interface DatabaseApi<T> {
+export interface DatatableResponse<T> {
   items: T[];
   totalCount: number;
 }
 
 export interface DatabaseService<T> {
-  create?(T: any): T;
-  update?(T: any): T;
-  delete?(T: any): boolean;
+  create?(T: any): Observable<T>;
+  update?(T: any): Observable<T>;
+  delete?(T: any): Observable<void>;
 }
 
 export abstract class DatabaseService<T> {
@@ -17,17 +17,17 @@ export abstract class DatabaseService<T> {
 
   abstract getAll(
     paginationOffset: PaginationOffset
-  ): Observable<DatabaseApi<T>>;
+  ): Observable<DatatableResponse<T>>;
 
-  create?(obj: T): T {
-    return obj;
+  create?(element: T): Observable<T> {
+    return observableOf(element);
   }
 
-  update?(obj: T): T {
-    return obj;
+  update?(element: T): Observable<T> {
+    return observableOf(element);
   }
 
-  delete?(obj: T): boolean {
-    return true;
+  delete?(element: T): Observable<void> {
+    return observableOf();
   }
 }

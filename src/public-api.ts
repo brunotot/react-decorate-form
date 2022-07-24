@@ -82,8 +82,13 @@ import {
   IURL,
 } from "./lib/decorator/input/FormInputDecorator";
 
-import { DatabaseService, DatabaseApi } from "./lib/service/DatabaseService";
-import EntityId from "./lib/decorator/input/EntityIdDecorator";
+import {
+  DatabaseService,
+  DatatableResponse,
+} from "./lib/service/DatabaseService";
+import EntityId, {
+  EntityIdStrategy,
+} from "./lib/decorator/input/EntityIdDecorator";
 import EntityName from "./lib/decorator/input/EntityNameDecorator";
 
 /* Main components */
@@ -177,6 +182,8 @@ export { EntityName };
 
 /* Service */
 export { DatabaseService };
-export { DatabaseApi };
+export { DatatableResponse };
+
+export { EntityIdStrategy };
 
 export * from "./lib/types/datatable-types";

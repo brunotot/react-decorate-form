@@ -31,5 +31,5 @@ export function isValuePresent(value: any) {
 }
 
 export function populateObject(model: any, value: any): void {
-  getOwnPropertyNames(model).forEach((key) => (model[key] = value[key]));
+  getOwnPropertyNames(model).forEach((key) => (model[key] = value?.[key]));
 }

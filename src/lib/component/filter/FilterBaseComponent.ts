@@ -1,20 +1,20 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from "@angular/forms";
+import { MatTableDataSource } from "@angular/material/table";
 import { Subject } from "rxjs";
 import { IInputMaterialSearchProps } from "../../decorator/input/FormInputDecorator";
-import DatatableHandler from "../../handler/DatatableHandler";
+import { BaseDatatableHandler } from "../../handler/BaseDatatableHandler";
 import { IInputProperty } from "../../handler/FormHandler";
 import { isValuePresent } from "../../utils/object-utils";
 
 @Component({ template: "" })
 export default class FilterBaseComponent implements OnInit {
-  // TODO: Napisati rucno listu svega sto se jos treba napravit i krenut od tog (redom Inpute koje treba rjesit)
   // TODO: Trenutne filtere prikazati u obliku chipsa iznad tablice ispod akcija
   private static CONTENT_MULTIPLIER_VALUE = 25;
   private static CONTENT_MULTIPLIER_DEFAULT = 1;
 
   contentMultiplier: number = FilterBaseComponent.CONTENT_MULTIPLIER_DEFAULT;
-  @Input() datatableHandler!: DatatableHandler;
+  @Input() datatableHandler!: BaseDatatableHandler;
   @Input() inputProperty!: IInputProperty;
   @Input() resetSubject!: Subject<void>;
   _formGroup!: FormGroup;
@@ -90,11 +90,12 @@ export default class FilterBaseComponent implements OnInit {
   }
 
   get filteredData(): any[] {
-    return this.datatableHandler.dataSource.filteredData;
+    return (this.datatableHandler.dataSource as MatTableDataSource<any>)
+      .filteredData;
   }
 
   get nonFilteredData(): any[] {
-    return this.datatableHandler.dataSource.data;
+    return (this.datatableHandler.dataSource as MatTableDataSource<any>).data;
   }
 
   filterMapper(value: any, formControlName: string): boolean {

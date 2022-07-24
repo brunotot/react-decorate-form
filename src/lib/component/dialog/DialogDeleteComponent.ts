@@ -59,7 +59,9 @@ export class DialogDeleteComponent implements OnInit {
   }
 
   onConfirmClick(): void {
-    this.dialogRef.close(true);
+    this.dialogRef.close({
+      model: this.model,
+    });
   }
 
   onCloseClick(): void {
