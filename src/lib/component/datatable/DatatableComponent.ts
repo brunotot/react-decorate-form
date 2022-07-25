@@ -59,6 +59,7 @@ export class DatatableComponent implements OnInit {
   @Input() createDialogTitle: string = messages.createDialogTitle;
   @Input() deleteDialogTitle: string = messages.deleteDialogTitle;
   @Input() createButtonText: string = messages.createButtonText;
+  @Input() columnNames: string[] = [];
   @Input() searchOptions: IInputSearchMetadata | IInputChipsMetadata = {
     type: InputType.SEARCH,
     metadata: {
@@ -71,7 +72,6 @@ export class DatatableComponent implements OnInit {
   actionsColumnName: string = "_actions";
   datatableHandler!: BaseDatatableHandler;
   InputType = InputType;
-  columnNames: string[] = [];
   columnNamesWithoutActions: string[] = [];
 
   get tableDataSource(): any[] | MatTableDataSource<any> {
@@ -122,6 +122,7 @@ export class DatatableComponent implements OnInit {
       snackBar: this._snackBar,
       databaseService: this.databaseService,
       modelData: this.data,
+      columnNames: this.columnNames,
     };
 
     if (this.ajax) {

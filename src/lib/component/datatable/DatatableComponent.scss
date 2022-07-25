@@ -4,7 +4,7 @@
 }
 
 .mat-column-_actions {
-  max-width: 140px;
+  width: 140px;
 }
 
 .ia-loading-shade {
@@ -22,14 +22,13 @@
 
 .ia-table-container {
   .ia-table-actions {
-    padding: 1.4rem;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    column-gap: 1rem;
-    row-gap: 1.125rem;
-    > button {
-      flex: 1;
-      min-width: 100px;
+    display: grid;
+    grid-template-columns: auto;
+    justify-content: normal;
+    padding: 1rem;
+    grid-gap: 0.5rem;
+    @media (min-width: 500px) {
+      grid-template-columns: auto 1fr auto;
     }
     .mat-form-field-wrapper {
       margin: 0;
@@ -95,11 +94,6 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    //max-height: 2rem; 
-    /*max-width: 16rem;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;*/
   }
 
   th.mat-header-cell:first-of-type,

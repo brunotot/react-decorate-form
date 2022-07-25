@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
 import {
   catchError,
   merge,
@@ -10,6 +9,7 @@ import {
   of as observableOf,
   map,
 } from "rxjs";
+import { messages } from "../constants/messages";
 import { BaseDatatableHandler } from "./BaseDatatableHandler";
 
 export class AsyncDatatableHandler extends BaseDatatableHandler {
@@ -30,7 +30,7 @@ export class AsyncDatatableHandler extends BaseDatatableHandler {
       .pipe(
         startWith({}),
         switchMap(() => {
-          this.isLoading = true;
+          this._startLoader();
           return this._databaseService!.getAll({
             pageSize: this.paginator.pageSize,
             pageIndex: this.paginator.pageIndex,
@@ -40,7 +40,7 @@ export class AsyncDatatableHandler extends BaseDatatableHandler {
           }).pipe(catchError(() => observableOf(null)));
         }),
         map((data) => {
-          this.isLoading = false;
+          this._stopLoader();
           if (data == null) {
             return [];
           }
@@ -60,34 +60,49 @@ export class AsyncDatatableHandler extends BaseDatatableHandler {
   }
 
   create(element: any): void {
+    !!this._databaseService!.create && this._startLoader();
     this._databaseService!.create?.(element).subscribe({
       next: () => {
         this.applyChanges();
+        this._showSnack(messages.createSuccess);
       },
       error: (error: HttpErrorResponse) => {
         this._showSnack(error.message);
+      },
+      complete: () => {
+        this._stopLoader();
       },
     });
   }
 
   update(element: any): void {
+    !!this._databaseService!.update && this._startLoader();
     this._databaseService!.update?.(element).subscribe({
       next: () => {
         this.applyChanges();
+        this._showSnack(messages.updateSuccess);
       },
       error: (error: HttpErrorResponse) => {
         this._showSnack(error.message);
+      },
+      complete: () => {
+        this._stopLoader();
       },
     });
   }
 
   delete(element: any): void {
+    !!this._databaseService!.delete && this._startLoader();
     this._databaseService!.delete?.(element).subscribe({
       next: () => {
         this.applyChanges();
+        this._showSnack(messages.deleteSuccess);
       },
       error: (error: HttpErrorResponse) => {
         this._showSnack(error.message);
+      },
+      complete: () => {
+        this._stopLoader();
       },
     });
   }

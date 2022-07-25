@@ -5,6 +5,7 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { BehaviorSubject } from "rxjs";
 import { messages } from "../constants/messages";
+import { variables } from "../constants/variables";
 import { DatabaseService } from "../service/DatabaseService";
 import {
   DatatableFiltersMap,
@@ -19,13 +20,13 @@ export interface IBaseDatatableHandler {
   databaseService?: DatabaseService<any>;
   snackBar: MatSnackBar;
   formClass: any;
+  columnNames: string[];
 }
 
 export abstract class BaseDatatableHandler {
-  private static SNACK_DURATION_MS: number = 3000;
-
   isLoading: boolean;
   columnNamesWithoutActions: string[];
+  columnNames: string[];
   inputPropertiesMap: IInputPropertiesMap;
   filters: DatatableFiltersMap;
   paginator!: MatPaginator;
@@ -46,7 +47,9 @@ export abstract class BaseDatatableHandler {
     snackBar,
     databaseService,
     formClass,
+    columnNames,
   }: IBaseDatatableHandler) {
+    this.columnNames = columnNames;
     this.searchChange = new BehaviorSubject<string[]>([]);
     this.totalCount = 0;
     this.inputPropertiesMap = {};
@@ -62,15 +65,21 @@ export abstract class BaseDatatableHandler {
     this._dataSource = new MatTableDataSource<any>(this._modelData);
     this._snackBar = snackBar;
 
+    let useAllColumnNames: boolean = this.columnNames.length === 0;
     let emptyForm = new this._formClass({});
     let formHandler = new FormHandler(emptyForm);
     for (let columnName of formHandler.propertyNames) {
-      let inputProperty = formHandler.getInputPropertyByFieldName(columnName);
-      if (!!inputProperty) {
-        let inputType = inputProperty.inputType;
-        if (InputType.PASSWORD !== inputType) {
-          this.columnNamesWithoutActions.push(columnName);
-          this.inputPropertiesMap[columnName] = inputProperty;
+      if (useAllColumnNames || this.columnNames.includes(columnName)) {
+        if (!useAllColumnNames) {
+          this.columnNames.push(columnName);
+        }
+        let inputProperty = formHandler.getInputPropertyByFieldName(columnName);
+        if (!!inputProperty) {
+          let inputType = inputProperty.inputType;
+          if (InputType.PASSWORD !== inputType) {
+            this.columnNamesWithoutActions.push(columnName);
+            this.inputPropertiesMap[columnName] = inputProperty;
+          }
         }
       }
     }
@@ -98,6 +107,14 @@ export abstract class BaseDatatableHandler {
     this.applyChanges();
   }
 
+  protected _startLoader(): void {
+    this.isLoading = true;
+  }
+
+  protected _stopLoader(): void {
+    this.isLoading = false;
+  }
+
   protected _normalizeSearch(search: string) {
     return isValuePresent(search)
       ? String(search)
@@ -109,7 +126,7 @@ export abstract class BaseDatatableHandler {
 
   protected _showSnack(message: string) {
     this._snackBar.open(message, messages.closeSnack, {
-      duration: BaseDatatableHandler.SNACK_DURATION_MS,
+      duration: variables.snackDurationMs,
     });
   }
 }

@@ -32,27 +32,24 @@
             <div class="mat-paginator-container ia-table-actions">
               <ia-button
                 *ngIf="useCreateAction"
+                css="height: 44px; width: 100%;"
                 (onClick)="openCreateDialog()"
                 appearance="mat-raised-button"
-                style="flex: 1"
-                css="width: 100%"
                 color="primary"
                 type="button"
                 [icon]="actionCreateIcon"
                 [label]="createButtonText"
               >
               </ia-button>
-              <div style="flex: 12" *ngIf="useSearch">
-                <ia-input
-                  [type]="searchOptions.type"
-                  [props]="searchOptions.metadata"
-                  (onChange)="onSearchChange($event)"
-                ></ia-input>
-              </div>
+              <ia-input
+                *ngIf="useSearch"
+                [type]="searchOptions.type"
+                [props]="searchOptions.metadata"
+                (onChange)="onSearchChange($event)"
+              ></ia-input>
               <ia-button
                 *ngIf="useFilters"
-                style="flex: 1"
-                css="width: 100%"
+                css="height: 44px; width: 100%"
                 appearance="mat-stroked-button"
                 (onClick)="sidenav.toggle()"
                 type="button"
