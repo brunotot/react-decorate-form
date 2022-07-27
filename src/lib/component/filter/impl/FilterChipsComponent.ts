@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import FilterBaseComponent from '../FilterBaseComponent';
-import { isValuePresent } from '../../../utils/object-utils';
-import { TEMPLATE_DATATABLE_FILTER_NORMAL } from '../../../utils/template-utils';
+import { Component } from "@angular/core";
+import FilterBaseComponent from "../FilterBaseComponent";
+import { isValuePresent } from "../../../utils/object-utils";
+import { TEMPLATE_DATATABLE_FILTER_NORMAL } from "../../../utils/template-utils";
 
 @Component({
-  selector: 'ia-filter-chips',
+  selector: "ia-filter-chips",
   template: TEMPLATE_DATATABLE_FILTER_NORMAL,
 })
 export class FilterChipsComponent extends FilterBaseComponent {

@@ -47,7 +47,8 @@ export class DatatableComponent implements OnInit {
   @Input() ajax: boolean = false;
   @Input() useSearch: boolean = true;
   @Input() actions: ("create" | "read" | "update" | "delete")[] = [];
-  @Input() filters: string[] = [];
+  @Input("filters") filtersNoop: string[] = [];
+  @Input("filtersNoop") filters: string[] = [];
   @Input() actionCreateIcon: string = variables.actionCreateIcon;
   @Input() actionUpdateIcon: string = variables.actionUpdateIcon;
   @Input() actionDeleteIcon: string = variables.actionDeleteIcon;
@@ -69,6 +70,7 @@ export class DatatableComponent implements OnInit {
     },
   };
 
+  actionsWidthPx: number = 3 * variables.datatableActionButtonWidthPx;
   actionsColumnName: string = "_actions";
   datatableHandler!: BaseDatatableHandler;
   InputType = InputType;
@@ -117,6 +119,9 @@ export class DatatableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.actionsWidthPx =
+      variables.datatableActionButtonWidthPx *
+      this.actions.filter((action) => action !== "create").length;
     let datatableHandlerConfig: IBaseDatatableHandler = {
       formClass: this.formClass,
       snackBar: this._snackBar,

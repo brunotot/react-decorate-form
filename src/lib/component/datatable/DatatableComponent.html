@@ -102,32 +102,34 @@
               [matColumnDef]="actionsColumnName"
               *ngIf="useCellActions"
             >
-              <th mat-header-cell *matHeaderCellDef>
+              <th
+                [style.width.px]="actionsWidthPx"
+                mat-header-cell
+                *matHeaderCellDef
+              >
                 {{ actionsColumnLabel }}
               </th>
               <td mat-cell *matCellDef="let element">
                 <div class="flex-nowrap">
-                  <button
-                    mat-icon-button
-                    (click)="openReadDialog(element)"
+                  <ia-button
                     *ngIf="useReadAction"
-                  >
-                    <mat-icon>{{ actionReadIcon }}</mat-icon>
-                  </button>
-                  <button
+                    appearance="mat-icon-button"
+                    (onClick)="openReadDialog(element)"
+                    [icon]="actionReadIcon"
+                  ></ia-button>
+                  <ia-button
                     *ngIf="useUpdateAction"
-                    mat-icon-button
-                    (click)="openUpdateDialog(element)"
-                  >
-                    <mat-icon>{{ actionUpdateIcon }}</mat-icon>
-                  </button>
-                  <button
+                    appearance="mat-icon-button"
+                    (onClick)="openUpdateDialog(element)"
+                    [icon]="actionUpdateIcon"
+                  ></ia-button>
+                  <ia-button
                     *ngIf="useDeleteAction"
-                    mat-icon-button
-                    (click)="openDeleteDialog(element)"
-                  >
-                    <mat-icon color="warn">{{ actionDeleteIcon }}</mat-icon>
-                  </button>
+                    appearance="mat-icon-button"
+                    (onClick)="openDeleteDialog(element)"
+                    [icon]="actionDeleteIcon"
+                    color="warn"
+                  ></ia-button>
                 </div>
               </td>
             </ng-container>

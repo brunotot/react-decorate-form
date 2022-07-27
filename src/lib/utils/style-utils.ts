@@ -23,7 +23,7 @@ const ROW_ACTIONS_CONTAINER_CSS: string = /*css*/ `
     margin-bottom: 0.125rem
   }
 
-  @media screen and (max-width: 300px) {
+  @media screen and (max-width: 500px) {
     .ia-form-actions {
       flex-direction: column;
     }

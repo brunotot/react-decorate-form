@@ -56,7 +56,9 @@ import {
 
 import DisplayContentBaseComponent from "./lib/component/display/DisplayContentBaseComponent";
 import InputConfigComponent from "./lib/component/input/InputConfigComponent";
-import FormInput from "./lib/decorator/input/FormInputDecorator";
+import FormInput, {
+  IInputSearchMetadata,
+} from "./lib/decorator/input/FormInputDecorator";
 import Email from "./lib/decorator/validator/impl/EmailValidatorDecorator";
 import MinLength from "./lib/decorator/validator/impl/MinLengthValidatorDecorator";
 import Required from "./lib/decorator/validator/impl/RequiredValidatorDecorator";
@@ -185,5 +187,6 @@ export { DatabaseService };
 export { DatatableResponse };
 
 export { EntityIdStrategy };
+export { IInputSearchMetadata };
 
 export * from "./lib/types/datatable-types";

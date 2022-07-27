@@ -14,6 +14,18 @@ export default class FilterBaseComponent implements OnInit {
   @Input() resetSubject!: Subject<void>;
   _formGroup!: FormGroup;
 
+  /* OVERRIDABLE */
+  get formControlNames(): string[] {
+    let arrayFiltered = this.nonFilteredPresentDataForPropertyName.map((o) =>
+      String(o[this.propertyName])
+    );
+    return this.getUniqueSortedStrings(arrayFiltered);
+  }
+  filterMapper(value: any, formControlName: string): boolean {
+    return String(value) === String(formControlName);
+  }
+  /* OVERRIDABLE */
+
   constructor() {}
 
   filterSearch: string = "";
@@ -35,13 +47,6 @@ export default class FilterBaseComponent implements OnInit {
       isValuePresent(o[this.propertyName])
     );
     return arrayFiltered;
-  }
-
-  get formControlNames(): string[] {
-    let arrayFiltered = this.nonFilteredPresentDataForPropertyName.map((o) =>
-      String(o[this.propertyName])
-    );
-    return this.getUniqueSortedStrings(arrayFiltered);
   }
 
   get formGroup(): FormGroup {
@@ -77,10 +82,6 @@ export default class FilterBaseComponent implements OnInit {
 
   get nonFilteredData(): any[] {
     return (this.datatableHandler.dataSource as MatTableDataSource<any>).data;
-  }
-
-  filterMapper(value: any, formControlName: string): boolean {
-    return String(value) === String(formControlName);
   }
 
   getUniqueSortedStrings(strings: string[]): string[] {

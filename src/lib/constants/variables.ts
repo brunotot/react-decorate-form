@@ -7,6 +7,7 @@ const variables = {
   actionReadIcon: "info_outline",
   actionsDialogWidth: "90%",
   snackDurationMs: 3000,
+  datatableActionButtonWidthPx: 46.6667,
 };
 
 export { variables };

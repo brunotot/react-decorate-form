@@ -99,7 +99,7 @@ export abstract class BaseDatatableHandler {
           .filter((search) => !!search)
       : [];
     this._tags = tagsNormalized;
-    this.applyChanges();
+    this.searchChange.next(this._tags);
   }
 
   setFilter(propertyName: string, filterConfig: (data: any) => boolean) {
