@@ -13,7 +13,11 @@
     [compareWith]="compareObjects"
   >
     <mat-option *ngIf="!props.multiple">--</mat-option>
-    <mat-option *ngFor="let item of props.items" [value]="item">
+    <mat-option
+      *ngFor="let item of items"
+      [disabled]="item.disabled !== undefined && !!item.disabled"
+      [value]="item.id"
+    >
       {{ item.text }}
     </mat-option>
   </mat-select>

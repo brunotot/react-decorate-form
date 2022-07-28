@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild, Optional } from '@angular/core';
-import { FormGroupDirective } from '@angular/forms';
-import { VIEW_PROVIDERS, buildProviders } from '../../../setup/provider-setup';
-import InputConfigComponent from '../InputConfigComponent';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { InputType } from '../../../types/input-types';
+import { Component, OnInit, ViewChild, Optional } from "@angular/core";
+import { FormGroupDirective } from "@angular/forms";
+import { VIEW_PROVIDERS, buildProviders } from "../../../setup/provider-setup";
+import InputConfigComponent from "../InputConfigComponent";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { MatChipInputEvent } from "@angular/material/chips";
+import { InputType } from "../../../types/input-types";
 
 @Component({
-  selector: 'ia-input-chips',
-  templateUrl: './input-chips.component.html',
-  styleUrls: ['./input-chips.component.scss'],
+  selector: "ia-input-chips",
+  templateUrl: "./input-chips.component.html",
+  styleUrls: ["./input-chips.component.scss"],
   providers: buildProviders(InputChipsComponent),
   viewProviders: VIEW_PROVIDERS,
 })
@@ -17,11 +17,19 @@ export class InputChipsComponent
   extends InputConfigComponent
   implements OnInit
 {
+  override get errors(): string[] {
+    let value = this.getErrorsDisplay();
+    if (this.chipList) {
+      this.chipList.errorState = value.length > 0;
+    }
+    return value;
+  }
+
   override get inputType(): InputType {
     return InputType.CHIPS;
   }
 
-  @ViewChild('chipList') chipList: any;
+  @ViewChild("chipList") chipList: any;
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   values: string[] = [];
@@ -41,13 +49,11 @@ export class InputChipsComponent
   }
 
   validate() {
-    if (this.chipList && this.shouldDisplayErrors) {
-      this.chipList.errorState = this.hasErrors;
-    }
+    this.chipList.errorState = this.hasErrors;
   }
 
   add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
+    const value = (event.value || "").trim();
     if (value) {
       this.values.push(value);
       this.writeValue(this.values);

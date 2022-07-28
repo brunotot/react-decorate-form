@@ -32,6 +32,7 @@ export class SyncDatatableHandler extends BaseDatatableHandler {
 
   create(element: any): void {
     this.data.push(element);
+    this.syncChangeEmitter.next(this.data);
     this.applyChanges();
     this._showSnack(messages.createSuccess);
     this._navigateLastPage();
@@ -40,6 +41,7 @@ export class SyncDatatableHandler extends BaseDatatableHandler {
   update(element: any): void {
     let index = this._findIndex(element);
     this.data[index] = element;
+    this.syncChangeEmitter.next(this.data);
     this.applyChanges();
     this._showSnack(messages.updateSuccess);
   }
@@ -47,6 +49,7 @@ export class SyncDatatableHandler extends BaseDatatableHandler {
   delete(element: any): void {
     let index = this._findIndex(element);
     this.data.splice(index, 1);
+    this.syncChangeEmitter.next(this.data);
     this.applyChanges();
     this._showSnack(messages.deleteSuccess);
   }

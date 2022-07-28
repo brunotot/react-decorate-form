@@ -21,6 +21,7 @@ export interface IBaseDatatableHandler {
   snackBar: MatSnackBar;
   formClass: any;
   columnNames: string[];
+  syncChangeEmitter: EventEmitter<any[]>;
 }
 
 export abstract class BaseDatatableHandler {
@@ -33,6 +34,7 @@ export abstract class BaseDatatableHandler {
   sort!: MatSort;
   totalCount: number;
   searchChange: BehaviorSubject<string[]>;
+  syncChangeEmitter: EventEmitter<any[]>;
 
   protected _modelData: any[];
   protected _formClass: any;
@@ -48,7 +50,9 @@ export abstract class BaseDatatableHandler {
     databaseService,
     formClass,
     columnNames,
+    syncChangeEmitter,
   }: IBaseDatatableHandler) {
+    this.syncChangeEmitter = syncChangeEmitter;
     this.columnNames = columnNames;
     this.searchChange = new BehaviorSubject<string[]>([]);
     this.totalCount = 0;

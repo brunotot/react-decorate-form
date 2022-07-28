@@ -24,8 +24,17 @@ export default function FormInput(
   return function (target: any, key: string) {
     let value: any = target[key];
     target[key] = value;
-    Reflect.defineMetadata(getMetadataKeyName(type), metadata, target, key);
+    generateMetadata(target, key, type, metadata);
   };
+}
+
+export function generateMetadata(
+  target: any,
+  key: string,
+  type: InputType,
+  metadata: any
+): void {
+  Reflect.defineMetadata(getMetadataKeyName(type), metadata, target, key);
 }
 
 /* Props */

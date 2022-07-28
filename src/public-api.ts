@@ -47,7 +47,7 @@ import { DisplayUrlComponent } from "./lib/component/display/ia-display-url/ia-d
 import { DisplayDataComponent } from "./lib/component/display/display-data/display-data.component";
 import { DisplayHiddenComponent } from "./lib/component/display/ia-display-hidden/ia-display-hidden.component";
 
-import { populateObject } from "./lib/utils/object-utils";
+import { normalizeArray, populateObject } from "./lib/utils/object-utils";
 import { ErrorsComponent } from "./lib/component/validation/errors/ErrorsComponent";
 import {
   InputBaseComponent,
@@ -57,6 +57,7 @@ import {
 import DisplayContentBaseComponent from "./lib/component/display/DisplayContentBaseComponent";
 import InputConfigComponent from "./lib/component/input/InputConfigComponent";
 import FormInput, {
+  generateMetadata,
   IInputSearchMetadata,
 } from "./lib/decorator/input/FormInputDecorator";
 import Email from "./lib/decorator/validator/impl/EmailValidatorDecorator";
@@ -92,6 +93,8 @@ import EntityId, {
   EntityIdStrategy,
 } from "./lib/decorator/input/EntityIdDecorator";
 import EntityName from "./lib/decorator/input/EntityNameDecorator";
+import { InputAppearanceType } from "./lib/decorator/input/FormInputDecorator";
+import { SelectOption } from "./lib/types/select-types";
 
 /* Main components */
 export { NgxInputAnnotationsModule };
@@ -188,5 +191,10 @@ export { DatatableResponse };
 
 export { EntityIdStrategy };
 export { IInputSearchMetadata };
+export { InputAppearanceType };
+export { SelectOption };
+
+export { generateMetadata };
+export { normalizeArray };
 
 export * from "./lib/types/datatable-types";

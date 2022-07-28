@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import DisplayContentBaseComponent from '../DisplayContentBaseComponent';
-import { SelectOption } from '../../../types/select-types';
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import DisplayContentBaseComponent from "../DisplayContentBaseComponent";
+import { SelectOption } from "../../../types/select-types";
 
 @Component({
-  selector: 'ia-display-select',
-  templateUrl: './ia-display-select.component.html',
-  styleUrls: ['./ia-display-select.component.scss'],
+  selector: "ia-display-select",
+  templateUrl: "./ia-display-select.component.html",
+  styleUrls: ["./ia-display-select.component.scss"],
   encapsulation: ViewEncapsulation.None,
 })
 export class DisplaySelectComponent
@@ -18,12 +18,12 @@ export class DisplaySelectComponent
 
   extraCount: number = 0;
   dataFormatted: SelectOption[] = [];
-  dataFormattedText: string = '';
+  dataFormattedText: string = "";
 
   public static override getSearchableString(data: any, props: any): string {
     return DisplaySelectComponent.getSelectedOptions(props.items, data)
       .map((selectOption) => selectOption.text)
-      .join(' ');
+      .join(" ");
   }
 
   private static getSelectedOptions(
@@ -36,6 +36,16 @@ export class DisplaySelectComponent
       : currentValue === 0 || !!currentValue
       ? [currentValue]
       : [];
+    currentValueArray = currentValueArray.map((currentValue) => {
+      if (
+        currentValue != null &&
+        typeof currentValue === "object" &&
+        "id" in currentValue
+      ) {
+        return currentValue.id;
+      }
+      return currentValue;
+    });
     return propsList.filter((selectOption: SelectOption) =>
       currentValueArray.includes(selectOption.id)
     );

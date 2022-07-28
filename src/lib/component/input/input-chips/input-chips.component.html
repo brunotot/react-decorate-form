@@ -25,9 +25,7 @@
     props.matIconSuffix
   }}</mat-icon>
   <mat-hint>{{ props.hint }}</mat-hint>
-  <ng-container *ngIf="shouldDisplayErrors">
-    <mat-error *ngFor="let error of errors">
-      {{ error }}
-    </mat-error>
-  </ng-container>
+  <mat-error *ngFor="let error of errors">
+    {{ error }}
+  </mat-error>
 </mat-form-field>

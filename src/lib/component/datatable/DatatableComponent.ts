@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
@@ -43,6 +45,9 @@ export class DatatableComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  @Output("onChange") syncChangeEmitter: EventEmitter<any[]> = new EventEmitter<
+    any[]
+  >();
   @Input() databaseService!: DatabaseService<any>;
   @Input() ajax: boolean = false;
   @Input() useSearch: boolean = true;
@@ -128,6 +133,7 @@ export class DatatableComponent implements OnInit {
       databaseService: this.databaseService,
       modelData: this.data,
       columnNames: this.columnNames,
+      syncChangeEmitter: this.syncChangeEmitter,
     };
 
     if (this.ajax) {
