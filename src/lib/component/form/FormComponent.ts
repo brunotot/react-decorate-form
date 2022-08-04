@@ -7,7 +7,7 @@ import {
   Output,
   ViewEncapsulation,
 } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import FormHandler, { IInputProperty } from "../../handler/FormHandler";
 import { ROW_ACTIONS_CONTAINER_CSS } from "../../utils/style-utils";
 
@@ -118,7 +118,7 @@ export class FormComponent implements OnInit {
     return this.formHandler.getInputPropertyByFieldName(fieldName);
   }
 
-  get form(): FormGroup {
+  get form(): UntypedFormGroup {
     return this.formHandler.form;
   }
 

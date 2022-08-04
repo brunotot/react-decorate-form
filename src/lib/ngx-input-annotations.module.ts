@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { BrowserModule } from "@angular/platform-browser";
 import {
-  FormControl,
+  UntypedFormControl,
   FormGroupDirective,
   FormsModule,
   NgForm,
@@ -89,7 +89,7 @@ import { DialogDeleteComponent } from "./component/dialog/DialogDeleteComponent"
 
 class ErrorStateMatcherImpl implements ErrorStateMatcher {
   isErrorState(
-    control: FormControl | null,
+    control: UntypedFormControl | null,
     form: FormGroupDirective | NgForm | null
   ): boolean {
     return shouldDisplayErrors(control, form);

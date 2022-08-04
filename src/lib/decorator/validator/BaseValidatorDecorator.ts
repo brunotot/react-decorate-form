@@ -1,6 +1,6 @@
 import {
   AbstractControl,
-  FormGroup,
+  UntypedFormGroup,
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
@@ -26,7 +26,7 @@ export interface IValidateConfig {
   validatorFn: ValidatorFn;
 }
 
-function getFormObject(target: any, formParent: FormGroup | null) {
+function getFormObject(target: any, formParent: UntypedFormGroup | null) {
   if (!formParent) {
     return target;
   }
@@ -49,7 +49,7 @@ function getValidatorFn(
     config[key] = message;
     return isValid(
       controlValue,
-      getFormObject(target, control.parent as FormGroup)
+      getFormObject(target, control.parent as UntypedFormGroup)
     )
       ? null
       : config;

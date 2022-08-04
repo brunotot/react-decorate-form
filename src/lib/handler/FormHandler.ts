@@ -1,4 +1,4 @@
-import { FormArray, FormControl, FormGroup, ValidatorFn } from "@angular/forms";
+import { UntypedFormArray, UntypedFormControl, UntypedFormGroup, ValidatorFn } from "@angular/forms";
 import { InputType } from "../types/input-types";
 import "reflect-metadata";
 import { METADATA_VALIDATION_KEY_PREFIX } from "../decorator/validator/BaseValidatorDecorator";
@@ -36,7 +36,7 @@ export function getOwnPropertyNames(object: any): string[] {
 }
 
 export interface IFormControls {
-  [key: string]: FormControl | FormArray | FormGroup;
+  [key: string]: UntypedFormControl | UntypedFormArray | UntypedFormGroup;
 }
 
 export interface IInputProperty {
@@ -48,7 +48,7 @@ export interface IInputProperty {
 
 export default class FormHandler {
   model: any;
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   inputProperties!: IInputProperty[];
   propertyNames!: string[];
 
@@ -117,7 +117,7 @@ export default class FormHandler {
 
   private initForm() {
     let controls: IFormControls = this.getControls();
-    this.form = new FormGroup(controls);
+    this.form = new UntypedFormGroup(controls);
     this.form.valueChanges.subscribe(() => {
       let keys = Object.keys(this.form.controls);
       for (let key of keys) {
@@ -134,7 +134,7 @@ export default class FormHandler {
       let propertyName: string = inputProperty.propertyName as string;
       let currentValue = this.model[propertyName];
       if (InputType.DATE === inputProperty.inputType) {
-        controls[propertyName] = new FormControl(
+        controls[propertyName] = new UntypedFormControl(
           new Date(currentValue),
           inputProperty.validatorFns
         );
@@ -148,14 +148,14 @@ export default class FormHandler {
           let mlFormHandler = new FormHandler(currentKeyValue);
           let formHandlerConfig: any = {};
           formHandlerConfig = mlFormHandler.getControls();
-          config[key] = new FormGroup(formHandlerConfig);
+          config[key] = new UntypedFormGroup(formHandlerConfig);
         }
-        controls[propertyName] = new FormGroup(
+        controls[propertyName] = new UntypedFormGroup(
           config,
           inputProperty.validatorFns
         );
       } else {
-        controls[propertyName] = new FormControl(
+        controls[propertyName] = new UntypedFormControl(
           currentValue,
           inputProperty.validatorFns
         );

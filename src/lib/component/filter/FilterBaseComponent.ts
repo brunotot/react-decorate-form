@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup } from "@angular/forms";
 import { MatTableDataSource } from "@angular/material/table";
 import { Subject } from "rxjs";
 import { IInputMaterialSearchProps } from "../../decorator/input/FormInputDecorator";
@@ -12,7 +12,7 @@ export default class FilterBaseComponent implements OnInit {
   @Input() datatableHandler!: BaseDatatableHandler;
   @Input() inputProperty!: IInputProperty;
   @Input() resetSubject!: Subject<void>;
-  _formGroup!: FormGroup;
+  _formGroup!: UntypedFormGroup;
 
   /* OVERRIDABLE */
   get formControlNames(): string[] {
@@ -49,15 +49,18 @@ export default class FilterBaseComponent implements OnInit {
     return arrayFiltered;
   }
 
-  get formGroup(): FormGroup {
+  get formGroup(): UntypedFormGroup {
     if (!this._formGroup) {
-      this._formGroup = new FormGroup({});
+      this._formGroup = new UntypedFormGroup({});
     }
 
     let formControlNames: string[] = this.formControlNames;
     for (let formControlName of formControlNames) {
       if (!this._formGroup.contains(formControlName)) {
-        this._formGroup.addControl(formControlName, new FormControl(false));
+        this._formGroup.addControl(
+          formControlName,
+          new UntypedFormControl(false)
+        );
       }
     }
 
