@@ -1,4 +1,5 @@
 {
+  "version": "0.0.2",
   "name": "ngx-input-annotations",
   "author": "Bruno Tot",
   "description": "Form and CRUD Datatable build to be used with Angular Material",
@@ -19,7 +20,6 @@
     "datatable",
     "reactive-forms"
   ],
-  "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^14.1.1",
     "@angular/core": "^14.1.1",
