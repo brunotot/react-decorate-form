@@ -1,6 +1,7 @@
 <ia-input-text
   *ngIf="inputType === InputType.TEXT"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -11,6 +12,7 @@
 <ia-input-text-area
   *ngIf="inputType === InputType.TEXTAREA"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -21,6 +23,7 @@
 <ia-input-password
   *ngIf="inputType === InputType.PASSWORD"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -31,6 +34,7 @@
 <ia-input-number
   *ngIf="inputType === InputType.NUMBER"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -41,6 +45,7 @@
 <ia-input-email
   *ngIf="inputType === InputType.EMAIL"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -51,6 +56,7 @@
 <ia-input-date
   *ngIf="inputType === InputType.DATE"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -61,6 +67,7 @@
 <ia-input-chips
   *ngIf="inputType === InputType.CHIPS"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -71,6 +78,7 @@
 <ia-input-checkbox
   *ngIf="inputType === InputType.CHECKBOX"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -81,6 +89,7 @@
 <ia-input-select
   *ngIf="inputType === InputType.SELECT"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -91,6 +100,7 @@
 <ia-input-search
   *ngIf="inputType === InputType.SEARCH"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -101,6 +111,7 @@
 <ia-input-color
   *ngIf="inputType === InputType.COLOR"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -111,6 +122,7 @@
 <ia-input-tel
   *ngIf="inputType === InputType.TEL"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -121,6 +133,7 @@
 <ia-input-url
   *ngIf="inputType === InputType.URL"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"
@@ -131,6 +144,7 @@
 <ia-input-multilanguage
   *ngIf="inputType === InputType.MULTILANGUAGE && !propertyName.includes('.')"
   [type]="inputType"
+  [useWidth]="useWidth"
   [name]="propertyName"
   [validators]="validators"
   [props]="props"

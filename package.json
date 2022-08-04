@@ -1,5 +1,24 @@
 {
   "name": "ngx-input-annotations",
+  "author": "Bruno Tot",
+  "description": "Form and CRUD Datatable build to be used with Angular Material",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brunotot/ngx-input-annotations.git"
+  },
+  "bugs": {
+    "url": "https://github.com/brunotot/ngx-input-annotations/issues"
+  },
+  "homepage": "https://github.com/brunotot/ngx-input-annotations",
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "angular-material",
+    "crud",
+    "datatable",
+    "reactive-forms"
+  ],
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^13.3.0",

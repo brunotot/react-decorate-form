@@ -1,15 +1,15 @@
-import { Component, OnInit, Optional, ViewEncapsulation } from '@angular/core';
-import { FormGroupDirective } from '@angular/forms';
-import { InputType } from '../../../types/input-types';
-import { VIEW_PROVIDERS, buildProviders } from '../../../setup/provider-setup';
-import InputConfigComponent from '../InputConfigComponent';
-import { getEmoji, getName } from 'language-flag-colors';
-import FormHandler, { IInputProperty } from '../../../handler/FormHandler';
+import { Component, OnInit, Optional, ViewEncapsulation } from "@angular/core";
+import { FormGroupDirective } from "@angular/forms";
+import { InputType } from "../../../types/input-types";
+import { VIEW_PROVIDERS, buildProviders } from "../../../setup/provider-setup";
+import InputConfigComponent from "../InputConfigComponent";
+import { getEmoji, getName } from "language-flag-colors";
+import FormHandler, { IInputProperty } from "../../../handler/FormHandler";
 
 @Component({
-  selector: 'ia-input',
-  templateUrl: './input-base.component.html',
-  styleUrls: ['./input-base.component.scss'],
+  selector: "ia-input",
+  templateUrl: "./input-base.component.html",
+  styleUrls: ["./input-base.component.scss"],
   providers: buildProviders(InputBaseComponent),
   viewProviders: VIEW_PROVIDERS,
   encapsulation: ViewEncapsulation.None,
@@ -33,7 +33,7 @@ interface ILanguageConfig {
 }
 
 @Component({
-  selector: 'ia-input-multilanguage',
+  selector: "ia-input-multilanguage",
   template: /*html*/ `
     <div
       [ngClass]="

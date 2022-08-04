@@ -1,4 +1,5 @@
 import { getOwnPropertyNames } from "../handler/FormHandler";
+import { getEntityIdVariable } from "./decorator-utils";
 
 export function debounce(this: any, func: Function, timeout = 500) {
   let timer: any;
@@ -31,5 +32,10 @@ export function isValuePresent(value: any) {
 }
 
 export function populateObject(model: any, value: any): void {
-  getOwnPropertyNames(model).forEach((key) => (model[key] = value?.[key]));
+  let entityIdVariable: string = getEntityIdVariable(model);
+  getOwnPropertyNames(model).forEach((key) => {
+    if (key !== entityIdVariable) {
+      model[key] = value?.[key];
+    }
+  });
 }

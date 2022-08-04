@@ -18,6 +18,16 @@ import { ROW_ACTIONS_CONTAINER_CSS } from "../../utils/style-utils";
       .ia-form > .ia-form-title {
         margin-bottom: 1.75rem;
       }
+
+      .ia-input-containers {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .ia-input-container {
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
     `,
     ROW_ACTIONS_CONTAINER_CSS,
   ],
@@ -32,14 +42,32 @@ import { ROW_ACTIONS_CONTAINER_CSS } from "../../utils/style-utils";
         {{ title }}
       </h1>
 
-      <ia-input
-        *ngFor="let inputProperty of inputProperties"
-        [name]="inputProperty.propertyName"
-        [validators]="inputProperty.validatorFns"
-        [type]="inputProperty.inputType"
-        [props]="inputProperty.props"
+      <div
+        class="ia-input-containers"
+        [attr.style]="'column-gap: '.concat(columnGapCss)"
       >
-      </ia-input>
+        <ia-input
+          *ngFor="let inputProperty of inputProperties"
+          class="ia-input-container"
+          [useWidth]="false"
+          [attr.style]="
+            'flex-basis: '.concat(
+              !!inputProperty.props.width
+                ? 'calc(' +
+                    inputProperty.props.width +
+                    ' - ' +
+                    columnGapCss +
+                    ')'
+                : '100%'
+            )
+          "
+          [name]="inputProperty.propertyName"
+          [validators]="inputProperty.validatorFns"
+          [type]="inputProperty.inputType"
+          [props]="inputProperty.props"
+        >
+        </ia-input>
+      </div>
 
       <div class="ia-form-actions">
         <ia-button
@@ -66,6 +94,7 @@ import { ROW_ACTIONS_CONTAINER_CSS } from "../../utils/style-utils";
 })
 export class FormComponent implements OnInit {
   formHandler!: FormHandler;
+  columnGapCss: string = "0.5rem";
 
   @Input() titleClass: string = "";
   @Input() title: string = "";

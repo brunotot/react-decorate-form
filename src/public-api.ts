@@ -20,7 +20,10 @@ import { DialogCreateComponent } from "./lib/component/dialog/DialogCreateCompon
 import { DialogDeleteComponent } from "./lib/component/dialog/DialogDeleteComponent";
 
 import { DatatableComponent } from "./lib/component/datatable/DatatableComponent";
-import { buildValidatorFn } from "./lib/decorator/validator/BaseValidatorDecorator";
+import {
+  buildValidatorFn,
+  uuidv4,
+} from "./lib/decorator/validator/BaseValidatorDecorator";
 import { InputType } from "./lib/types/input-types";
 import { ButtonComponent } from "./lib/component/button/ButtonComponent";
 import { FormComponent } from "./lib/component/form/FormComponent";
@@ -89,12 +92,11 @@ import {
   DatabaseService,
   DatatableResponse,
 } from "./lib/service/DatabaseService";
-import EntityId, {
-  EntityIdStrategy,
-} from "./lib/decorator/input/EntityIdDecorator";
+
 import EntityName from "./lib/decorator/input/EntityNameDecorator";
 import { InputAppearanceType } from "./lib/decorator/input/FormInputDecorator";
 import { SelectOption } from "./lib/types/select-types";
+import EntityId from "./lib/decorator/input/EntityIdDecorator";
 
 /* Main components */
 export { NgxInputAnnotationsModule };
@@ -189,7 +191,7 @@ export { EntityName };
 export { DatabaseService };
 export { DatatableResponse };
 
-export { EntityIdStrategy };
+export { uuidv4 };
 export { IInputSearchMetadata };
 export { InputAppearanceType };
 export { SelectOption };

@@ -30,6 +30,7 @@ export function shouldDisplayErrors(
 @Component({ template: "" })
 export default class InputConfigComponent implements ControlValueAccessor {
   @Output("onChange") inputChangeEmitter = new EventEmitter();
+  @Input("useWidth") useWidth: boolean = true;
   @Input("type") _inputType!: InputType;
   @Input("props") _props: any = {};
   @Input("name") set name(name: string | undefined) {
@@ -67,13 +68,19 @@ export default class InputConfigComponent implements ControlValueAccessor {
     let propsCopy = { ...this._props };
     for (let key of Object.keys(this._defaultProps0)) {
       let value = propsCopy[key];
-      if (value === undefined && !(key in this.defaultProps)) {
+      if (
+        ((!this.useWidth && key === "width") || value === undefined) &&
+        !(key in this.defaultProps)
+      ) {
         propsCopy[key] = this._defaultProps0[key];
       }
     }
     for (let key of Object.keys(this.defaultProps)) {
       let value = propsCopy[key];
-      if (key in this._defaultProps0 || value === undefined) {
+      if (
+        ((this.useWidth || key !== "width") && key in this._defaultProps0) ||
+        value === undefined
+      ) {
         propsCopy[key] = this.defaultProps[key];
       }
     }
