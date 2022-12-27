@@ -21,3 +21,7 @@ jobs:
         run: npm run deploy
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+      - uses: stefanzweifel/git-auto-commit-action@v3
+        with:
+          commit_message: "New version upgrade"
+          push: true
