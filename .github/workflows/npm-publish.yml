@@ -19,7 +19,6 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v3
         with:
           commit_message: "Automatically committing changes before running npm version patch"
-      - run: chown -R $(whoami) .
       - run: npm version patch
       - run: npm run build
       - run: cd dist
