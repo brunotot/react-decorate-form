@@ -13,6 +13,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - run: git config --global user.email "package@updater.com"
+      - run: git config --global user.name "Package Update"
       - run: npm install
       - uses: stefanzweifel/git-auto-commit-action@v3
         with:
