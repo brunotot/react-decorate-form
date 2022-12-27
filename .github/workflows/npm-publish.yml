@@ -25,4 +25,7 @@ jobs:
           commit_message: "New version upgrade"
           push: true
       - run: npm run build
-      - run: cd dist && npm publish
+      - name: 🚀 publish
+        run: cd dist && npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
