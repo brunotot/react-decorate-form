@@ -1,4 +1,4 @@
-<h1 align="center">ngx-rapid-interface-builder</h1>
+ <h1 align="center">ngx-rapid-interface-builder</h1>
 
 <p align="center">🚀 Agonising <strong>Form</strong> and <strong>Datatable</strong> creation made easy and splendidly developer-friendly</p>
 <p align="center">:zap: Quickly and painlessly build <strong>fully responsive</strong> and <strong>validated</strong> forms and/or datatables</p>
@@ -78,8 +78,8 @@ npm install ngx-simple-form
 // ...
 import { NgxPainlessFormModule } from "ngx-painless-form";
 @NgModule({
-  // ...
-  imports: [NgxPainlessFormModule],
+	// ...
+	imports: [NgxPainlessFormModule],
 })
 export class AppModule {}
 ```
@@ -90,9 +90,9 @@ export class AppModule {}
 
 ```html
 <rib-base-form
-  [form]="formInstance"
-  [formTitle]="formTitle"
-  [fnSubmit]="onSubmitFn"
+	[form]="formInstance"
+	[formTitle]="formTitle"
+	[fnSubmit]="onSubmitFn"
 >
 </rib-base-form>
 ```
@@ -108,25 +108,25 @@ import { IForm, Form, FormControlWrapper, Validators } from "ngx-painless-form";
 
 ```typescript
 let exampleFormValue: IForm = {
-  id: "1",
-  text: "Thiasddsas",
-  date: new Date("2025-07-01"),
-  datetime: new Date("2025-07-01"),
-  month: new Date("2025-07-01"),
-  time: "03:20",
-  number: 11,
-  textarea: "This is a text area example",
-  password: "password-example",
-  email: "test@test.com",
-  color: "#000000",
-  search: "test",
-  checkbox: false,
-  url: "http://www.example.com/index.html",
-  phone: "+123/45-67890",
-  week: "2021-W01",
-  range: 60000,
-  select2Multiple: ["1", "2"],
-  select2Single: "1",
+	id: "1",
+	text: "Thiasddsas",
+	date: new Date("2025-07-01"),
+	datetime: new Date("2025-07-01"),
+	month: new Date("2025-07-01"),
+	time: "03:20",
+	number: 11,
+	textarea: "This is a text area example",
+	password: "password-example",
+	email: "test@test.com",
+	color: "#000000",
+	search: "test",
+	checkbox: false,
+	url: "http://www.example.com/index.html",
+	phone: "+123/45-67890",
+	week: "2021-W01",
+	range: 60000,
+	select2Multiple: ["1", "2"],
+	select2Single: "1",
 };
 ```
 
@@ -134,192 +134,192 @@ let exampleFormValue: IForm = {
 
 ```typescript
 @Component({
-  /* ... */
+	/* ... */
 })
 export class AppComponent {
-  // Define what happens on submit
-  onSubmitFn = (value: IForm): any => console.log(value);
+	// Define what happens on submit
+	onSubmitFn = (value: IForm): any => console.log(value);
 
-  // Define optional form title
-  formTitle: string = "Example title";
+	// Define optional form title
+	formTitle: string = "Example title";
 
-  // Define form configuration
-  formInstance: Form = new FormControlWrapper(exampleFormValue)
-    .withHidden("id")
-    .withText({
-      formControlName: "text",
-      label: "Text label",
-      placeholder: "Text placeholder",
-      validatorConfigs: [
-        Validators.required("Text required!"),
-        {
-          message: "At least 5 characters required!",
-          isValid: (v) => v.length >= 5,
-        },
-      ],
-    })
-    .withDateTime({
-      formControlName: "datetime",
-      label: "Datetime label",
-      validatorConfigs: [
-        Validators.required("Datetime required!"),
-        {
-          message: "Year must be 2022 or above",
-          isValid: (d) => d.getFullYear() >= 2022,
-        },
-      ],
-    })
-    .withDate({
-      formControlName: "date",
-      label: "Date label",
-      validatorConfigs: [
-        Validators.required("Date required!"),
-        {
-          message: "Date year must be above 2023",
-          isValid: (d) => d.getFullYear() > 2023,
-        },
-      ],
-    })
-    .withMonth({
-      formControlName: "month",
-      label: "Month label",
-      validatorConfigs: [
-        Validators.required("Month required!"),
-        {
-          message: "Month must be greater than April",
-          isValid: (d) => (d as Date).getMonth() > 3,
-        },
-      ],
-    })
-    .withTime({
-      formControlName: "time",
-      label: "Time label",
-      validatorConfigs: [
-        Validators.required("Time required!"),
-        { message: "HH should be less than 4", isValid: (t) => t.hh < 4 },
-      ],
-    })
-    .withColor({
-      formControlName: "color",
-      label: "Color label",
-      validatorConfigs: [
-        { message: "Red has to be 0", isValid: (c) => c.rgb?.red === 0 },
-      ],
-    })
-    .withNumber({
-      formControlName: "number",
-      label: "Number label",
-      placeholder: "Number placeholder",
-      validatorConfigs: [
-        Validators.required("Number required!"),
-        { message: "Number should be greater than 10", isValid: (v) => v > 10 },
-      ],
-    })
-    .withTextArea({
-      formControlName: "textarea",
-      label: "Textarea label",
-      placeholder: "Textarea placeholder",
-      validatorConfigs: [Validators.required("Textarea required!")],
-    })
-    .withPassword({
-      formControlName: "password",
-      label: "Password label",
-      placeholder: "Password placeholder",
-      validatorConfigs: [Validators.required("Password required!")],
-    })
-    .withEmail({
-      formControlName: "email",
-      label: "Email label",
-      placeholder: "Email placeholder",
-      validatorConfigs: [Validators.required("Email required!")],
-    })
-    .withSearch({
-      formControlName: "search",
-      label: "Search label",
-      validatorConfigs: [Validators.required("Search required!")],
-    })
-    .withUrl({
-      formControlName: "url",
-      label: "URL label",
-      placeholder: "URL placeholder",
-      validatorConfigs: [Validators.required("Url required!")],
-    })
-    .withCheckbox({
-      formControlName: "checkbox",
-      validatorConfigs: [
-        { message: "Checkbox must be false", isValid: (c) => !c },
-      ],
-      label: "Checkbox label",
-    })
-    .withSelectSingle({
-      formControlName: "select2Single",
-      label: "Select2 single label",
-      placeholder: "Select2 single placeholder",
-      data: [
-        { id: "1", text: "Option1" },
-        { id: "2", text: "Option2" },
-        { id: "3", text: "Option3" },
-      ],
-      validatorConfigs: [Validators.required("Select2 single required!")],
-    })
-    .withSelectMultiple({
-      formControlName: "select2Multiple",
-      label: "Select2 multiple label",
-      placeholder: "Select2 multiple placeholder",
-      data: [
-        { id: "1", text: "Option1" },
-        { id: "2", text: "Option2" },
-        { id: "3", text: "Option3" },
-      ],
-      validatorConfigs: [
-        Validators.required("Select2 multiple required!"),
-        {
-          message: "Select must have exactly 1 value",
-          isValid: (res) => res.length === 1,
-        },
-      ],
-    })
-    .withPhone({
-      formControlName: "phone",
-      label: "Phone label",
-      placeholder: "Phone placeholder",
-      validatorConfigs: [Validators.required("Phone required!")],
-    })
-    .withFileSingle({
-      formControlName: "file",
-      label: "File label",
-      validatorConfigs: [Validators.required("File required!")],
-    })
-    .withFileMultiple({
-      formControlName: "files",
-      multiple: true,
-      label: "Files multiple label",
-      validatorConfigs: [
-        Validators.required("Files multiple required!"),
-        {
-          message: "There should be only one file",
-          isValid: (files) => files?.length === 1,
-        },
-      ],
-    })
-    .withWeek({
-      formControlName: "week",
-      label: "Week label",
-      validatorConfigs: [
-        Validators.required("Week required!"),
-        { message: "Week must be 1", isValid: (w) => w.week === 1 },
-      ],
-    })
-    .withRange({
-      formControlName: "range",
-      label: "Range label",
-      min: 10000,
-      max: 200000,
-      validatorConfigs: [
-        Validators.min(50000, "You have to be at least 50000 years old!"),
-      ],
-    })
-    .toForm();
+	// Define form configuration
+	formInstance: Form = new FormControlWrapper(exampleFormValue)
+		.withHidden("id")
+		.withText({
+			formControlName: "text",
+			label: "Text label",
+			placeholder: "Text placeholder",
+			validatorConfigs: [
+				Validators.required("Text required!"),
+				{
+					message: "At least 5 characters required!",
+					isValid: (v) => v.length >= 5,
+				},
+			],
+		})
+		.withDateTime({
+			formControlName: "datetime",
+			label: "Datetime label",
+			validatorConfigs: [
+				Validators.required("Datetime required!"),
+				{
+					message: "Year must be 2022 or above",
+					isValid: (d) => d.getFullYear() >= 2022,
+				},
+			],
+		})
+		.withDate({
+			formControlName: "date",
+			label: "Date label",
+			validatorConfigs: [
+				Validators.required("Date required!"),
+				{
+					message: "Date year must be above 2023",
+					isValid: (d) => d.getFullYear() > 2023,
+				},
+			],
+		})
+		.withMonth({
+			formControlName: "month",
+			label: "Month label",
+			validatorConfigs: [
+				Validators.required("Month required!"),
+				{
+					message: "Month must be greater than April",
+					isValid: (d) => (d as Date).getMonth() > 3,
+				},
+			],
+		})
+		.withTime({
+			formControlName: "time",
+			label: "Time label",
+			validatorConfigs: [
+				Validators.required("Time required!"),
+				{ message: "HH should be less than 4", isValid: (t) => t.hh < 4 },
+			],
+		})
+		.withColor({
+			formControlName: "color",
+			label: "Color label",
+			validatorConfigs: [
+				{ message: "Red has to be 0", isValid: (c) => c.rgb?.red === 0 },
+			],
+		})
+		.withNumber({
+			formControlName: "number",
+			label: "Number label",
+			placeholder: "Number placeholder",
+			validatorConfigs: [
+				Validators.required("Number required!"),
+				{ message: "Number should be greater than 10", isValid: (v) => v > 10 },
+			],
+		})
+		.withTextArea({
+			formControlName: "textarea",
+			label: "Textarea label",
+			placeholder: "Textarea placeholder",
+			validatorConfigs: [Validators.required("Textarea required!")],
+		})
+		.withPassword({
+			formControlName: "password",
+			label: "Password label",
+			placeholder: "Password placeholder",
+			validatorConfigs: [Validators.required("Password required!")],
+		})
+		.withEmail({
+			formControlName: "email",
+			label: "Email label",
+			placeholder: "Email placeholder",
+			validatorConfigs: [Validators.required("Email required!")],
+		})
+		.withSearch({
+			formControlName: "search",
+			label: "Search label",
+			validatorConfigs: [Validators.required("Search required!")],
+		})
+		.withUrl({
+			formControlName: "url",
+			label: "URL label",
+			placeholder: "URL placeholder",
+			validatorConfigs: [Validators.required("Url required!")],
+		})
+		.withCheckbox({
+			formControlName: "checkbox",
+			validatorConfigs: [
+				{ message: "Checkbox must be false", isValid: (c) => !c },
+			],
+			label: "Checkbox label",
+		})
+		.withSelectSingle({
+			formControlName: "select2Single",
+			label: "Select2 single label",
+			placeholder: "Select2 single placeholder",
+			data: [
+				{ id: "1", text: "Option1" },
+				{ id: "2", text: "Option2" },
+				{ id: "3", text: "Option3" },
+			],
+			validatorConfigs: [Validators.required("Select2 single required!")],
+		})
+		.withSelectMultiple({
+			formControlName: "select2Multiple",
+			label: "Select2 multiple label",
+			placeholder: "Select2 multiple placeholder",
+			data: [
+				{ id: "1", text: "Option1" },
+				{ id: "2", text: "Option2" },
+				{ id: "3", text: "Option3" },
+			],
+			validatorConfigs: [
+				Validators.required("Select2 multiple required!"),
+				{
+					message: "Select must have exactly 1 value",
+					isValid: (res) => res.length === 1,
+				},
+			],
+		})
+		.withPhone({
+			formControlName: "phone",
+			label: "Phone label",
+			placeholder: "Phone placeholder",
+			validatorConfigs: [Validators.required("Phone required!")],
+		})
+		.withFileSingle({
+			formControlName: "file",
+			label: "File label",
+			validatorConfigs: [Validators.required("File required!")],
+		})
+		.withFileMultiple({
+			formControlName: "files",
+			multiple: true,
+			label: "Files multiple label",
+			validatorConfigs: [
+				Validators.required("Files multiple required!"),
+				{
+					message: "There should be only one file",
+					isValid: (files) => files?.length === 1,
+				},
+			],
+		})
+		.withWeek({
+			formControlName: "week",
+			label: "Week label",
+			validatorConfigs: [
+				Validators.required("Week required!"),
+				{ message: "Week must be 1", isValid: (w) => w.week === 1 },
+			],
+		})
+		.withRange({
+			formControlName: "range",
+			label: "Range label",
+			min: 10000,
+			max: 200000,
+			validatorConfigs: [
+				Validators.min(50000, "You have to be at least 50000 years old!"),
+			],
+		})
+		.toForm();
 }
 ```
 
