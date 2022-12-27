@@ -20,6 +20,10 @@ jobs:
         with:
           commit_message: "Automatically committing changes before running npm version patch"
       - run: npm version patch
+      - uses: stefanzweifel/git-auto-commit-action@v3
+        with:
+          commit_message: "New version upgrade"
+          push: true
       - run: npm run build
       - run: cd dist
-      - run: npm publish
+      - run: npm publish --force
