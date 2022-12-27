@@ -25,5 +25,4 @@ jobs:
           commit_message: "New version upgrade"
           push: true
       - run: npm run build
-      - run: cd dist
-      - run: npm publish .
+      - run: cd dist && npm publish
