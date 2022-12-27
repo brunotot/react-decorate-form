@@ -14,5 +14,9 @@ jobs:
         with:
           node-version: 12
       - run: npm install
-      - run: npm run deploy
-
+      - run: npm version patch
+      - run: npm run build
+      - run: git commit -am "Bump version"
+      - run: git push
+      - run: cd dist
+      - run: npm publish
