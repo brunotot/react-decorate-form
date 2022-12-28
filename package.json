@@ -4,6 +4,9 @@
 	"description": "React library that allows form validation manipulation through TypeScript Decorators",
 	"main": "index.js",
 	"types": "types/index.d.ts",
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/brunotot/react-decorate-form.git"
