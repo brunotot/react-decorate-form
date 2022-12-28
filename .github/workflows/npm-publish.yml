@@ -21,6 +21,10 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Autocommit version patch"
+
+      - uses: actions/setup-node@v1
+        with:
+          registry-url: "https://npm.pkg.github.com"
       - name: 🚀 Publish to NPM
         run: npm run deploy
         env:
