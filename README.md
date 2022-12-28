@@ -4,7 +4,7 @@
 <p align="center">:zap: Allows strict type checking when applying validators</p>
 <p align="center">:star: Works perfectly with existing React form components</p>
 <h2 align="center">
-  <a href="https://brunotot.github.io/react-decorate-form/playground/">LIVE DEMO</a>
+  <a href="https://stackblitz.com/edit/react-ts-d3swd2?file=src%2FApp.tsx&file=src%2Fmodel%2FUserForm.ts">STACKBLITZ DEMO</a>
 </h2>
 
 ## Installation
