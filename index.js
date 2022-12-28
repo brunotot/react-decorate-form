@@ -1,7 +1,8 @@
 import Error from "./src/components/Error";
 import Errors from "./src/components/Errors";
 import Form from "./src/components/Form";
-import ErrorMessage from "./src/constants/ErrorMessage";
+import Rule from "./src/decorators/validators/custom/Rule";
+import ValidatorService from "./src/service/ValidatorService";
 import { validators } from "./src/utils/ValidatorDecoratorUtils";
 
-export { validators, Error, Errors, Form, ErrorMessage };
+export { ValidatorService, validators, Error, Errors, Form, Rule };

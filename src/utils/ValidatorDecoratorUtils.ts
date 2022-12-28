@@ -3,6 +3,7 @@ import Size from "../decorators/validators/array/Size";
 import AssertFalse from "../decorators/validators/boolean/AssertFalse";
 import AssertTrue from "../decorators/validators/boolean/AssertTrue";
 import NotEmpty from "../decorators/validators/compound/NotEmpty";
+import Rule from "../decorators/validators/custom/Rule";
 import Digits from "../decorators/validators/number/Digits";
 import Max from "../decorators/validators/number/Max";
 import Min from "../decorators/validators/number/Min";
@@ -58,6 +59,10 @@ const string = {
 	URL,
 };
 
+const custom = {
+	Rule,
+};
+
 const validators = {
 	any,
 	array,
@@ -65,6 +70,7 @@ const validators = {
 	compound,
 	number,
 	string,
+	custom,
 };
 
 export { validators };
