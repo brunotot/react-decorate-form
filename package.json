@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"types": "types/index.d.ts",
 	"publishConfig": {
-		"registry": "https://npm.pkg.github.com"
+		"brunotot:registry": "https://npm.pkg.github.com"
 	},
 	"repository": {
 		"type": "git",
