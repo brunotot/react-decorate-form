@@ -15,7 +15,18 @@
 npm install react-decorate-form
 ```
 
-2. Add babel configuration to your `tsconfig.json`. This allows for type-safety checking :star:
+2. Allow experimental decorators configuration in your `tsconfig.json`. This removes IDE errors which could pop-up :zap:
+```ts
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    /* ... */
+  }
+}
+```
+
+3. Add babel configuration to your `tsconfig.json`. This allows for type-safety checking :star:
 
 ```ts
 {
