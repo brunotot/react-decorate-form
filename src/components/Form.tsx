@@ -1,16 +1,9 @@
 import React, { createContext, useEffect, useMemo, useState } from "react";
 import {
-	ClassType,
-	ValidationEvaluationType,
-	DecoratorService,
-	EvaluateValidationTypes,
+	Class,
+	ValidationHandler,
+	ErrorData,
 } from "typescript-decorator-validation";
-
-/* If state type is Class */
-export type Model<T> = Pick<
-	T,
-	{ [K in keyof T]: T[K] extends Function ? never : K }[keyof T]
->;
 
 export type HTMLFormProps = React.DetailedHTMLProps<
 	React.FormHTMLAttributes<HTMLFormElement>,
@@ -19,62 +12,35 @@ export type HTMLFormProps = React.DetailedHTMLProps<
 
 export type FormProps<T> = HTMLFormProps & {
 	handleSubmit: (data: T) => any;
-	model: ClassType<T>;
+	model: Class<T>;
 	value: any;
 };
 
 export const FormContext = createContext<FormContextType<any>>(null as any);
 
-export type ErrorsType = {
-	[key: string]: ValidationEvaluationType[];
-};
-
 export type FormContextType<T> = {
 	state: T;
-	errors: ErrorsType;
-	decoratorService: DecoratorService;
+	errors: ErrorData;
+	validationHandler: ValidationHandler<T>;
 };
 
-function isValid(errors: ErrorsType): boolean {
-	return Object.values(errors).every((validationEvaluations) =>
-		validationEvaluations.every((evaluation) => evaluation.valid)
-	);
-}
-
 export default function Form<T>(props: FormProps<T>) {
-	const { model: modelClass, value, handleSubmit, ...args } = props;
-
-	const [errors, setErrors] = useState<ErrorsType>({});
-	const decoratorService = useMemo(() => new DecoratorService(modelClass), []);
-	const validators = decoratorService.getAllValidators();
+	const { model, value, handleSubmit, ...args } = props;
+	const [errors, setErrors] = useState<ErrorData>({});
+	const validationHandler = useMemo(() => new ValidationHandler(model), []);
 
 	const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-
-		if (isValid(errors)) {
-			handleSubmit(decoratorService.buildTarget(value));
+		if (!validationHandler.hasErrors(value)) {
+			handleSubmit(validationHandler.buildInstance(value));
 		}
 	};
 
-	function getErrors<T>(validations: EvaluateValidationTypes): ErrorsType {
-		const targetObject = decoratorService.buildTarget<T>(value);
-		let errors: ErrorsType = {};
-		Object.entries(validations).forEach(([key, validators]) => {
-			errors[key] = validators
-				.map((validator) => validator((targetObject as any)[key]))
-				.filter((evaluation) => !evaluation.valid);
-		});
-		return errors;
-	}
-
-	useEffect(() => {
-		const allErrors = getErrors(validators);
-		setErrors(allErrors);
-	}, [value]);
+	useEffect(() => setErrors(validationHandler.getErrors(value)), [value]);
 
 	const context = {
 		state: value,
-		decoratorService,
+		validationHandler,
 		errors,
 	};
 
