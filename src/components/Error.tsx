@@ -1,7 +1,5 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { FormContext } from "./Form";
-import { useEffect } from "react";
-import React from "react";
 
 export type ErrorPropsMapperType = (message: string) => JSX.Element;
 

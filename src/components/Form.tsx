@@ -1,11 +1,10 @@
-import { createContext, useEffect, useMemo, useState } from "react";
-import DecoratorService from "../service/DecoratorService";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 import {
 	ClassType,
-	EvaluateValidationTypes,
 	ValidationEvaluationType,
-} from "../service/ValidatorService";
-import React from "react";
+	DecoratorService,
+	EvaluateValidationTypes,
+} from "typescript-decorator-validation";
 
 /* If state type is Class */
 export type Model<T> = Pick<

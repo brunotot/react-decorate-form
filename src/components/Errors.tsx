@@ -1,7 +1,6 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { FormContext } from "./Form";
 import Error, { ErrorPropsMapperType } from "./Error";
-import React from "react";
 
 export type ErrorsProps = {
 	name: string;
