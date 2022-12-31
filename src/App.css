@@ -1,0 +1,22 @@
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-repeat: no-repeat;
+  background: rgb(34, 193, 195);
+  background: linear-gradient(0deg,
+      rgba(34, 193, 195, 1) 0%,
+      rgba(253, 187, 45, 1) 100%);
+}
+
+label[data-required='true']::after {
+  content: ' *';
+  color: rgb(217, 83, 79);
+}
+
+.card__form {
+  margin: 4rem;
+}
