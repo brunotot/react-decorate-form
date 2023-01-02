@@ -42,7 +42,7 @@
 
 1. Install library dependency
 ```
-npm install typescript-decorator-validation
+npm install react-decorate-form
 ```
 2. Allow experimental decorators configuration in your `tsconfig.json`. 
    <br>This removes IDE errors which could pop-up
