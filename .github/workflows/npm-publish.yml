@@ -16,16 +16,7 @@ jobs:
           registry-url: https://registry.npmjs.org
       - run: git config --global user.email "version@release.com"
       - run: git config --global user.name "Version Release"
-      - run: npm install
-      - name: Commit code after npm install
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "Autocommit version patch"
       - name: 🚀 Publish to NPM
         run: npm run deploy
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "New version upgrade"
-      - run: git push

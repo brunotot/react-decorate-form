@@ -7,7 +7,7 @@
 	"scripts": {
 		"clean": "rm -rf dist",
 		"build": "npm run clean && tsc && cp package.json README.md ./dist",
-		"deploy": "npm version patch && npm run build && cd dist && npm publish --access=public",
+		"deploy": "npm i && git commit -am 'update package-lock.json' && npm version patch && npm run build && cd dist && npm publish --access=public && git push",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [
