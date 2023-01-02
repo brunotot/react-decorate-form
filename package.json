@@ -15,7 +15,7 @@
 		"babel-plugin-transform-typescript-metadata": "^0.3.2",
 		"bootstrap": "^5.2.3",
 		"react": "^18.2.0",
-		"react-decorate-form": "file:../../libs/impl/react",
+		"react-decorate-form": "file:../react-decorate-form",
 		"react-dom": "^18.2.0",
 		"reflect-metadata": "^0.1.13"
 	},
