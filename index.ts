@@ -1,6 +1,6 @@
 import Error from "./src/components/Error";
 import Errors from "./src/components/Errors";
-import Form from "./src/components/Form";
+import Form, { FormContext } from "./src/components/Form";
 import {
 	InferredType,
 	ValidatorService,
@@ -16,4 +16,5 @@ export {
 	ValidatorService,
 	validators,
 	Rule,
+	FormContext,
 };
