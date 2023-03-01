@@ -20,13 +20,13 @@ export const FormContext = createContext<FormContextType<any>>(null as any);
 
 export type FormContextType<T> = {
 	state: T;
-	errors: ErrorData;
+	errors: ErrorData<T>;
 	validationHandler: ValidationHandler<T>;
 };
 
 export default function Form<T>(props: FormProps<T>) {
 	const { model, value, handleSubmit, ...args } = props;
-	const [errors, setErrors] = useState<ErrorData>({});
+	const [errors, setErrors] = useState<ErrorData<T>>({});
 	const validationHandler = useMemo(() => new ValidationHandler(model), []);
 
 	const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {

@@ -1,6 +1,7 @@
 import Error from "./src/components/Error";
 import Errors from "./src/components/Errors";
 import Form, { FormContext } from "./src/components/Form";
+import useDecoratedValidation from "./src/hooks/useDecoratedValidation";
 import {
 	InferredType,
 	ValidatorService,
@@ -17,4 +18,5 @@ export {
 	validators,
 	Rule,
 	FormContext,
+	useDecoratedValidation,
 };
