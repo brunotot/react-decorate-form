@@ -7,7 +7,10 @@ import {
 	ValidatorService,
 	validators,
 	Rule,
+	ValidationResult,
 } from "typescript-decorator-validation";
+
+export type { ValidationResult };
 
 export {
 	Form,
