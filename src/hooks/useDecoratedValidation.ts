@@ -11,7 +11,7 @@ export type OnChangeHandlerType = (
 
 export type DecoratedValidationType<K, T> = {
 	value: K;
-	setValue: K | ((value: K) => void);
+	setValue: React.Dispatch<React.SetStateAction<K>>;
 	isValid: boolean;
 	onChange: OnChangeHandlerType;
 	detailedErrors: ErrorData<T>;
