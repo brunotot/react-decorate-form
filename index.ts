@@ -6,6 +6,8 @@ import {
   validators,
   Rule,
   ValidationResult,
+  ValidationGroup,
+  setLocale,
 } from "typescript-decorator-validation";
 
 export type { ValidationResult };
@@ -13,9 +15,11 @@ export type { ValidationResult };
 export {
   Form,
   InferredType,
+  ValidationGroup,
   ValidatorService,
   validators,
   Rule,
   FormContext,
   useDecoratedValidation,
+  setLocale,
 };
