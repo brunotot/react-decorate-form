@@ -8,6 +8,7 @@ import {
   ValidationResult,
   ValidationGroup,
   setLocale,
+  Locale,
 } from "typescript-decorator-validation";
 
 export type { ValidationResult };
@@ -22,4 +23,5 @@ export {
   FormContext,
   useDecoratedValidation,
   setLocale,
+  Locale,
 };
