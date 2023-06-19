@@ -154,10 +154,10 @@ function App() {
           <List>
             {formData.hobbies.map((hobby, i) => {
               console.log(errors);
-              const isValid = !(errors.hobbies[i]?.length || 0);
+              const isValid = !(errors.hobbies.children[i]?.length || 0);
               return (
                 <ListItem
-                  title={isValid ? "" : errors.hobbies[i][0].message}
+                  title={isValid ? "" : errors.hobbies.children[i][0].message}
                   key={hobby}
                 >
                   <Box

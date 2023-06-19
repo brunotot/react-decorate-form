@@ -10,14 +10,14 @@ export type UserFormFields = {
 };
 
 export default class UserForm implements UserFormFields {
-  @validators.string.Size({ min: 5 })
-  @validators.string.NotEmpty()
+  @validators.string.MinLength(5)
+  @validators.string.Required()
   firstName!: string;
 
-  @validators.string.NotEmpty()
+  @validators.string.Required()
   lastName!: string;
 
-  @validators.string.NotEmpty()
+  @validators.string.Required()
   @validators.string.Password({
     length: 3,
   })
@@ -33,19 +33,17 @@ export default class UserForm implements UserFormFields {
   @validators.string.URL()
   url!: string;
 
-  @validators.number.Range({ min: 18, max: 100 })
+  @validators.number.ValueRange({ min: 18, max: 100 })
   age!: number;
 
   //@validators.boolean.AssertTrue("Passwords must match") NOT WORKING !!!
   get passwordsMatch(): boolean {
     return this.password === this.confirmPassword;
   }
-  // TODO Nepotrebno
-  set passwordsMatch(value: string) {}
 
   //@Validators.arrayNotEmpty()
   //@Validators.arrayEach(Validators.stringMaxLength(10)) !!!!!!
-  @validators.array.NotEmpty()
+  @validators.array.Required()
   @validators.any.Truthy()
   //@validators.string.Email() NOT WORKING!!!
   hobbies!: string[];
