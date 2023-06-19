@@ -32,7 +32,8 @@ export default function Form<T>(props: FormProps<T>) {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validationHandler.hasErrors(value)) {
-      handleSubmit(validationHandler.buildInstance(value));
+      //TODO
+      //handleSubmit(validationHandler.buildInstance(value));
     }
   };
 
