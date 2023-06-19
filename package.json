@@ -1,37 +1,37 @@
 {
-	"name": "react-decorate-form",
-	"version": "1.0.84",
-	"description": "React library that allows form validation manipulation through TypeScript Decorators",
-	"main": "index.js",
-	"types": "types/index.d.ts",
-	"scripts": {
-		"clean": "rm -rf dist",
-		"build": "npm run clean && tsc && cp package.json README.md ./dist",
-		"deploy": "npm i && git commit -am 'update package-lock.json' && npm version patch && npm run build && cd dist && npm publish --access=public && git push",
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"keywords": [
-		"typescript",
-		"react",
-		"decorator",
-		"form",
-		"validation"
-	],
-	"author": "Bruno Tot",
-	"license": "MIT",
-	"dependencies": {
-		"@babel/plugin-proposal-class-properties": "^7.18.6",
-		"@babel/plugin-proposal-decorators": "^7.20.7",
-		"@babel/preset-typescript": "^7.18.6",
-		"babel-plugin-transform-typescript-metadata": "^0.3.2",
-		"reflect-metadata": "^0.1.13",
-		"typescript-decorator-validation": "^1.0.28"
-	},
-	"devDependencies": {
-		"@types/react": "^18.0.28",
-		"@types/react-dom": "^18.0.10",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"typescript": "^4.9.4"
-	}
+  "name": "react-decorate-form",
+  "version": "1.0.84",
+  "description": "React library that allows form validation manipulation through TypeScript Decorators",
+  "main": "index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc && cp package.json README.md ./dist",
+    "deploy": "npm i && git commit -am 'update package-lock.json' && npm version patch && npm run build && cd dist && npm publish --access=public && git push",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "typescript",
+    "react",
+    "decorator",
+    "form",
+    "validation"
+  ],
+  "author": "Bruno Tot",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.20.7",
+    "@babel/preset-typescript": "^7.18.6",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
+    "reflect-metadata": "^0.1.13",
+    "typescript-decorator-validation": "^1.1.9"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.9.4"
+  }
 }
