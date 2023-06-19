@@ -47,7 +47,7 @@ export default function Form<T>(props: FormProps<T>) {
 
   return (
     <FormContext.Provider value={context}>
-      <form {...args} onSubmit={onSubmit}>
+      <form {...(args as any)} onSubmit={onSubmit}>
         {props.children}
       </form>
     </FormContext.Provider>
