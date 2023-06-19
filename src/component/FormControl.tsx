@@ -1,46 +1,39 @@
-import React from "react";
-import { Errors } from "react-decorate-form";
+import { Box, TextField } from "@mui/material";
+import { ValidationResult } from "react-decorate-form";
 
 export type FormControlProps = {
-	required?: boolean;
-	type?: string;
-	placeholder?: string;
-	name: string;
-	label: string;
-	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
+  type?: string;
+  placeholder?: string;
+  value: string;
+  label: string;
+  size?: "small" | "medium";
+  onChange?: (value: string) => void;
+  errors?: ValidationResult[];
 };
 
 export default function FormControl({
-	type = "text",
-	required = false,
-	name,
-	placeholder,
-	label,
-	onChange,
+  type = "text",
+  value,
+  placeholder,
+  label,
+  onChange,
+  errors = [],
+  required = false,
+  size = "small",
 }: FormControlProps) {
-	return (
-		<div className="form-group row mb-2">
-			<label
-				htmlFor={name}
-				data-required={required}
-				className="col-form-label col-md-3"
-			>
-				{label}
-				{!required && (
-					<span className="small text-muted">&nbsp;(Optional)</span>
-				)}
-			</label>
-			<div className="col-md-9">
-				<input
-					className="form-control mb-1"
-					placeholder={placeholder}
-					onChange={onChange}
-					type={type}
-					name={name}
-					id={name}
-				/>
-				<Errors name={name} />
-			</div>
-		</div>
-	);
+  return (
+    <Box display="flex" flexDirection="column" gap={0.5}>
+      <TextField
+        size={size}
+        error={errors?.length > 0}
+        type={type}
+        value={value}
+        label={label}
+        onChange={(e) => onChange?.(e.target.value)}
+        placeholder={placeholder}
+        helperText={errors[0]?.message}
+      />
+    </Box>
+  );
 }
