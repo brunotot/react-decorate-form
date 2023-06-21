@@ -1,6 +1,6 @@
 {
   "name": "react-decorate-form",
-  "version": "1.0.101",
+  "version": "1.0.102",
   "description": "React library that allows form validation manipulation through TypeScript Decorators",
   "main": "index.js",
   "types": "types/index.d.ts",
